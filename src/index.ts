@@ -1,18 +1,5 @@
 import './style.scss';
-console.log('test');
-const asd = 'qwe';
-console.log(asd);
+import data from './data';
 
-const img = document.createElement('img');
-img.src = 'assets/images/bird.jpg';
-const body = document.getElementById('body');
-document.getElementById('body')?.append(img);
-
-const tt: number = 0;
-
-console.log(tt);
-
-const new1 = {
-    sd: 'asd',
-};
-console.log(new1);
+const products = new data().get();
+console.log(products);
