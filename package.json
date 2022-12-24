@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^5.47.0",
-    "clean-webpack-plugin": "^4.0.0"
+    "clean-webpack-plugin": "^4.0.0",
+    "normalize-scss": "^7.0.1"
   }
 }
