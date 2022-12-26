@@ -1,8 +1,43 @@
-body {
-  margin: 0 auto;
-  background-color: aqua;
-}
+//@import "../node_modules/normalize-scss/sass/normalize/import-now";
 
-#bird {
-  background-image: url('./assets/images/bird.jpg');
-}
+// abstract //
+@import "sass/abstract/constants";
+// @import "abstract/placeholders";
+@import "sass/abstract/mixins";
+// @import "abstract/animation";
+
+// base //
+@import "sass/base/base";
+@import "sass/base/typography";
+
+// components //
+@import "sass/components/header";
+@import "sass/components/buttons";
+@import "sass/components/choice-menu";
+//@import "sass/components/footer";
+
+// layouts //
+@import "sass/layouts/main";
+@import "sass/layouts/aside";
+@import "sass/layouts/store";
+
+// fonts //
+
+
+
+
+
+
+
+
+
+
+
+// body {
+//   margin: 0 auto;
+//   background-color: aqua;
+// }
+
+// #bird {
+//   background-image: url('./assets/images/bird.jpg');
+// }

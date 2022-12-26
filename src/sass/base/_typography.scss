@@ -1,0 +1,24 @@
+html {
+  font-size: 10px;
+}
+
+.h1 {
+  @include text ('Sora', normal, 400, 4.9rem, $color-primary, 6.2rem);
+}
+
+.header__subtitle {
+  @include text ('Sora', normal, 400, 3rem, $color-primary, 3.8rem);
+}
+
+.button {
+  @include text ('Sora', normal, 700, 1.5rem, $color-light, 2.5rem);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+h2 {
+  @include text ('Sora', normal, 700, 2rem, $color-primary, 2.5rem);
+}
+
+.choice-menu__option + label {
+  @include text ('Sora', normal, 400, 2rem, $color-primary, 2.5rem);
+}

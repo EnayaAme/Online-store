@@ -1,0 +1,16 @@
+.main {
+  background-color: $color-base;
+  background-image: url('./assets/images/pattern.png');
+  background-repeat: repeat;
+  background-size: 100% auto;
+}
+
+.main__wrapper {
+  display: flex;
+  margin: auto;
+  padding: 25px 0;
+  align-items: flex-start;
+  justify-content: space-between;
+  max-width: 1200px;
+  gap: 30px;
+}
