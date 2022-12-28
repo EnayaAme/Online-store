@@ -22,3 +22,7 @@ h2 {
 .choice-menu__option + label {
   @include text ('Sora', normal, 400, 2rem, $color-primary, 2.5rem);
 }
+
+.range-menu__numbers {
+  @include text ('Sora', normal, 400, 1.5rem, $color-primary, 2.5rem);
+}
