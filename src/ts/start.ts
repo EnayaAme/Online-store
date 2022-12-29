@@ -1,3 +1,7 @@
+////////////////////////////////////   IMPORTS   ////////////////////////////////////
+
+import data from './data';
+
 ////////////////////////////////////   INTERFACES   ////////////////////////////////////
 
 interface ConstructorElement {
@@ -5,6 +9,7 @@ interface ConstructorElement {
   id?: string;
   className?: string;
   content?: string;
+  BackgroundImg?: string;
 }
 // схожий с прошлым только для img
 interface ConstructorImage {
@@ -20,6 +25,7 @@ interface ConstructorCheckbox {
   id: string;
   value: string;
   className?: string;
+  CountCategories: number;
 }
 
 interface ConstructorRange {
@@ -41,6 +47,7 @@ interface ConstructorRangeBlock {
   range2Max: string;
   range1Value: string;
   range2Value: string;
+  isPrice: boolean;
 }
 
 ////////////////////////////////////   CLASSES   ////////////////////////////////////
@@ -49,7 +56,7 @@ interface ConstructorRangeBlock {
 
 class CreateElement {
   protected el: HTMLElement;
-  constructor({ tag, id, className, content }: ConstructorElement) {
+  constructor({ tag, id, className, content, BackgroundImg }: ConstructorElement) {
     this.el = document.createElement(tag);
     if (id) {
       this.el.id = id;
@@ -59,6 +66,9 @@ class CreateElement {
     }
     if (content) {
       this.el.textContent = content;
+    }
+    if (BackgroundImg) {
+      this.el.style.background = `url('${BackgroundImg}') no-repeat center / contain`;
     }
   }
   getnode() {
@@ -90,7 +100,7 @@ class CreateImage {
 class CreateCheckbox {
   private input: HTMLInputElement;
   private label: HTMLLabelElement;
-  constructor({ type, name, id, value, className }: ConstructorCheckbox) {
+  constructor({ type, name, id, value, className, CountCategories }: ConstructorCheckbox) {
     this.input = document.createElement('input');
     this.input.type = type;
     this.input.name = name;
@@ -103,7 +113,7 @@ class CreateCheckbox {
     this.label.htmlFor = id;
     this.label.textContent = value;
     const quantity = document.createElement('span');
-    quantity.textContent = '  (10/15)';
+    quantity.textContent = `  (${CountCategories}/${CountCategories})`;
     this.label.append(quantity);
   }
   getnode() {
@@ -151,6 +161,7 @@ class CreateRangeBlock extends CreateElement {
     range2Min,
     range2Max,
     range2Value,
+    isPrice,
   }: ConstructorRangeBlock) {
     super({ tag: 'div', className: 'aside__range range-menu' });
     this.title = new CreateElement({ tag: 'h2', className: 'range-menu__title', content: title }).getnode();
@@ -183,18 +194,30 @@ class CreateRangeBlock extends CreateElement {
       if (parseInt(this.range2.value) - parseInt(this.range1.value) <= 0) {
         this.range1.value = String(parseInt(this.range2.value) - 0);
       }
-      this.from.textContent = '$ ' + this.range1.value;
-      const percent1 = (+this.range1.value / +this.range1.max) * 100;
-      const percent2 = (+this.range2.value / +this.range1.max) * 100;
+      if (isPrice) {
+        this.from.textContent = '$ ' + this.range1.value;
+      } else {
+        this.from.textContent = this.range1.value;
+      }
+      const dis = +this.range1.max - +this.range1.min;
+      const step = 100 / (+this.range1.max - +this.range1.min);
+      const percent1 = (dis - (+this.range1.max - +this.range1.value)) * step;
+      const percent2 = (dis - (+this.range1.max - +this.range2.value)) * step;
       this.rangeLine.style.background = `linear-gradient(to right, rgba(105, 0, 31, 0.08) ${percent1}% , #69001F ${percent1}% , #69001F ${percent2}%, rgba(105, 0, 31, 0.08) ${percent2}%)`;
     });
     this.range2.addEventListener('input', () => {
       if (parseInt(this.range2.value) - parseInt(this.range1.value) <= 0) {
         this.range2.value = String(parseInt(this.range1.value) + 0);
       }
-      this.to.textContent = '$ ' + this.range2.value;
-      const percent1 = (+this.range1.value / +this.range1.max) * 100;
-      const percent2 = (+this.range2.value / +this.range1.max) * 100;
+      if (isPrice) {
+        this.to.textContent = '$ ' + this.range2.value;
+      } else {
+        this.from.textContent = this.range2.value;
+      }
+      const dis = +this.range1.max - +this.range1.min;
+      const step = 100 / (+this.range1.max - +this.range1.min);
+      const percent1 = (dis - (+this.range1.max - +this.range1.value)) * step;
+      const percent2 = (dis - (+this.range1.max - +this.range2.value)) * step;
       this.rangeLine.style.background = `linear-gradient(to right, rgba(105, 0, 31, 0.08) ${percent1}% , #69001F ${percent1}% , #69001F ${percent2}%, rgba(105, 0, 31, 0.08) ${percent2}%)`;
     });
   }
@@ -231,6 +254,7 @@ class CreateDefaultPage {
   }
   // метод для main
   CreateMain() {
+    const product = new data();
     const main = new CreateElement({ tag: 'main', className: 'main' }).getnode();
     this.body.append(main);
     const wrapper = new CreateElement({ tag: 'div', className: 'wrapper main__wrapper' }).getnode();
@@ -245,28 +269,31 @@ class CreateDefaultPage {
     }).getnode();
     const categories = new CreateElement({ tag: 'div', className: 'aside__choice choice-menu' }).getnode();
     const brands = new CreateElement({ tag: 'div', className: 'aside__choice choice-menu' }).getnode();
-
+    const MaxMinPrices = product.GetMinMaxPrice();
     const prises = new CreateRangeBlock({
       title: 'Prises',
-      from: '$ 0',
-      to: '$ 1000',
-      range1Min: '0',
-      range1Max: '1000',
-      range1Value: '0',
-      range2Min: '0',
-      range2Max: '1000',
-      range2Value: '1000',
+      from: `$ ${MaxMinPrices.min}`,
+      to: `$ ${MaxMinPrices.max}`,
+      range1Min: MaxMinPrices.min,
+      range1Max: MaxMinPrices.max,
+      range1Value: MaxMinPrices.min,
+      range2Min: MaxMinPrices.min,
+      range2Max: MaxMinPrices.max,
+      range2Value: MaxMinPrices.max,
+      isPrice: true,
     }).getnode();
+    const MaxMinDate = product.GetMinMaxDate();
     const year = new CreateRangeBlock({
       title: 'Release date',
-      from: '2017',
-      to: '2022',
-      range1Min: '0',
-      range1Max: '1000',
-      range1Value: '0',
-      range2Min: '0',
-      range2Max: '1000',
-      range2Value: '1000',
+      from: MaxMinDate.min,
+      to: MaxMinDate.max,
+      range1Min: MaxMinDate.min,
+      range1Max: MaxMinDate.max,
+      range1Value: MaxMinDate.min,
+      range2Min: MaxMinDate.min,
+      range2Max: MaxMinDate.max,
+      range2Value: MaxMinDate.max,
+      isPrice: false,
     }).getnode();
     const buttonBottom = new CreateElement({
       tag: 'button',
@@ -280,23 +307,64 @@ class CreateDefaultPage {
       content: 'Category',
     }).getnode();
     categories.append(categoriesTitle);
-    const current = new CreateCheckbox({
-      type: 'checkbox',
-      name: 'Category',
-      id: 'Smartphone',
-      value: 'Smartphone',
-      className: 'choice-menu__option',
-    }).getnode();
-    categories.append(current[0], current[1]);
+    const ListCategories = product.GetCategories();
+    ListCategories.forEach((item) => {
+      const current = new CreateCheckbox({
+        type: 'checkbox',
+        name: 'Category',
+        id: item.category,
+        value: item.category,
+        className: 'choice-menu__option',
+        CountCategories: item.count,
+      }).getnode();
+      categories.append(current[0], current[1]);
+    });
     const brandsTitle = new CreateElement({ tag: 'h2', className: 'choice-menu__title', content: 'Brand' }).getnode();
     brands.append(brandsTitle);
-
+    const ListBrands = product.GetBrands();
+    ListBrands.forEach((item) => {
+      const current = new CreateCheckbox({
+        type: 'checkbox',
+        name: 'Category',
+        id: item.brand,
+        value: item.brand,
+        className: 'choice-menu__option',
+        CountCategories: item.count,
+      }).getnode();
+      brands.append(current[0], current[1]);
+    });
     // CreateStore
     const store = new CreateElement({ tag: 'div', className: 'store' }).getnode();
     wrapper.append(store);
     const menu = new CreateElement({ tag: 'div', className: 'store__menu' }).getnode();
     const products = new CreateElement({ tag: 'div', className: 'store__products' }).getnode();
     store.append(menu, products);
+    const cards = product.Get();
+    cards.forEach((item) => {
+      const CardBox = new CreateElement({
+        tag: 'div',
+        className: 'card__box',
+        id: `card-${item.id.toString()}`,
+        BackgroundImg: item.images[0],
+      }).getnode();
+      const CardModel = new CreateElement({ tag: 'h2', className: 'card__model', content: item.model }).getnode();
+      const CardPrice = new CreateElement({
+        tag: 'h2',
+        className: 'card__price',
+        content: `${item.price.toString()}$`,
+      }).getnode();
+      CardBox.style.width = '200px';
+      CardBox.style.height = '200px';
+      CardBox.style.display = 'flex';
+      CardBox.style.flexDirection = 'column';
+      CardBox.style.justifyContent = 'space-between';
+      products.style.overflow = 'hidden';
+      products.style.overflowY = 'auto';
+      CardModel.style.textAlign = 'center';
+      CardPrice.style.textAlign = 'center';
+      CardBox.append(CardModel, CardPrice);
+      products.append(CardBox);
+    });
   }
   // метод для footer
   // CreateFooter() {}
