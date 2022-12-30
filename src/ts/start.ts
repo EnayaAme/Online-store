@@ -1,6 +1,7 @@
 ////////////////////////////////////   IMPORTS   ////////////////////////////////////
 
 import data from './data';
+import CreateRoute from './route';
 
 ////////////////////////////////////   INTERFACES   ////////////////////////////////////
 
@@ -226,6 +227,8 @@ class CreateRangeBlock extends CreateElement {
 class CreateDefaultPage {
   // переменная которая хранит body
   private body = document.body;
+  // Роутер
+  private route = new CreateRoute();
   // метод создает header
   CreateHeader() {
     // создаем header, передаем в конструктор не все возможные аргументы, но он не ругается
@@ -237,6 +240,7 @@ class CreateDefaultPage {
     header.append(wrapper);
     wrapper.append(textBlock, cartBlock);
     const h1 = new CreateElement({ tag: 'h1', className: 'h1', content: 'Online Store' }).getnode();
+    this.route.addrouting(h1);
     const subtitle = new CreateElement({
       tag: 'span',
       className: 'header__subtitle',
@@ -347,6 +351,7 @@ class CreateDefaultPage {
         id: `card-${item.id.toString()}`,
         BackgroundImg: item.images[0],
       }).getnode();
+      this.route.addrouting(CardBox);
       const CardModel = new CreateElement({ tag: 'h2', className: 'card__model', content: item.model }).getnode();
       const CardPrice = new CreateElement({
         tag: 'h2',

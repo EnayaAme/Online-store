@@ -1,18 +1,21 @@
 import './style.scss';
 import data from './ts/data';
 import CreateDefaultPage from './ts/start';
+import CreateRoute from './ts/route';
 
 const products = new data();
-//console.log(products.Get());
-//products.GetCategories();
+const route = new CreateRoute();
+
 const newarr = [];
 newarr.push(products.Get()[0]);
 newarr.push(products.Get()[1]);
 newarr.push(products.Get()[2]);
-//console.log(newarr);
-console.log(products.GetBrands(newarr));
-console.log(products.GetBrands());
 products.GetMinMaxDate();
+
+window.addEventListener('hashchange', () => {
+  const hash = window.location.hash;
+  route.init(hash.slice(1));
+});
 
 const Page = new CreateDefaultPage();
 Page.CreateHeader();
