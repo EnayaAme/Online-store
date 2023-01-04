@@ -37,6 +37,12 @@ h2 {
   text-align: center;
 }
 
-.store__quantity {
+.store__quantity,
+.search__text,
+.search__text::placeholder {
   @include text ('Sora', normal, 700, 1.5rem, $color-primary, 2.5rem);
+}
+
+.search__text::placeholder {
+  opacity: 0.5;
 }

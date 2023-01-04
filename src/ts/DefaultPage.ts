@@ -7,6 +7,7 @@ import { CreateElement } from './Elements/CreateElement';
 import { CreateImage } from './Elements/CreateImage';
 import data from './data';
 import CreateRoute from './route';
+import { CreateSearchBar } from './Components/CreateSearchBar';
 
 class CreateDefaultPage {
   // переменная которая хранит body
@@ -136,11 +137,12 @@ class CreateDefaultPage {
     const productsAmmount = new CreateElement({ tag: 'span', className: 'store__quantity-found', content: '65' }).getnode();
     foundProducts.append(productsAmmount);
     const sortMenu = new CreateSortMenu({ tag: 'div', className: 'sort-menu' }).getnode();
+    const searchBar = new CreateSearchBar({ tag: 'div', className: 'search' }).getnode();
 
 
 
 
-    menu.append(foundProducts, sortMenu);
+    menu.append(foundProducts, searchBar, sortMenu);
     ///// products
     const products = new CreateElement({ tag: 'div', className: 'store__products' }).getnode();
     store.append(menu, products);
