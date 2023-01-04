@@ -11,6 +11,8 @@ class Router {
     'MaxPrice': this.products.GetMinMaxPrice().max,
     'MinYear': this.products.GetMinMaxDate().min,
     'MaxYear': this.products.GetMinMaxDate().max,
+    'Search': '',
+    'Sort': '',
   }
   private body = document.body;
   private checker = false;
@@ -31,6 +33,8 @@ class Router {
     }
     if (id === '#basket') {
       console.log('basket');
+      const newurl = `${id}`;
+      window.location.hash = newurl;
       this.checker = true;
     }
   }
@@ -46,15 +50,17 @@ class Router {
   }
 
   AddFilters(){
-    if ((this.filters.Category.length !== 0 || this.filters.Brand.length !== 0) || 
-    (this.filters.MinPrice !== this.products.GetMinMaxPrice().min || 
-    this.filters.MaxPrice !== this.products.GetMinMaxPrice().max) ) {
+    if ((this.filters.Category.length !== 0 || this.filters.Brand.length !== 0) ||
+    (this.filters.MinPrice !== this.products.GetMinMaxPrice().min ||
+    this.filters.MaxPrice !== this.products.GetMinMaxPrice().max) ||
+    (this.filters.MinYear !== this.products.GetMinMaxDate().min ||
+    this.filters.MaxYear !== this.products.GetMinMaxDate().max) ||
+    this.filters.Search !== '' || this.filters.Sort !== '') {
       let newurl = '#?';
-      let CurrentPrice = '';
       if (this.filters.Category.length !== 0) {
         newurl += 'Category=';
         this.filters.Category.forEach((item) => {
-          newurl += `${item}↕`;
+          newurl += `${item}+`;
         });
         newurl = newurl.slice(0, -1);
       }
@@ -65,20 +71,44 @@ class Router {
           newurl += '&Brand=';
         }
         this.filters.Brand.forEach((item) => {
-          newurl += `${item}↕`;
+          newurl += `${item}+`;
         });
         newurl = newurl.slice(0, -1);
       }
       if (this.filters.MinPrice !== this.products.GetMinMaxPrice().min || 
       this.filters.MaxPrice !== this.products.GetMinMaxPrice().max) {
-        CurrentPrice = 
-        newurl += `&Price=${this.filters.MinPrice}↕${this.filters.MaxPrice}`;
+        if (newurl === '#?') {
+          newurl += `Price=${this.filters.MinPrice}+${this.filters.MaxPrice}`;
+        } else {
+          newurl += `&Price=${this.filters.MinPrice}+${this.filters.MaxPrice}`;
+        }
         this.isChangePrice = true;
       }
-      //console.log('newurl' + newurl);
-      //console.log(this.filters);
+      if (this.filters.MinYear !== this.products.GetMinMaxDate().min || 
+      this.filters.MaxYear !== this.products.GetMinMaxDate().max) {
+        if (newurl === '#?') {
+          newurl += `Date=${this.filters.MinYear}+${this.filters.MaxYear}`;
+        } else {
+          newurl += `&Date=${this.filters.MinYear}+${this.filters.MaxYear}`;
+        }
+        this.isChangePrice = true;
+      }
+      if (this.filters.Search !== '') {
+        if (newurl === '#?') {
+          newurl += `Search=${this.filters.Search}`;
+        } else {
+          newurl += `&Search=${this.filters.Search}`;
+        }
+      }
+      if (this.filters.Sort !== '') {
+        console.log(this.filters.Sort);
+        if (newurl === '#?') {
+          newurl += `Sort=${this.filters.Sort}`;
+        } else {
+          newurl += `&Sort=${this.filters.Sort}`;
+        }
+      }
       window.location.hash = newurl;
-      //console.log('hash'+window.location.hash);
     } else {
       window.location.hash = '';
     }
@@ -98,55 +128,6 @@ class Router {
     });
     this.filters.Brand.splice(index, 1);
     this.AddFilters();
-  }
-
-  init(id: string) {
-    if (id.split('-')[0] === '#card') {
-      if (this.body.children[1]){
-        this.body.children[1].remove();
-      }
-    }
-    if (id === '') {
-      const MainPage = new CreateDefaultPage();
-      if (document.body.childNodes[2]) {
-        document.body.childNodes[2].remove();
-      }
-      MainPage.CreateMain();
-      this.checker = true;
-    }
-    if (id === '#basket') {
-      console.log('basket');
-      this.checker = true;
-    }
-    ///filters///
-    ///Category///
-    if (id.split('=')[0] === 'Category') {
-      if(!this.filters.Category.includes(id.split('=')[1])){
-        this.filters.Category.push(id.split('=')[1]);
-      }
-    }
-    if (this.checker === false) {
-      console.log(id);
-      console.log('ERROR 404');
-    }
-    // if(this.filters.Category.length !== 0 || this.filters.Brand.length !== 0) {
-    //   let newurl = '#?';
-    //   if (this.filters.Category.length !== 0) {
-    //     newurl += 'Category=';
-    //     this.filters.Category.forEach((item) => {
-    //       newurl += `${item}↕`;
-    //     });
-    //     newurl.slice(0, -1);
-    //   }
-    //   if (this.filters.Brand.length !== 0) {
-    //     newurl += '&Brand=';
-    //     this.filters.Brand.forEach((item) => {
-    //       newurl += `${item}↕`;
-    //     });
-    //     newurl.slice(0, -1);
-    //   }
-    //   console.log(newurl);
-    // }
   }
 
   addrouting(tag: HTMLElement) {
@@ -192,26 +173,31 @@ class Router {
   AddRoutingToPriceMin(MinPrice: string) {
     this.filters.MinPrice = MinPrice;
     this.AddFilters();
-    //console.log(this.filters);
-    //console.log(MinPrice);
   }
 
   AddRoutingToPriceMax(MaxPrice: string) {
     this.filters.MaxPrice = MaxPrice;
     this.AddFilters();
-    console.log(this.filters);
   }
 
   AddRoutingToYearMin(MinYear: string) {
     this.filters.MinYear = MinYear;
     this.AddFilters();
-    console.log(this.filters);
   }
 
   AddRoutingToYearMax(MaxYear: string) {
     this.filters.MaxYear = MaxYear;
     this.AddFilters();
-    console.log(this.filters);
+  }
+
+  AddRoutingToSearch(text: string) {
+    this.filters.Search = text;
+    this.AddFilters();
+  }
+  AddRoutingToSort(id: string) {
+    this.filters.Sort = id;
+    console.log(this.filters.Sort);
+    this.AddFilters();
   }
 }
 

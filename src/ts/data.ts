@@ -102,7 +102,7 @@ class data {
       max: max.toString(),
       min: min.toString(),
     };
-    console.log(obj);
+    //console.log(obj);
     return obj;
   }
 }
