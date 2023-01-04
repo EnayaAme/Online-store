@@ -1,4 +1,4 @@
-import Router from './Route';
+import Router from './route';
 
 export interface ConstructorElement {
   tag: string;

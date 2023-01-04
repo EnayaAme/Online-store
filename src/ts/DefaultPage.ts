@@ -5,8 +5,8 @@ import { CreateSortMenu } from './Components/CreateSortMenu';
 import { CreateCheckbox } from './Elements/CreateCheckbox';
 import { CreateElement } from './Elements/CreateElement';
 import { CreateImage } from './Elements/CreateImage';
-import data from './Data';
-import CreateRoute from './Route';
+import data from './data';
+import CreateRoute from './route';
 
 class CreateDefaultPage {
   // переменная которая хранит body

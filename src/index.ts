@@ -1,8 +1,8 @@
 import './style.scss';
-import data from './ts/Data';
+import data from './ts/data';
 
 import CreateDefaultPage from './ts/DefaultPage';
-import CreateRoute from './ts/Route';
+import CreateRoute from './ts/route';
 
 const products = new data();
 const route = new CreateRoute();

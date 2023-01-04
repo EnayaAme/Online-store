@@ -1,4 +1,4 @@
-import data from "./Data";
+import data from "./data";
 import { filters } from "./Interfaces";
 import CreateDefaultPage from "./DefaultPage";
 
