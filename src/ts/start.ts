@@ -25,7 +25,7 @@ interface ConstructorCheckbox {
   id: string;
   value: string;
   className?: string;
-  CountCategories: number;
+  CountCategories?: number;
 }
 
 interface ConstructorRange {
@@ -48,6 +48,19 @@ interface ConstructorRangeBlock {
   range1Value: string;
   range2Value: string;
   isPrice: boolean;
+}
+
+interface ConstructorRadio {
+  type: string;
+  value: string;
+  id: string;
+  name: string;
+  className?: string;
+}
+
+interface ConstructorSortMenu {
+  tag: string;
+  className?: string;
 }
 
 ////////////////////////////////////   CLASSES   ////////////////////////////////////
@@ -94,6 +107,29 @@ class CreateImage {
   }
   getnode() {
     return this.el;
+  }
+}
+
+class CreateRadio {
+  private input: HTMLInputElement;
+  private label: HTMLLabelElement;
+
+  constructor({ type, value, id, name, className }: ConstructorRadio) {
+    this.label = document.createElement('label');
+    this.label.htmlFor = id;
+    this.label.textContent = value;
+
+    this.input = document.createElement('input');
+    this.input.type = type;
+    this.input.name = name;
+    this.input.id = id;
+    if (className) {
+      this.input.classList.add(className);
+    }
+  }
+  getnode() {
+    const arr: [HTMLInputElement, HTMLLabelElement] = [this.input, this.label];
+    return arr;
   }
 }
 
@@ -223,6 +259,35 @@ class CreateRangeBlock extends CreateElement {
   }
 }
 
+class CreateSortMenu extends CreateElement {
+  private container: HTMLElement;
+  private options: HTMLElement;
+  private seleted: HTMLElement;
+  private option: HTMLElement;
+
+  private input: [HTMLInputElement, HTMLLabelElement];
+
+
+  constructor ({ tag, className }: ConstructorSortMenu) {
+    super({ tag: 'div', className: 'sort-menu' });
+    this.container = new CreateElement({ tag: 'div', className: 'select-box' }).getnode();
+    this.options = new CreateElement({ tag: 'div', className: 'options-container' }).getnode();
+    this.seleted = new CreateElement({ tag: 'div', className: 'selected', content: 'Sort by' }).getnode();
+    this.container.append(this.options, this.seleted);
+    ///////////////
+    this.option = new CreateElement({ tag: 'div', className: 'option' }).getnode();
+    this.input =  new CreateRadio({ type: 'radio', className: 'radio', id: 'Rating', name: 'sort', value: 'Rating'}).getnode();
+    this.option.append(this.input[0], this.input[1]);
+    this.options.append(this.option);
+
+    this.el.append(this.container);
+
+    this.seleted.addEventListener('click', () => {
+      this.options!.classList.toggle("active");
+    })
+  }
+}
+
 class CreateDefaultPage {
   // переменная которая хранит body
   private body = document.body;
@@ -337,6 +402,14 @@ class CreateDefaultPage {
     const store = new CreateElement({ tag: 'div', className: 'store' }).getnode();
     wrapper.append(store);
     const menu = new CreateElement({ tag: 'div', className: 'store__menu' }).getnode();
+    /////  menu
+    const sortMenu = new CreateSortMenu({ tag: 'div', className: 'sort-menu' }).getnode();
+
+
+
+
+    menu.append(sortMenu);
+    ///// products
     const products = new CreateElement({ tag: 'div', className: 'store__products' }).getnode();
     store.append(menu, products);
     const cards = product.Get();
@@ -375,5 +448,22 @@ class CreateDefaultPage {
 // Page.CreateHeader();
 // Page.CreateMain();
 // Page.CreateFooter();
+
+
+const selected = document.querySelector(".selected");
+const optionsContainer = document.querySelector(".options-container");
+
+const optionsList = document.querySelectorAll(".option");
+
+selected!.addEventListener("click", () => {
+  optionsContainer!.classList.toggle("active");
+});
+
+// optionsList.forEach(o => {
+//   o.addEventListener("click", () => {
+//     selected!.innerHTML = o.querySelector("label").innerHTML;
+//     optionsContainer!.classList.remove("active");
+//   });
+// });
 
 export default CreateDefaultPage;
