@@ -24,6 +24,13 @@ export interface ConstructorCheckbox {
   CountCategories?: number;
 }
 
+export interface ConstructotTextInput {
+  type: string;
+  placeholder: string;
+  name: string;
+  className?: string;
+}
+
 export interface ConstructorRange {
   type: string;
   min: string;
