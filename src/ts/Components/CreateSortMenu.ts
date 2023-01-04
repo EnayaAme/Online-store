@@ -13,8 +13,8 @@ export class CreateSortMenu extends CreateElement {
     super({ tag: 'div', className: 'sort-menu' });
     this.sortmenu = [
       ['Rating', 'Rating'],
-      ['PriceTH', 'Price from low to high'],
-      ['PriceTL', 'Price from high to low'],
+      ['PriceTH', 'Price (low to high)'],
+      ['PriceTL', 'Price (high to low)'],
       ['RD', 'Release Date']
     ]
     this.container = new CreateElement({ tag: 'div', className: 'select-box' }).getnode();
