@@ -29,10 +29,14 @@ h2 {
 
 .select-box {
   @include text ('Sora', normal, 700, 1.5rem, $color-light, 2.5rem);
-  text-align: center
+  text-align: center;
 }
 
 .options-container {
   @include text ('Sora', normal, 700, 1.5rem, $color-light, 3.5rem);
-  text-align: center
+  text-align: center;
+}
+
+.store__quantity {
+  @include text ('Sora', normal, 700, 1.5rem, $color-primary, 2.5rem);
 }

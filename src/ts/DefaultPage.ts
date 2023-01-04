@@ -132,12 +132,15 @@ class CreateDefaultPage {
     wrapper.append(store);
     const menu = new CreateElement({ tag: 'div', className: 'store__menu' }).getnode();
     /////  menu
+    const foundProducts = new CreateElement({ tag: 'div', className: 'store__quantity', content: 'Found : ' }).getnode();
+    const productsAmmount = new CreateElement({ tag: 'span', className: 'store__quantity-found', content: '65' }).getnode();
+    foundProducts.append(productsAmmount);
     const sortMenu = new CreateSortMenu({ tag: 'div', className: 'sort-menu' }).getnode();
 
 
 
 
-    menu.append(sortMenu);
+    menu.append(foundProducts, sortMenu);
     ///// products
     const products = new CreateElement({ tag: 'div', className: 'store__products' }).getnode();
     store.append(menu, products);
