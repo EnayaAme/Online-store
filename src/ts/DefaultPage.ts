@@ -8,6 +8,7 @@ import { CreateImage } from './Elements/CreateImage';
 import data from './data';
 import CreateRoute from './route';
 import { CreateSearchBar } from './Components/CreateSearchBar';
+import { filters } from './Interfaces';
 
 class CreateDefaultPage {
   // переменная которая хранит body
@@ -42,7 +43,7 @@ class CreateDefaultPage {
     cart.append(cartIcon);
   }
   // метод для main
-  CreateMain() {
+  CreateMain(filters: filters) {
     const product = new data();
     const main = new CreateElement({ tag: 'main', className: 'main' }).getnode();
     this.body.append(main);
@@ -56,6 +57,7 @@ class CreateDefaultPage {
       className: 'button aside__button',
       content: 'Reset',
     }).getnode();
+    this.router.AddRoutingToHeader(buttonTop);
     const categories = new CreateElement({ tag: 'div', className: 'aside__choice choice-menu' }).getnode();
     const brands = new CreateElement({ tag: 'div', className: 'aside__choice choice-menu' }).getnode();
     const MaxMinPrices = product.GetMinMaxPrice();
@@ -93,6 +95,9 @@ class CreateDefaultPage {
       className: 'button aside__button',
       content: 'Copy search link',
     }).getnode();
+    buttonBottom.addEventListener('click', () => {
+      navigator.clipboard.writeText(window.location.href);
+    });
     aside.append(buttonTop, categories, brands, prises, year, buttonBottom);
     const categoriesTitle = new CreateElement({
       tag: 'h2',
@@ -136,8 +141,8 @@ class CreateDefaultPage {
     const foundProducts = new CreateElement({ tag: 'div', className: 'store__quantity', content: 'Found : ' }).getnode();
     const productsAmmount = new CreateElement({ tag: 'span', className: 'store__quantity-found', content: '65' }).getnode();
     foundProducts.append(productsAmmount);
-    const sortMenu = new CreateSortMenu({ tag: 'div', className: 'sort-menu' }).getnode();
-    const searchBar = new CreateSearchBar({ tag: 'div', className: 'search' }).getnode();
+    const sortMenu = new CreateSortMenu({ tag: 'div', className: 'sort-menu', router: this.router }).getnode();
+    const searchBar = new CreateSearchBar({ tag: 'div', className: 'search', router: this.router }).getnode();
 
 
 

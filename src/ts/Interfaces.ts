@@ -6,6 +6,7 @@ export interface ConstructorElement {
   className?: string;
   content?: string;
   BackgroundImg?: string;
+  router?: Router;
 }
 // схожий с прошлым только для img
 export interface ConstructorImage {
@@ -66,6 +67,7 @@ export interface ConstructorRadio {
 export interface ConstructorSortMenu {
   tag: string;
   className?: string;
+  router?: Router;
 }
 
 export interface filters {
@@ -75,4 +77,6 @@ export interface filters {
   MaxPrice: string;
   MinYear: string;
   MaxYear: string;
+  Search: string;
+  Sort: string;
 }

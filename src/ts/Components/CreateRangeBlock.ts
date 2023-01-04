@@ -68,8 +68,12 @@ export class CreateRangeBlock extends CreateElement {
       const percent1 = (dis - (+this.range1.max - +this.range1.value)) * step;
       const percent2 = (dis - (+this.range1.max - +this.range2.value)) * step;
       this.rangeLine.style.background = `linear-gradient(to right, rgba(105, 0, 31, 0.08) ${percent1}% , #69001F ${percent1}% , #69001F ${percent2}%, rgba(105, 0, 31, 0.08) ${percent2}%)`;
+    });
+    this.range1.addEventListener('mouseup', () => {
       if (id === 'price-slider') {
         router.AddRoutingToPriceMin(this.range1.value);
+      } else {
+        router.AddRoutingToYearMin(this.range1.value);
       }
     });
     this.range2.addEventListener('input', () => {
@@ -79,15 +83,19 @@ export class CreateRangeBlock extends CreateElement {
       if (isPrice) {
         this.to.textContent = '$ ' + this.range2.value;
       } else {
-        this.from.textContent = this.range2.value;
+        this.to.textContent = this.range2.value;
       }
       const dis = +this.range1.max - +this.range1.min;
       const step = 100 / (+this.range1.max - +this.range1.min);
       const percent1 = (dis - (+this.range1.max - +this.range1.value)) * step;
       const percent2 = (dis - (+this.range1.max - +this.range2.value)) * step;
       this.rangeLine.style.background = `linear-gradient(to right, rgba(105, 0, 31, 0.08) ${percent1}% , #69001F ${percent1}% , #69001F ${percent2}%, rgba(105, 0, 31, 0.08) ${percent2}%)`;
+    });
+    this.range2.addEventListener('mouseup', () => {
       if (id === 'price-slider') {
         router.AddRoutingToPriceMax(this.range2.value);
+      } else {
+        router.AddRoutingToYearMax(this.range2.value);
       }
     });
   }
