@@ -1,0 +1,88 @@
+.select-box {
+  position: relative;
+  display: flex;
+  width: 230px;
+  flex-direction: column;
+}
+
+.select-box .options-container {
+  background: #69001F;
+  color: #FFFFFF;
+  max-height: 0;
+  width: 100%;
+  opacity: 0;
+  overflow: hidden;
+  order: 1;
+}
+
+.selected {
+  background: #69001F;
+  border-radius: 40px;
+  color: #FFFFFF;
+  position: relative;
+  border: 0;
+  outline: 0;
+  order: 0;
+  cursor: pointer;
+  &:hover {
+    background: #9A2648;
+    transition: .3s;
+  }
+  &::after {
+    content: "";
+    background: url("assets/images/arrow-down.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    position: absolute;
+    height: 100%;
+    width: 32px;
+    right: 10px;
+    transition: all 0.3s;
+  }
+}
+
+.options-container {
+  position: absolute;
+  top: 25px;
+  background: #69001F;
+  transition: .3s;
+  border: 0;
+  outline: 0;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 0 0 25px 25px;
+}
+
+
+.select-box .options-container.active {
+  max-height: 240px;
+  opacity: 1;
+  overflow-y: scroll;
+  & + .selected {
+    border-radius: 40px 40px 0 0;
+  }
+  & + .selected::after {
+    transform: rotateX(180deg);
+  }
+}
+
+.select-box .options-container::-webkit-scrollbar-thumb {
+  background: #525861;
+  border-radius: 0 8px 8px 0;
+}
+
+
+.select-box .option:hover {
+  background: #9A2648;
+}
+
+.select-box,
+.select-box label {
+  cursor: pointer;
+
+}
+
+.select-box .option .radio {
+  display: none;
+}
+
+

@@ -26,3 +26,13 @@ h2 {
 .range-menu__numbers {
   @include text ('Sora', normal, 400, 1.5rem, $color-primary, 2.5rem);
 }
+
+.select-box {
+  @include text ('Sora', normal, 700, 1.5rem, $color-light, 2.5rem);
+  text-align: center
+}
+
+.options-container {
+  @include text ('Sora', normal, 700, 1.5rem, $color-light, 3.5rem);
+  text-align: center
+}
