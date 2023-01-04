@@ -27,7 +27,9 @@ h2 {
   @include text ('Sora', normal, 400, 1.5rem, $color-primary, 2.5rem);
 }
 
-.select-box {
+.select-box,
+.card__model,
+.card__price {
   @include text ('Sora', normal, 700, 1.5rem, $color-light, 2.5rem);
   text-align: center;
 }

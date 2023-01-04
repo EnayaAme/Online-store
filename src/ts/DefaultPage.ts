@@ -159,19 +159,15 @@ class CreateDefaultPage {
       const CardPrice = new CreateElement({
         tag: 'h2',
         className: 'card__price',
-        content: `${item.price.toString()}$`,
+        content: `${item.price.toString()} $`,
       }).getnode();
-      CardBox.style.width = '200px';
-      CardBox.style.height = '200px';
-      CardBox.style.display = 'flex';
-      CardBox.style.flexDirection = 'column';
-      CardBox.style.justifyContent = 'space-between';
-      products.style.overflow = 'hidden';
-      products.style.overflowY = 'auto';
-      CardModel.style.textAlign = 'center';
-      CardPrice.style.textAlign = 'center';
-      CardBox.append(CardModel, CardPrice);
+      const CardAddtoCart = new CreateElement({tag: 'div', className: 'card__add-to-cart'}).getnode();
+      CardBox.append(CardModel, CardPrice, CardAddtoCart);
       products.append(CardBox);
+
+      CardAddtoCart.addEventListener('click', () => {
+        CardAddtoCart.classList.toggle('_product-added');
+      })
     });
   }
   // метод для footer
