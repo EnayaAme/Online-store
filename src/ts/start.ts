@@ -1,6 +1,7 @@
 ////////////////////////////////////   IMPORTS   ////////////////////////////////////
 
 import data from './data';
+import CreateRoute from './route';
 
 ////////////////////////////////////   INTERFACES   ////////////////////////////////////
 
@@ -48,6 +49,8 @@ interface ConstructorRangeBlock {
   range1Value: string;
   range2Value: string;
   isPrice: boolean;
+  id: string;
+  router: CreateRoute;
 }
 
 interface ConstructorRadio {
@@ -198,6 +201,8 @@ class CreateRangeBlock extends CreateElement {
     range2Max,
     range2Value,
     isPrice,
+    id,
+    router,
   }: ConstructorRangeBlock) {
     super({ tag: 'div', className: 'aside__range range-menu' });
     this.title = new CreateElement({ tag: 'h2', className: 'range-menu__title', content: title }).getnode();
@@ -212,7 +217,7 @@ class CreateRangeBlock extends CreateElement {
       min: range1Min,
       max: range1Max,
       value: range1Value,
-      id: 'slider-1',
+      id: `${id}-1`,
       className: 'range-menu__slider',
     }).getnode();
     this.range2 = new CreateRange({
@@ -220,7 +225,7 @@ class CreateRangeBlock extends CreateElement {
       min: range2Min,
       max: range2Max,
       value: range2Value,
-      id: 'slider-2',
+      id: `${id}-2`,
       className: 'range-menu__slider',
     }).getnode();
     this.rangeBlock.append(this.rangeLine, this.range1, this.range2);
@@ -240,6 +245,9 @@ class CreateRangeBlock extends CreateElement {
       const percent1 = (dis - (+this.range1.max - +this.range1.value)) * step;
       const percent2 = (dis - (+this.range1.max - +this.range2.value)) * step;
       this.rangeLine.style.background = `linear-gradient(to right, rgba(105, 0, 31, 0.08) ${percent1}% , #69001F ${percent1}% , #69001F ${percent2}%, rgba(105, 0, 31, 0.08) ${percent2}%)`;
+      if (id === 'price-slider') {
+        router.AddRoutingToPriceMin(this.range1.value);
+      }
     });
     this.range2.addEventListener('input', () => {
       if (parseInt(this.range2.value) - parseInt(this.range1.value) <= 0) {
@@ -255,6 +263,9 @@ class CreateRangeBlock extends CreateElement {
       const percent1 = (dis - (+this.range1.max - +this.range1.value)) * step;
       const percent2 = (dis - (+this.range1.max - +this.range2.value)) * step;
       this.rangeLine.style.background = `linear-gradient(to right, rgba(105, 0, 31, 0.08) ${percent1}% , #69001F ${percent1}% , #69001F ${percent2}%, rgba(105, 0, 31, 0.08) ${percent2}%)`;
+      if (id === 'price-slider') {
+        router.AddRoutingToPriceMax(this.range2.value);
+      }
     });
   }
 }
@@ -291,6 +302,8 @@ class CreateSortMenu extends CreateElement {
 class CreateDefaultPage {
   // переменная которая хранит body
   private body = document.body;
+  // Роутер
+  private router = new CreateRoute();
   // метод создает header
   CreateHeader() {
     // создаем header, передаем в конструктор не все возможные аргументы, но он не ругается
@@ -302,6 +315,7 @@ class CreateDefaultPage {
     header.append(wrapper);
     wrapper.append(textBlock, cartBlock);
     const h1 = new CreateElement({ tag: 'h1', className: 'h1', content: 'Online Store' }).getnode();
+    this.router.AddRoutingToHeader(h1);
     const subtitle = new CreateElement({
       tag: 'span',
       className: 'header__subtitle',
@@ -346,6 +360,8 @@ class CreateDefaultPage {
       range2Max: MaxMinPrices.max,
       range2Value: MaxMinPrices.max,
       isPrice: true,
+      id: 'price-slider',
+      router: this.router,
     }).getnode();
     const MaxMinDate = product.GetMinMaxDate();
     const year = new CreateRangeBlock({
@@ -359,6 +375,8 @@ class CreateDefaultPage {
       range2Max: MaxMinDate.max,
       range2Value: MaxMinDate.max,
       isPrice: false,
+      id: 'year-slider',
+      router: this.router,
     }).getnode();
     const buttonBottom = new CreateElement({
       tag: 'button',
@@ -374,7 +392,7 @@ class CreateDefaultPage {
     categories.append(categoriesTitle);
     const ListCategories = product.GetCategories();
     ListCategories.forEach((item) => {
-      const current = new CreateCheckbox({
+      const current: [HTMLInputElement, HTMLLabelElement] = new CreateCheckbox({
         type: 'checkbox',
         name: 'Category',
         id: item.category,
@@ -382,6 +400,7 @@ class CreateDefaultPage {
         className: 'choice-menu__option',
         CountCategories: item.count,
       }).getnode();
+      this.router.AddRoutingToCategory(current[0]);
       categories.append(current[0], current[1]);
     });
     const brandsTitle = new CreateElement({ tag: 'h2', className: 'choice-menu__title', content: 'Brand' }).getnode();
@@ -396,6 +415,7 @@ class CreateDefaultPage {
         className: 'choice-menu__option',
         CountCategories: item.count,
       }).getnode();
+      this.router.AddRoutingToBrand(current[0]);
       brands.append(current[0], current[1]);
     });
     // CreateStore
@@ -420,6 +440,7 @@ class CreateDefaultPage {
         id: `card-${item.id.toString()}`,
         BackgroundImg: item.images[0],
       }).getnode();
+      this.router.addrouting(CardBox);
       const CardModel = new CreateElement({ tag: 'h2', className: 'card__model', content: item.model }).getnode();
       const CardPrice = new CreateElement({
         tag: 'h2',

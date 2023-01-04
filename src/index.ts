@@ -1,20 +1,28 @@
 import './style.scss';
 import data from './ts/data';
 import CreateDefaultPage from './ts/start';
+import CreateRoute from './ts/route';
 
 const products = new data();
-//console.log(products.Get());
-//products.GetCategories();
+const route = new CreateRoute();
+
 const newarr = [];
 newarr.push(products.Get()[0]);
 newarr.push(products.Get()[1]);
 newarr.push(products.Get()[2]);
-//console.log(newarr);
-console.log(products.GetBrands(newarr));
-console.log(products.GetBrands());
 products.GetMinMaxDate();
+const hash = location.hash;
+
+console.log(`current hash = ${hash}`)
+
 
 const Page = new CreateDefaultPage();
 Page.CreateHeader();
-Page.CreateMain();
+route.init(hash);
+window.addEventListener('hashchange', () => {
+  //console.log('The hash has changed!');
+  //console.log(location.hash);
+  route.init(location.hash);
+}, false);
+//Page.CreateMain();
 //Page.CreateFooter();
