@@ -14,7 +14,7 @@ export class CreateElement {
       this.el.textContent = content;
     }
     if (BackgroundImg) {
-      this.el.style.background = `url('${BackgroundImg}') no-repeat center / contain`;
+      this.el.style.background = `white url('${BackgroundImg}') no-repeat center / contain`;
     }
   }
   getnode() {

@@ -1,0 +1,59 @@
+.card__box {
+  z-index: 1;
+  position: relative;
+  width: 200px;
+  height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 20px;
+  cursor: pointer;
+  //overflow: hidden;
+}
+
+.card__model {
+  background: $color-primary;
+  border-radius: 40px 40px 0 0;
+}
+
+.card__price {
+  width: 100px;
+  background: $color-primary;
+  border-radius: 40px 40px 0 0;
+  //border-radius: 40px;
+}
+
+.card__add-to-cart {
+  z-index: 10;
+  position: absolute;
+  bottom: -8px;
+  right: -8px;
+  height: 45px;
+  width: 45px;
+  border-radius: 50%;
+  background: $color-primary url('./assets/images/cart-add.svg') no-repeat center / 30px 30px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  cursor: pointer;
+  transition: 0.3s;
+  &:hover {
+    background: $color-primary-hover url('./assets/images/cart-add.svg') no-repeat center / 30px 30px;
+  }
+  &:active {
+    transform: scale(1.05);
+  }
+}
+
+._product-added {
+  background: $color-light url('./assets/images/cart-added.svg') no-repeat center / 30px 30px;
+  outline-color: $color-primary;
+  outline-style: solid;
+  outline-offset: -2px;
+  outline-width: 2px;
+  &:hover {
+    background: $color-light url('./assets/images/cart-added.svg') no-repeat center / 30px 30px;
+    outline-color: $color-primary;
+    outline-style: solid;
+    outline-offset: -2px;
+    outline-width: 2px;
+  }
+}
