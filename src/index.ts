@@ -11,13 +11,18 @@ newarr.push(products.Get()[0]);
 newarr.push(products.Get()[1]);
 newarr.push(products.Get()[2]);
 products.GetMinMaxDate();
+const hash = location.hash;
 
-window.addEventListener('hashchange', () => {
-  const hash = window.location.hash;
-  route.init(hash.slice(1));
-});
+console.log(`current hash = ${hash}`)
+
 
 const Page = new CreateDefaultPage();
 Page.CreateHeader();
-Page.CreateMain();
+route.init(hash);
+window.addEventListener('hashchange', () => {
+  //console.log('The hash has changed!');
+  //console.log(location.hash);
+  route.init(location.hash);
+}, false);
+//Page.CreateMain();
 //Page.CreateFooter();
