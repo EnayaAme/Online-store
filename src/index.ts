@@ -1,7 +1,8 @@
 import './style.scss';
-import data from './ts/data';
-import CreateDefaultPage from './ts/start';
-import CreateRoute from './ts/route';
+import data from './ts/Data';
+
+import CreateDefaultPage from './ts/DefaultPage';
+import CreateRoute from './ts/Route';
 
 const products = new data();
 const route = new CreateRoute();
@@ -13,7 +14,7 @@ newarr.push(products.Get()[2]);
 products.GetMinMaxDate();
 const hash = location.hash;
 
-console.log(`current hash = ${hash}`)
+//console.log(`current hash = ${hash}`)
 
 
 const Page = new CreateDefaultPage();

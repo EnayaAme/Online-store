@@ -1,14 +1,6 @@
-import data from "./data";
-import CreateDefaultPage from "./start";
-
-interface filters {
-  Category: string[];
-  Brand: string[];
-  MinPrice: string;
-  MaxPrice: string;
-  MinYear: string;
-  MaxYear: string;
-}
+import data from "./Data";
+import { filters } from "./Interfaces";
+import CreateDefaultPage from "./DefaultPage";
 
 class Router {
   private products = new data();
