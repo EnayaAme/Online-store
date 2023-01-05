@@ -8,6 +8,7 @@ import { CreateImage } from './Elements/CreateImage';
 import data from './data';
 import CreateRoute from './route';
 import { CreateSearchBar } from './Components/CreateSearchBar';
+import { CreateRadio } from './Elements/CreateRadio';
 
 class CreateDefaultPage {
   // переменная которая хранит body
@@ -133,16 +134,24 @@ class CreateDefaultPage {
     wrapper.append(store);
     const menu = new CreateElement({ tag: 'div', className: 'store__menu' }).getnode();
     /////  menu
+    const viewOptions = new CreateElement({ tag:'div', className:'store__view' }).getnode();
+    const viewBlock1 = new CreateElement({ tag:'div', className:'store__optionBlock1' }).getnode();
+    const view1 = new CreateRadio({type: 'radio', value: '', id: 'view1', name: 'view', className: 'view-option1', checked: true }).getnode();
+    viewBlock1.append(view1[0], view1[1]);
+    const view2 = new CreateRadio({type: 'radio', value: '', id: 'view2', name: 'view', className: 'view-option2' }).getnode();
+    const viewBlock2 = new CreateElement({ tag:'div', className:'store__optionBlock2' }).getnode();
+    viewBlock2.append(view2[0], view2[1]);
+    viewOptions.append(viewBlock1, viewBlock2);
+
+
+    ///////
     const foundProducts = new CreateElement({ tag: 'div', className: 'store__quantity', content: 'Found : ' }).getnode();
     const productsAmmount = new CreateElement({ tag: 'span', className: 'store__quantity-found', content: '65' }).getnode();
     foundProducts.append(productsAmmount);
+    ///////
     const sortMenu = new CreateSortMenu({ tag: 'div', className: 'sort-menu' }).getnode();
     const searchBar = new CreateSearchBar({ tag: 'div', className: 'search' }).getnode();
-
-
-
-
-    menu.append(foundProducts, searchBar, sortMenu);
+    menu.append(viewOptions, foundProducts, searchBar, sortMenu);
     ///// products
     const products = new CreateElement({ tag: 'div', className: 'store__products' }).getnode();
     store.append(menu, products);
@@ -180,21 +189,5 @@ class CreateDefaultPage {
 // Page.CreateMain();
 // Page.CreateFooter();
 
-
-// const selected = document.querySelector(".selected");
-// const optionsContainer = document.querySelector(".options-container");
-
-// const optionsList = document.querySelectorAll(".option");
-
-// selected!.addEventListener("click", () => {
-//   optionsContainer!.classList.toggle("active");
-// });
-
-// optionsList.forEach(o => {
-//   o.addEventListener("click", () => {
-//     selected!.innerHTML = o.querySelector("label").innerHTML;
-//     optionsContainer!.classList.remove("active");
-//   });
-// });
 
 export default CreateDefaultPage;

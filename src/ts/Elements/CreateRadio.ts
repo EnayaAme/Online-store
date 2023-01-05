@@ -4,7 +4,7 @@ export class CreateRadio {
   private input: HTMLInputElement;
   private label: HTMLLabelElement;
 
-  constructor({ type, value, id, name, className }: ConstructorRadio) {
+  constructor({ type, value, id, name, className, checked }: ConstructorRadio) {
     this.label = document.createElement('label');
     this.label.htmlFor = id;
     this.label.textContent = value;
@@ -15,6 +15,9 @@ export class CreateRadio {
     this.input.id = id;
     if (className) {
       this.input.classList.add(className);
+    }
+    if (checked) {
+      this.input.checked = checked;
     }
   }
   getnode() {
