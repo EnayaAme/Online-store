@@ -1,3 +1,4 @@
+import { CardPage } from "./CardPage";
 import data from "./data";
 import CreateDefaultPage from "./DefaultPage";
 import { filters } from "./Interfaces";
@@ -33,6 +34,7 @@ export class ApplyRouting {
       if (this.body.children[1]){
         this.body.children[1].remove();
       }
+      new CardPage(this.products.GetById(hash.split('-')[1]));
     }
     if (hash === '') {
       this.ToDefaultFilters();

@@ -31,7 +31,7 @@ class Router {
       this.checker = true;
       //console.log(window.location.hash);
       this.ToPages = true;
-      new CardPage(this.products.GetById(id.split('-')[1]));
+      //new CardPage(this.products.GetById(id.split('-')[1]));
       //console.log(this.products.GetById(id.split('-')[1]));
     }
     if (id === '') {
