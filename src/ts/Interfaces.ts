@@ -78,6 +78,7 @@ export interface ConstructorRadio {
   id: string;
   name: string;
   className?: string;
+  checked?: boolean;
 }
 
 export interface ConstructorSortMenu {
