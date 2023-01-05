@@ -1,0 +1,37 @@
+.store__view {
+  display: flex;
+  column-gap: 5px;
+}
+
+.store__optionBlock1 input,
+.store__optionBlock2 input {
+  display: none;
+}
+
+.store__optionBlock1 label,
+.store__optionBlock2 label {
+  display: block;
+  height: 40px;
+  width: 40px;
+  cursor: pointer;
+  transition: .3s;
+  &:active {
+    transform: scale(1.05);
+  }
+}
+
+.store__optionBlock1 input:checked+label {
+  background: url('./assets/images/option-big-active.svg') no-repeat center / 40px 40px;
+}
+
+.store__optionBlock1 label {
+  background: url('./assets/images/option-big-inactive.svg') no-repeat center / 40px 40px;
+}
+
+.store__optionBlock2 input:checked+label {
+  background: url('./assets/images/option-small-active.svg') no-repeat center / 40px 40px;
+}
+
+.store__optionBlock2 label {
+  background: url('./assets/images/option-small-inactive.svg') no-repeat center / 40px 40px;
+}
