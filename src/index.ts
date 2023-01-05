@@ -1,11 +1,12 @@
 import './style.scss';
+import { ApplyRouting } from './ts/ApplyRouting';
 import data from './ts/data';
 
 import CreateDefaultPage from './ts/DefaultPage';
 import CreateRoute from './ts/route';
 
 const products = new data();
-const route = new CreateRoute();
+const AppRouting = new ApplyRouting();
 
 const newarr = [];
 newarr.push(products.Get()[0]);
@@ -19,11 +20,11 @@ const hash = location.hash;
 
 const Page = new CreateDefaultPage();
 Page.CreateHeader();
-route.init(hash);
+AppRouting.init(hash);
 window.addEventListener('hashchange', () => {
   //console.log('The hash has changed!');
   //console.log(location.hash);
-  route.init(location.hash);
+  AppRouting.init(location.hash);
 }, false);
 //Page.CreateMain();
 //Page.CreateFooter();

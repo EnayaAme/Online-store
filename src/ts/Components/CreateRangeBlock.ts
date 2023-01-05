@@ -26,6 +26,7 @@ export class CreateRangeBlock extends CreateElement {
     isPrice,
     id,
     router,
+    filters,
   }: ConstructorRangeBlock) {
     super({ tag: 'div', className: 'aside__range range-menu' });
     this.title = new CreateElement({ tag: 'h2', className: 'range-menu__title', content: title }).getnode();
@@ -43,6 +44,7 @@ export class CreateRangeBlock extends CreateElement {
       id: `${id}-1`,
       className: 'range-menu__slider',
     }).getnode();
+    console.log('CRB');
     this.range2 = new CreateRange({
       type: 'range',
       min: range2Min,
@@ -54,7 +56,16 @@ export class CreateRangeBlock extends CreateElement {
     this.rangeBlock.append(this.rangeLine, this.range1, this.range2);
     this.el.append(this.title, this.nums, this.rangeBlock);
     ////////////////////// функционал //////////////////////
+
+    const dis = +this.range1.max - +this.range1.min;
+    const step = 100 / (+this.range1.max - +this.range1.min);
+    const percent1 = (dis - (+this.range1.max - +this.range1.value)) * step;
+    const percent2 = (dis - (+this.range1.max - +this.range2.value)) * step;
+    this.rangeLine.style.background = `linear-gradient(to right, rgba(105, 0, 31, 0.08) ${percent1}% , #69001F ${percent1}% , #69001F ${percent2}%, rgba(105, 0, 31, 0.08) ${percent2}%)`;
+
+    console.log(this.range1.value);
     this.range1.addEventListener('input', () => {
+      console.log(this.range1.value);
       if (parseInt(this.range2.value) - parseInt(this.range1.value) <= 0) {
         this.range1.value = String(parseInt(this.range2.value) - 0);
       }
@@ -68,8 +79,14 @@ export class CreateRangeBlock extends CreateElement {
       const percent1 = (dis - (+this.range1.max - +this.range1.value)) * step;
       const percent2 = (dis - (+this.range1.max - +this.range2.value)) * step;
       this.rangeLine.style.background = `linear-gradient(to right, rgba(105, 0, 31, 0.08) ${percent1}% , #69001F ${percent1}% , #69001F ${percent2}%, rgba(105, 0, 31, 0.08) ${percent2}%)`;
+    });
+    this.range1.addEventListener('mouseup', () => {
       if (id === 'price-slider') {
-        router.AddRoutingToPriceMin(this.range1.value);
+        router!.AddRoutingToPriceMin(this.range1.value);
+        router!.AddRoutingToPriceMax(this.range2.value);
+      } else {
+        router!.AddRoutingToYearMin(this.range1.value);
+        router!.AddRoutingToYearMax(this.range2.value);
       }
     });
     this.range2.addEventListener('input', () => {
@@ -79,15 +96,21 @@ export class CreateRangeBlock extends CreateElement {
       if (isPrice) {
         this.to.textContent = '$ ' + this.range2.value;
       } else {
-        this.from.textContent = this.range2.value;
+        this.to.textContent = this.range2.value;
       }
       const dis = +this.range1.max - +this.range1.min;
       const step = 100 / (+this.range1.max - +this.range1.min);
       const percent1 = (dis - (+this.range1.max - +this.range1.value)) * step;
       const percent2 = (dis - (+this.range1.max - +this.range2.value)) * step;
       this.rangeLine.style.background = `linear-gradient(to right, rgba(105, 0, 31, 0.08) ${percent1}% , #69001F ${percent1}% , #69001F ${percent2}%, rgba(105, 0, 31, 0.08) ${percent2}%)`;
+    });
+    this.range2.addEventListener('mouseup', () => {
       if (id === 'price-slider') {
-        router.AddRoutingToPriceMax(this.range2.value);
+        router!.AddRoutingToPriceMin(this.range1.value);
+        router!.AddRoutingToPriceMax(this.range2.value);
+      } else {
+        router!.AddRoutingToYearMin(this.range1.value);
+        router!.AddRoutingToYearMax(this.range2.value);
       }
     });
   }

@@ -8,6 +8,7 @@ import { CreateImage } from './Elements/CreateImage';
 import data from './data';
 import CreateRoute from './route';
 import { CreateSearchBar } from './Components/CreateSearchBar';
+import { filters } from './Interfaces';
 import { CreateRadio } from './Elements/CreateRadio';
 
 class CreateDefaultPage {
@@ -43,7 +44,8 @@ class CreateDefaultPage {
     cart.append(cartIcon);
   }
   // метод для main
-  CreateMain() {
+  CreateMain(filters: filters) {
+    this.router.GetFilters(filters);
     const product = new data();
     const main = new CreateElement({ tag: 'main', className: 'main' }).getnode();
     this.body.append(main);
@@ -57,43 +59,49 @@ class CreateDefaultPage {
       className: 'button aside__button',
       content: 'Reset',
     }).getnode();
+    this.router.AddRoutingToHeader(buttonTop);
     const categories = new CreateElement({ tag: 'div', className: 'aside__choice choice-menu' }).getnode();
     const brands = new CreateElement({ tag: 'div', className: 'aside__choice choice-menu' }).getnode();
     const MaxMinPrices = product.GetMinMaxPrice();
     const prises = new CreateRangeBlock({
       title: 'Prises',
-      from: `$ ${MaxMinPrices.min}`,
-      to: `$ ${MaxMinPrices.max}`,
+      from: `$ ${filters.MinPrice}`,
+      to: `$ ${filters.MaxPrice}`,
       range1Min: MaxMinPrices.min,
       range1Max: MaxMinPrices.max,
-      range1Value: MaxMinPrices.min,
+      range1Value: filters.MinPrice,
       range2Min: MaxMinPrices.min,
       range2Max: MaxMinPrices.max,
-      range2Value: MaxMinPrices.max,
+      range2Value: filters.MaxPrice,
       isPrice: true,
       id: 'price-slider',
       router: this.router,
+      filters: filters,
     }).getnode();
     const MaxMinDate = product.GetMinMaxDate();
     const year = new CreateRangeBlock({
       title: 'Release date',
-      from: MaxMinDate.min,
-      to: MaxMinDate.max,
+      from: filters.MinYear,
+      to: filters.MaxYear,
       range1Min: MaxMinDate.min,
       range1Max: MaxMinDate.max,
-      range1Value: MaxMinDate.min,
+      range1Value: filters.MinYear,
       range2Min: MaxMinDate.min,
       range2Max: MaxMinDate.max,
-      range2Value: MaxMinDate.max,
+      range2Value: filters.MaxYear,
       isPrice: false,
       id: 'year-slider',
       router: this.router,
+      filters: filters,
     }).getnode();
     const buttonBottom = new CreateElement({
       tag: 'button',
       className: 'button aside__button',
       content: 'Copy search link',
     }).getnode();
+    buttonBottom.addEventListener('click', () => {
+      navigator.clipboard.writeText(window.location.href);
+    });
     aside.append(buttonTop, categories, brands, prises, year, buttonBottom);
     const categoriesTitle = new CreateElement({
       tag: 'h2',
@@ -110,6 +118,7 @@ class CreateDefaultPage {
         value: item.category,
         className: 'choice-menu__option',
         CountCategories: item.count,
+        filters: filters.Category,
       }).getnode();
       this.router.AddRoutingToCategory(current[0]);
       categories.append(current[0], current[1]);
@@ -125,6 +134,7 @@ class CreateDefaultPage {
         value: item.brand,
         className: 'choice-menu__option',
         CountCategories: item.count,
+        filters: filters.Brand,
       }).getnode();
       this.router.AddRoutingToBrand(current[0]);
       brands.append(current[0], current[1]);
@@ -148,10 +158,10 @@ class CreateDefaultPage {
     const foundProducts = new CreateElement({ tag: 'div', className: 'store__quantity', content: 'Found : ' }).getnode();
     const productsAmmount = new CreateElement({ tag: 'span', className: 'store__quantity-found', content: '65' }).getnode();
     foundProducts.append(productsAmmount);
-    ///////
-    const sortMenu = new CreateSortMenu({ tag: 'div', className: 'sort-menu' }).getnode();
-    const searchBar = new CreateSearchBar({ tag: 'div', className: 'search' }).getnode();
+    const sortMenu = new CreateSortMenu({ tag: 'div', className: 'sort-menu', router: this.router, filter: filters.Sort }).getnode();
+    const searchBar = new CreateSearchBar({ tag: 'div', className: 'search', router: this.router, filter: filters.Search }).getnode();
     menu.append(viewOptions, foundProducts, searchBar, sortMenu);
+
     ///// products
     const products = new CreateElement({ tag: 'div', className: 'store__products' }).getnode();
     store.append(menu, products);
@@ -163,7 +173,7 @@ class CreateDefaultPage {
         id: `card-${item.id.toString()}`,
         BackgroundImg: item.images[0],
       }).getnode();
-      this.router.addrouting(CardBox);
+      this.router.AddRoutingToCard(CardBox);
       const CardModel = new CreateElement({ tag: 'h2', className: 'card__model', content: item.model }).getnode();
       const CardPrice = new CreateElement({
         tag: 'h2',

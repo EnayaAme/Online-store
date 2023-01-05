@@ -9,7 +9,7 @@ export class CreateSortMenu extends CreateElement {
   private sortmenu: string[][];
   private option!: HTMLElement;
   private input!: [HTMLInputElement, HTMLLabelElement];
-  constructor ({ tag, className }: ConstructorSortMenu) {
+  constructor ({ tag, className, router, filter }: ConstructorSortMenu) {
     super({ tag: 'div', className: 'sort-menu' });
     this.sortmenu = [
       ['Rating', 'Rating'],
@@ -19,14 +19,17 @@ export class CreateSortMenu extends CreateElement {
     ]
     this.container = new CreateElement({ tag: 'div', className: 'select-box' }).getnode();
     this.options = new CreateElement({ tag: 'div', className: 'options-container' }).getnode();
-    this.selected = new CreateElement({ tag: 'div', className: 'selected', content: 'Sort by' }).getnode();
+    this.selected = new CreateElement({ tag: 'div', className: 'selected', content: filter }).getnode();
     this.container.append(this.options, this.selected);
     this.sortmenu.forEach((item) => {
       this.option = new CreateElement({ tag: 'div', className: 'option' }).getnode();
       this.input =  new CreateRadio({ type: 'radio', className: 'radio', id: item[0], name: 'sort', value: item[1]}).getnode();
       this.option.append(this.input[0], this.input[1]);
       this.options.append(this.option);
-      this.option.addEventListener("click", () => {
+      this.input[0].addEventListener('click', () => {
+        if (router) {
+          router.AddRoutingToSort(item[0]);
+        }
         this.selected.innerHTML = item[1];
         this.options.classList.remove("active");
       });
