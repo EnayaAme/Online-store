@@ -3,12 +3,18 @@ import { ConstructorCheckbox } from "../Interfaces";
 export class CreateCheckbox {
   private input: HTMLInputElement;
   private label: HTMLLabelElement;
-  constructor({ type, name, id, value, className, CountCategories }: ConstructorCheckbox) {
+  constructor({ type, name, id, value, className, CountCategories, filters }: ConstructorCheckbox) {
     this.input = document.createElement('input');
     this.input.type = type;
     this.input.name = name;
     this.input.id = id;
     this.input.value = value;
+    
+    filters?.forEach((item) => {
+      if (item === value) {
+        this.input.checked = true;
+      }
+    });
     if (className) {
       this.input.classList.add(className);
     }

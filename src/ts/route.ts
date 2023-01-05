@@ -1,6 +1,7 @@
 import data from "./data";
 import { filters } from "./Interfaces";
 import CreateDefaultPage from "./DefaultPage";
+import { CardPage } from "./CardPage";
 
 class Router {
   private products = new data();
@@ -12,12 +13,16 @@ class Router {
     'MinYear': this.products.GetMinMaxDate().min,
     'MaxYear': this.products.GetMinMaxDate().max,
     'Search': '',
-    'Sort': '',
+    'Sort': 'Sort by',
   }
   private body = document.body;
   private checker = false;
   private ToPages = false;
   private isChangePrice = false;
+
+  // constructor(filters: filters) {
+  //   this.filters = filters;
+  // }
 
   AddURL(id: string) {
     if (id.split('-')[0] === '#card') {
@@ -26,6 +31,8 @@ class Router {
       this.checker = true;
       console.log(window.location.hash);
       this.ToPages = true;
+      new CardPage(this.products.GetById(id.split('-')[1]));
+      console.log(this.products.GetById(id.split('-')[1]));
     }
     if (id === '') {
       window.location.hash = '';
@@ -50,12 +57,13 @@ class Router {
   }
 
   AddFilters(){
+    console.log('asd');
     if ((this.filters.Category.length !== 0 || this.filters.Brand.length !== 0) ||
     (this.filters.MinPrice !== this.products.GetMinMaxPrice().min ||
     this.filters.MaxPrice !== this.products.GetMinMaxPrice().max) ||
     (this.filters.MinYear !== this.products.GetMinMaxDate().min ||
     this.filters.MaxYear !== this.products.GetMinMaxDate().max) ||
-    this.filters.Search !== '' || this.filters.Sort !== '') {
+    this.filters.Search !== '' || this.filters.Sort !== 'Sort by') {
       let newurl = '#?';
       if (this.filters.Category.length !== 0) {
         newurl += 'Category=';
@@ -100,7 +108,7 @@ class Router {
           newurl += `&Search=${this.filters.Search}`;
         }
       }
-      if (this.filters.Sort !== '') {
+      if (this.filters.Sort !== 'Sort by') {
         console.log(this.filters.Sort);
         if (newurl === '#?') {
           newurl += `Sort=${this.filters.Sort}`;
@@ -130,7 +138,7 @@ class Router {
     this.AddFilters();
   }
 
-  addrouting(tag: HTMLElement) {
+  AddRoutingToCard(tag: HTMLElement) {
     tag.onclick = (e: Event) => {
       const target = e.target;
       const id = (target as HTMLButtonElement).id;
@@ -198,6 +206,10 @@ class Router {
     this.filters.Sort = id;
     console.log(this.filters.Sort);
     this.AddFilters();
+  }
+
+  GetFilters(filters: filters) {
+    this.filters = filters;
   }
 }
 

@@ -9,7 +9,7 @@ export class CreateSortMenu extends CreateElement {
   private sortmenu: string[][];
   private option!: HTMLElement;
   private input!: [HTMLInputElement, HTMLLabelElement];
-  constructor ({ tag, className, router }: ConstructorSortMenu) {
+  constructor ({ tag, className, router, filter }: ConstructorSortMenu) {
     super({ tag: 'div', className: 'sort-menu' });
     this.sortmenu = [
       ['Rating', 'Rating'],
@@ -19,7 +19,7 @@ export class CreateSortMenu extends CreateElement {
     ]
     this.container = new CreateElement({ tag: 'div', className: 'select-box' }).getnode();
     this.options = new CreateElement({ tag: 'div', className: 'options-container' }).getnode();
-    this.selected = new CreateElement({ tag: 'div', className: 'selected', content: 'Sort by' }).getnode();
+    this.selected = new CreateElement({ tag: 'div', className: 'selected', content: filter }).getnode();
     this.container.append(this.options, this.selected);
     this.sortmenu.forEach((item) => {
       this.option = new CreateElement({ tag: 'div', className: 'option' }).getnode();

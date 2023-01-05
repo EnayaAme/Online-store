@@ -9,11 +9,12 @@ export class CreateSearchBar extends CreateElement {
   private button: HTMLElement;
   private icon: HTMLImageElement;
 
-  constructor({ tag, className, router }: ConstructorElement) {
+  constructor({ tag, className, router, filter }: ConstructorElement) {
     super({ tag: 'div', className: 'search' });
     this.input = new CreateTextInput ({type: 'text', placeholder: 'Search product', name: 'search', className: 'search__text'}).getnode();
     this.button = new CreateElement({tag: 'button', className: 'search__button'}).getnode();
     this.icon = new CreateImage({ src: './assets/images/search.png', alt: 'search', className: 'search__icon'}).getnode();
+    this.input.value = filter!;
     this.button.addEventListener('click', () => {
       console.log(router);
       if (router) {

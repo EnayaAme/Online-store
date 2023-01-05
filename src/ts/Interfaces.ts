@@ -1,5 +1,18 @@
 import Router from './route';
 
+export interface product {
+  id: number;
+  model: string;
+  description: string;
+  price: number;
+  discountPercentage: number;
+  rating: number;
+  DateOfIssue: number;
+  brand: string;
+  category: string;
+  images: string[];
+}
+
 export interface ConstructorElement {
   tag: string;
   id?: string;
@@ -7,6 +20,7 @@ export interface ConstructorElement {
   content?: string;
   BackgroundImg?: string;
   router?: Router;
+  filter?: string;
 }
 // схожий с прошлым только для img
 export interface ConstructorImage {
@@ -23,6 +37,7 @@ export interface ConstructorCheckbox {
   value: string;
   className?: string;
   CountCategories?: number;
+  filters?: string[];
 }
 
 export interface ConstructotTextInput {
@@ -53,7 +68,8 @@ export interface ConstructorRangeBlock {
   range2Value: string;
   isPrice: boolean;
   id: string;
-  router: Router;
+  router?: Router;
+  filters: filters;
 }
 
 export interface ConstructorRadio {
@@ -68,6 +84,7 @@ export interface ConstructorSortMenu {
   tag: string;
   className?: string;
   router?: Router;
+  filter?: string;
 }
 
 export interface filters {

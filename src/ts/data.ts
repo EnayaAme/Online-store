@@ -1,17 +1,5 @@
 import products from '../assets/files/data.json';
-
-interface product {
-  id: number;
-  model: string;
-  description: string;
-  price: number;
-  discountPercentage: number;
-  rating: number;
-  DateOfIssue: number;
-  brand: string;
-  category: string;
-  images: string[];
-}
+import { product } from './Interfaces';
 
 interface GetCategories {
   category: string;
@@ -104,6 +92,17 @@ class data {
     };
     //console.log(obj);
     return obj;
+  }
+  GetById(id: string) {
+    let ObjById: product;
+    products.forEach((item: product) => {
+      console.log(item.id.toString());
+      console.log(id);
+      if(item.id.toString() === id) {
+        ObjById = item;
+      }
+    });
+    return ObjById!;
   }
 }
 

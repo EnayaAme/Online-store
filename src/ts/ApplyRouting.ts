@@ -3,6 +3,7 @@ import CreateDefaultPage from "./DefaultPage";
 import { filters } from "./Interfaces";
 
 export class ApplyRouting {
+  private MainPage = new CreateDefaultPage();
   private products = new data();
   private body = document.body;
   private checker = false;
@@ -16,17 +17,17 @@ export class ApplyRouting {
     'MinYear': this.products.GetMinMaxDate().min,
     'MaxYear': this.products.GetMinMaxDate().max,
     'Search': '',
-    'Sort': '',
+    'Sort': 'Sort by',
   }
 
   init(hash: string) {
+    console.log(this.filters);
     if (hash[1] === '?'){
       this.createFilters(hash);
-      const MainPage = new CreateDefaultPage();
       if (document.body.childNodes[2]) {
         document.body.childNodes[2].remove();
       }
-      MainPage.CreateMain(this.filters);
+      this.MainPage.CreateMain(this.filters);
     }
     if (hash.split('-')[0] === '#card') {
       if (this.body.children[1]){
@@ -34,11 +35,12 @@ export class ApplyRouting {
       }
     }
     if (hash === '') {
-      const MainPage = new CreateDefaultPage();
+      this.ToDefaultFilters();
+      this.MainPage = new CreateDefaultPage();
       if (document.body.childNodes[2]) {
         document.body.childNodes[2].remove();
       }
-      MainPage.CreateMain(this.filters);
+      this.MainPage.CreateMain(this.filters);
       this.checker = true;
     }
     if (hash === '#basket') {
@@ -97,6 +99,6 @@ export class ApplyRouting {
     this.filters.MinYear = this.products.GetMinMaxDate().min;
     this.filters.MaxYear = this.products.GetMinMaxDate().max;
     this.filters.Search = '';
-    this.filters.Sort = '';
+    this.filters.Sort = 'Sort by';
   }
 }
