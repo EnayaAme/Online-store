@@ -44,7 +44,7 @@ export class CreateRangeBlock extends CreateElement {
       id: `${id}-1`,
       className: 'range-menu__slider',
     }).getnode();
-    console.log('CRB');
+    //console.log('CRB');
     this.range2 = new CreateRange({
       type: 'range',
       min: range2Min,
@@ -63,9 +63,9 @@ export class CreateRangeBlock extends CreateElement {
     const percent2 = (dis - (+this.range1.max - +this.range2.value)) * step;
     this.rangeLine.style.background = `linear-gradient(to right, rgba(105, 0, 31, 0.08) ${percent1}% , #69001F ${percent1}% , #69001F ${percent2}%, rgba(105, 0, 31, 0.08) ${percent2}%)`;
 
-    console.log(this.range1.value);
+    //console.log(this.range1.value);
     this.range1.addEventListener('input', () => {
-      console.log(this.range1.value);
+      //console.log(this.range1.value);
       if (parseInt(this.range2.value) - parseInt(this.range1.value) <= 0) {
         this.range1.value = String(parseInt(this.range2.value) - 0);
       }

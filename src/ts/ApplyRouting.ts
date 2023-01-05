@@ -21,7 +21,7 @@ export class ApplyRouting {
   }
 
   init(hash: string) {
-    console.log(this.filters);
+    //console.log(this.filters);
     if (hash[1] === '?'){
       this.createFilters(hash);
       if (document.body.childNodes[2]) {
@@ -89,7 +89,7 @@ export class ApplyRouting {
           break;
       }
     });
-    console.log(this.filters);
+    //console.log(this.filters);
   }
   ToDefaultFilters() {
     this.filters.Brand = [];

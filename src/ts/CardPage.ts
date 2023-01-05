@@ -4,6 +4,7 @@ import Router from "./route";
 
 export class CardPage{
   constructor(product: product) {
+    console.log(product);
     const router = new Router();
     const main = new CreateElement({ tag: 'main', className: 'main' }).getnode();
     document.body.append(main);

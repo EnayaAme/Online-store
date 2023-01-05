@@ -96,8 +96,8 @@ class data {
   GetById(id: string) {
     let ObjById: product;
     products.forEach((item: product) => {
-      console.log(item.id.toString());
-      console.log(id);
+      //console.log(item.id.toString());
+      //console.log(id);
       if(item.id.toString() === id) {
         ObjById = item;
       }
