@@ -20,16 +20,14 @@ h2 {
 }
 
 .choice-menu__option + label {
-  @include text ('Sora', normal, 400, 2rem, $color-primary, 2.5rem);
+  @include text ('Sora', normal, 400, 1.5rem, $color-primary, 2.5rem);
 }
 
 .range-menu__numbers {
   @include text ('Sora', normal, 400, 1.5rem, $color-primary, 2.5rem);
 }
 
-.select-box,
-.card__model,
-.card__price {
+.select-box {
   @include text ('Sora', normal, 700, 1.5rem, $color-light, 2.5rem);
   text-align: center;
 }
@@ -47,4 +45,20 @@ h2 {
 
 .search__text::placeholder {
   opacity: 0.5;
+}
+
+.card__model,
+.card__price {
+  @include text ('Sora', normal, 400, 1.5rem, $color-light, 2.5rem);
+  text-align: center;
+}
+
+.DivPath {
+  @include text ('Sora', normal, 400, 2rem, $color-primary, 3.5rem);
+  text-transform: uppercase;
+}
+
+#h1_card {
+  @include text ('Sora', normal, 400, 2.5rem, $color-primary, 3.5rem);
+  text-align: center;
 }
