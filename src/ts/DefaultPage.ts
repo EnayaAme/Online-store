@@ -8,7 +8,7 @@ import { CreateImage } from './Elements/CreateImage';
 import data from './data';
 import CreateRoute from './route';
 import { CreateSearchBar } from './Components/CreateSearchBar';
-import { filters } from './Interfaces';
+import { filters, product } from './Interfaces';
 import { CreateRadio } from './Elements/CreateRadio';
 
 class CreateDefaultPage {
@@ -44,7 +44,8 @@ class CreateDefaultPage {
     cart.append(cartIcon);
   }
   // метод для main
-  CreateMain(filters: filters) {
+  CreateMain(filters: filters, ProductsCards: product[]) {
+    console.log(filters);
     this.router.GetFilters(filters);
     const product = new data();
     const main = new CreateElement({ tag: 'main', className: 'main' }).getnode();
@@ -62,6 +63,10 @@ class CreateDefaultPage {
     this.router.AddRoutingToHeader(buttonTop);
     const categories = new CreateElement({ tag: 'div', className: 'aside__choice choice-menu' }).getnode();
     const brands = new CreateElement({ tag: 'div', className: 'aside__choice choice-menu' }).getnode();
+    const CurrentPrice = product.GetCurrentMinMaxPrice(ProductsCards);
+    // if (filters.MinPrice === '16') {
+    //   filters.MinPrice = CurrentPrice.min;
+    // }
     const MaxMinPrices = product.GetMinMaxPrice();
     const prises = new CreateRangeBlock({
       title: 'Prises',
@@ -77,7 +82,10 @@ class CreateDefaultPage {
       id: 'price-slider',
       router: this.router,
       filters: filters,
+      current: CurrentPrice,
     }).getnode();
+    const CurrentDate = product.GetCurrentMinMaxDate(new data().Get());
+    console.log(new data().Get())
     const MaxMinDate = product.GetMinMaxDate();
     const year = new CreateRangeBlock({
       title: 'Release date',
@@ -93,6 +101,7 @@ class CreateDefaultPage {
       id: 'year-slider',
       router: this.router,
       filters: filters,
+      current: CurrentDate,
     }).getnode();
     const buttonBottom = new CreateElement({
       tag: 'button',
@@ -109,7 +118,9 @@ class CreateDefaultPage {
       content: 'Category',
     }).getnode();
     categories.append(categoriesTitle);
-    const ListCategories = product.GetCategories();
+    //console.log(filters, ProductsCards)
+    const ListCategories = product.GetCategories(ProductsCards);
+    //const ListOfCurrentCategories = product.GetCurrentCategories(ProductsCards);
     ListCategories.forEach((item) => {
       const current: [HTMLInputElement, HTMLLabelElement] = new CreateCheckbox({
         type: 'checkbox',
@@ -117,7 +128,8 @@ class CreateDefaultPage {
         id: item.category,
         value: item.category,
         className: 'choice-menu__option',
-        CountCategories: item.count,
+        Count: item.count,
+        Current: item.CurrentCategory,
         filters: filters.Category,
       }).getnode();
       this.router.AddRoutingToCategory(current[0]);
@@ -125,7 +137,7 @@ class CreateDefaultPage {
     });
     const brandsTitle = new CreateElement({ tag: 'h2', className: 'choice-menu__title', content: 'Brand' }).getnode();
     brands.append(brandsTitle);
-    const ListBrands = product.GetBrands();
+    const ListBrands = product.GetBrands(ProductsCards);
     ListBrands.forEach((item) => {
       const current = new CreateCheckbox({
         type: 'checkbox',
@@ -133,7 +145,8 @@ class CreateDefaultPage {
         id: item.brand,
         value: item.brand,
         className: 'choice-menu__option',
-        CountCategories: item.count,
+        Count: item.count,
+        Current: item.CurrentBrand,
         filters: filters.Brand,
       }).getnode();
       this.router.AddRoutingToBrand(current[0]);
@@ -154,7 +167,7 @@ class CreateDefaultPage {
     viewOptions.append(viewBlock1, viewBlock2);
     ///////
     const foundProducts = new CreateElement({ tag: 'div', className: 'store__quantity', content: 'Found : ' }).getnode();
-    const productsAmmount = new CreateElement({ tag: 'span', className: 'store__quantity-found', content: '65' }).getnode();
+    const productsAmmount = new CreateElement({ tag: 'span', className: 'store__quantity-found', content: ProductsCards.length.toString() }).getnode();
     foundProducts.append(productsAmmount);
     const sortMenu = new CreateSortMenu({ tag: 'div', className: 'sort-menu', router: this.router, filter: filters.Sort }).getnode();
     const searchBar = new CreateSearchBar({ tag: 'div', className: 'search', router: this.router, filter: filters.Search }).getnode();
@@ -164,7 +177,7 @@ class CreateDefaultPage {
     const products = new CreateElement({ tag: 'div', className: 'store__products' }).getnode();
     store.append(menu, products);
     const cards = product.Get();
-    cards.forEach((item) => {
+    ProductsCards.forEach((item) => {
       const CardBox = new CreateElement({
         tag: 'div',
         className: 'card__box',
@@ -185,7 +198,7 @@ class CreateDefaultPage {
       CardAddtoCart.addEventListener('click', () => {
         CardAddtoCart.classList.toggle('_product-added');
       })
-
+      
       viewBlock1.addEventListener('click', () => {
         if (view1[0].checked) {
           if (CardBox.classList.contains('_small-view')) {

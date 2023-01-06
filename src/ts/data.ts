@@ -1,66 +1,81 @@
 import products from '../assets/files/data.json';
-import { product } from './Interfaces';
+import { GetMinMax, product } from './Interfaces';
 
 interface GetCategories {
   category: string;
   count: number;
+  CurrentCategory: number;
 }
 
 interface GetBrands {
   brand: string;
   count: number;
-}
-
-interface GetMinMaxPrice {
-  max: string;
-  min: string;
+  CurrentBrand: number;
 }
 
 class data {
+  private ListCategories: string[] = [];
+  private arr: product[] = products;
+  private ListBrands: string[] = [];
+  constructor () {
+    this.arr.forEach((item) => {
+      if (this.ListCategories.includes(item.category) === false) {
+        this.ListCategories.push(item.category);
+      }
+    });
+    this.arr.forEach((item) => {
+      if (this.ListBrands.includes(item.brand) === false) {
+        this.ListBrands.push(item.brand);
+      }
+    });
+  }
   Get() {
     return products;
   }
-  GetCategories(arr: product[] = products) {
-    const ListCategories: string[] = [];
+  GetCategories(categories: product[]) {
     const ResCategory: GetCategories[] = [];
-    arr.forEach((item) => {
-      if (ListCategories.includes(item.category) === false) {
-        ListCategories.push(item.category);
-      }
-    });
-    ListCategories.forEach((item) => {
+    this.ListCategories.forEach((item) => {
       let counter = 0;
-      arr.forEach((it) => {
+      let current = 0;
+      this.arr.forEach((it) => {
         if (item === it.category) {
           counter += 1;
+        }
+      });
+      categories.forEach((it) => {
+        if (it.category === item) {
+          current += 1;
         }
       });
       const obj: GetCategories = {
         category: item,
         count: counter,
+        CurrentCategory: current,
       };
       ResCategory.push(obj);
     });
+    //console.log(ResCategory);
     return ResCategory;
   }
-  GetBrands(arr: product[] = products) {
-    const ListBrands: string[] = [];
+  GetBrands(brands: product[]) {
     const ResBrands: GetBrands[] = [];
-    arr.forEach((item) => {
-      if (ListBrands.includes(item.brand) === false) {
-        ListBrands.push(item.brand);
-      }
-    });
-    ListBrands.forEach((item) => {
+    this.ListBrands.forEach((item) => {
       let counter = 0;
-      arr.forEach((it) => {
+      let current = 0;
+      this.arr.forEach((it) => {
         if (item === it.brand) {
           counter += 1;
+        }
+      });
+      brands.forEach((it) => {
+        if (it.brand === item) {
+          current += 1;
         }
       });
       const obj: GetBrands = {
         brand: item,
         count: counter,
+        CurrentBrand: current,
       };
       ResBrands.push(obj);
     });
@@ -73,7 +88,7 @@ class data {
     });
     const min = Math.min.apply(null, ListPrice);
     const max = Math.max.apply(null, ListPrice);
-    const obj: GetMinMaxPrice = {
+    const obj: GetMinMax = {
       max: max.toString(),
       min: min.toString(),
     };
@@ -86,7 +101,7 @@ class data {
     });
     const min = Math.min.apply(null, ListDate);
     const max = Math.max.apply(null, ListDate);
-    const obj: GetMinMaxPrice = {
+    const obj: GetMinMax = {
       max: max.toString(),
       min: min.toString(),
     };
@@ -103,6 +118,33 @@ class data {
       }
     });
     return ObjById!;
+  }
+  GetCurrentMinMaxPrice(Price: product[]) {
+    const AllPrices: number[] = [];
+    Price.forEach((element) => {
+      AllPrices.push(element.price);
+    });
+    const min = Math.min.apply(null, AllPrices);
+    const max = Math.max.apply(null, AllPrices);
+    const obj: GetMinMax = {
+      max: max.toString(),
+      min: min.toString(),
+    };
+    return obj;
+  }
+  GetCurrentMinMaxDate(Date: product[]) {
+    const AllDates: number[] = [];
+    Date.forEach((element) => {
+      AllDates.push(element.DateOfIssue);
+    });
+    const min = Math.min.apply(null, AllDates);
+    const max = Math.max.apply(null, AllDates);
+    const obj: GetMinMax = {
+      max: max.toString(),
+      min: min.toString(),
+    };
+    //console.log(obj)
+    return obj;
   }
 }
 

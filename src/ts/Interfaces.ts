@@ -36,7 +36,8 @@ export interface ConstructorCheckbox {
   id: string;
   value: string;
   className?: string;
-  CountCategories?: number;
+  Count?: number;
+  Current?: number;
   filters?: string[];
 }
 
@@ -70,6 +71,7 @@ export interface ConstructorRangeBlock {
   id: string;
   router?: Router;
   filters: filters;
+  current?: GetMinMax;
 }
 
 export interface ConstructorRadio {
@@ -97,4 +99,9 @@ export interface filters {
   MaxYear: string;
   Search: string;
   Sort: string;
+}
+
+export interface GetMinMax {
+  max: string;
+  min: string;
 }

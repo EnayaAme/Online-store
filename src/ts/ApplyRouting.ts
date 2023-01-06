@@ -1,3 +1,4 @@
+import { ApplyFilters } from "./ApplyFilters";
 import { CardPage } from "./CardPage";
 import data from "./data";
 import CreateDefaultPage from "./DefaultPage";
@@ -28,7 +29,9 @@ export class ApplyRouting {
       if (document.body.childNodes[2]) {
         document.body.childNodes[2].remove();
       }
-      this.MainPage.CreateMain(this.filters);
+      const data = new ApplyFilters(this.filters);
+      
+      this.MainPage.CreateMain(this.filters, data.return());
     }
     if (hash.split('-')[0] === '#card') {
       if (this.body.children[1]){
@@ -42,7 +45,10 @@ export class ApplyRouting {
       if (document.body.childNodes[2]) {
         document.body.childNodes[2].remove();
       }
-      this.MainPage.CreateMain(this.filters);
+      const data = new ApplyFilters(this.filters);
+      this.MainPage.CreateMain(this.filters, data.return());
+      console.log(this.products.Get());
+      console.log(this.filters)
       this.checker = true;
     }
     if (hash === '#basket') {
@@ -82,7 +88,7 @@ export class ApplyRouting {
           this.filters.MaxYear = values.split('+')[1];
           break;
         case 'Search':
-          this.filters.Search = values;
+          this.filters.Search = decodeURI(values);
           break;
         case 'Sort':
           this.filters.Sort = values;
