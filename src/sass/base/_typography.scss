@@ -60,5 +60,26 @@ h2 {
 
 #h1_card {
   @include text ('Sora', normal, 400, 2.5rem, $color-primary, 3.5rem);
-  text-align: center;
+}
+
+.rating-num, 
+.data__text {
+  @include text ('Sora', normal, 400, 1.5rem, $color-primary, 1.5rem);
+}
+
+.price-with-discount {
+  @include text ('Sora', normal, 700, 1.5rem, $color-primary, 1.5rem);
+}
+
+.price-no-discount {
+  @include text ('Sora', normal, 700, 1.2rem, rgba(105, 0, 31, 0.35), 1.5rem);
+  text-decoration: line-through;
+}
+
+.data__title {
+  @include text ('Sora', normal, 700, 1.5rem, $color-primary, 1.5rem);
+}
+
+.data__button {
+  @include text ('Sora', normal, 400, 1.5rem, $color-light, 1.5rem);
 }
