@@ -27,6 +27,7 @@ export class CreateRangeBlock extends CreateElement {
     id,
     router,
     filters,
+    current,
   }: ConstructorRangeBlock) {
     super({ tag: 'div', className: 'aside__range range-menu' });
     this.title = new CreateElement({ tag: 'h2', className: 'range-menu__title', content: title }).getnode();
@@ -36,6 +37,18 @@ export class CreateRangeBlock extends CreateElement {
     this.nums.append(this.from, this.to);
     this.rangeBlock = new CreateElement({ tag: 'div', className: 'range-menu__range' }).getnode();
     this.rangeLine = new CreateElement({ tag: 'div', className: 'range-menu__tracker' }).getnode();
+    if (range1Value === '16') {
+      range1Value = current?.min!;
+    }
+    if (range2Value === '1559') {
+      range2Value = current?.max!;
+    }
+    if (range1Value === '2013') {
+      range1Value = current?.min!;
+    }
+    if (range2Value === '2022') {
+      range2Value = current?.max!;
+    }
     this.range1 = new CreateRange({
       type: 'range',
       min: range1Min,
@@ -55,6 +68,13 @@ export class CreateRangeBlock extends CreateElement {
     }).getnode();
     this.rangeBlock.append(this.rangeLine, this.range1, this.range2);
     this.el.append(this.title, this.nums, this.rangeBlock);
+    if (isPrice) {
+      this.from.textContent = '$ ' + this.range1.value;
+      this.to.textContent = '$ ' + this.range2.value;
+    } else {
+      this.from.textContent = this.range1.value;
+      this.to.textContent = this.range2.value;
+    }
     ////////////////////// функционал //////////////////////
 
     const dis = +this.range1.max - +this.range1.min;

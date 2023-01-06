@@ -3,7 +3,7 @@ import { ConstructorCheckbox } from "../Interfaces";
 export class CreateCheckbox {
   private input: HTMLInputElement;
   private label: HTMLLabelElement;
-  constructor({ type, name, id, value, className, CountCategories, filters }: ConstructorCheckbox) {
+  constructor({ type, name, id, value, className, Count, Current, filters }: ConstructorCheckbox) {
     this.input = document.createElement('input');
     this.input.type = type;
     this.input.name = name;
@@ -22,7 +22,7 @@ export class CreateCheckbox {
     this.label.htmlFor = id;
     this.label.textContent = value;
     const quantity = document.createElement('span');
-    quantity.textContent = `  (${CountCategories}/${CountCategories})`;
+    quantity.textContent = `  (${Current}/${Count})`;
     this.label.append(quantity);
   }
   getnode() {

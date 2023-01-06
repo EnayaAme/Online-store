@@ -17,6 +17,11 @@ export class CreateSortMenu extends CreateElement {
       ['PriceTL', 'Price (high to low)'],
       ['RD', 'Release Date']
     ]
+    this.sortmenu.forEach((it) => {
+      if (filter === it[0]) {
+        filter = it[1];
+      }
+    });
     this.container = new CreateElement({ tag: 'div', className: 'select-box' }).getnode();
     this.options = new CreateElement({ tag: 'div', className: 'options-container' }).getnode();
     this.selected = new CreateElement({ tag: 'div', className: 'selected', content: filter }).getnode();
@@ -30,7 +35,7 @@ export class CreateSortMenu extends CreateElement {
         if (router) {
           router.AddRoutingToSort(item[0]);
         }
-        this.selected.innerHTML = item[1];
+        //this.selected.innerHTML = item[1];
         this.options.classList.remove("active");
       });
     });

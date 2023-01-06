@@ -16,7 +16,7 @@ export class CreateSearchBar extends CreateElement {
     this.icon = new CreateImage({ src: './assets/images/search.png', alt: 'search', className: 'search__icon'}).getnode();
     this.input.value = filter!;
     this.button.addEventListener('click', () => {
-      console.log(router);
+      //console.log(router);
       if (router) {
         router.AddRoutingToSearch(this.input.value);
       }
