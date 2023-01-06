@@ -165,8 +165,6 @@ class CreateDefaultPage {
     const viewBlock2 = new CreateElement({ tag:'div', className:'store__optionBlock2' }).getnode();
     viewBlock2.append(view2[0], view2[1]);
     viewOptions.append(viewBlock1, viewBlock2);
-
-
     ///////
     const foundProducts = new CreateElement({ tag: 'div', className: 'store__quantity', content: 'Found : ' }).getnode();
     const productsAmmount = new CreateElement({ tag: 'span', className: 'store__quantity-found', content: ProductsCards.length.toString() }).getnode();
@@ -200,19 +198,20 @@ class CreateDefaultPage {
       CardAddtoCart.addEventListener('click', () => {
         CardAddtoCart.classList.toggle('_product-added');
       })
-
-      // viewBlock1.addEventListener('click', () => {
-      //   if (view1[0].checked) {
-      //     if (CardBox.classList.contains('_small-view')) {
-      //       CardBox.classList.remove('_small-view');
-      //     }
-      //   }
-      // });
-      // viewBlock2.addEventListener('click', () => {
-      //   if (view2[0].checked) {
-      //     CardBox.classList.add('_small-view');
-      //   }
-      // });
+      
+      viewBlock1.addEventListener('click', () => {
+        if (view1[0].checked) {
+          if (CardBox.classList.contains('_small-view')) {
+            CardBox.classList.remove('_small-view');
+          }
+        }
+      });
+      
+      viewBlock2.addEventListener('click', () => {
+        if (view2[0].checked) {
+          CardBox.classList.add('_small-view');
+        }
+      });
     });
   }
   // метод для footer
