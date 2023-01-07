@@ -90,6 +90,14 @@ export interface ConstructorSortMenu {
   filter?: string;
 }
 
+export interface ConstructorLink {
+  href: string;
+  className?: string;
+  id?: string;
+  target?: string;
+  content?: string;
+}
+
 export interface filters {
   Category: string[];
   Brand: string[];

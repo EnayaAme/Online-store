@@ -30,11 +30,11 @@ header {
   margin: auto;
   width: 90px;
   height: 90px;
-  background: #69001F;
+  background: $color-primary;
   border-radius: 50%;
   transition: .3s;
   &:hover {
-    background: #9A2648;
+    background: $color-primary-hover;
     cursor: pointer;
   }
   &:active {
