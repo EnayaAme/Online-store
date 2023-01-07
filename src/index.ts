@@ -27,4 +27,4 @@ window.addEventListener('hashchange', () => {
   AppRouting.init(location.hash);
 }, false);
 //Page.CreateMain();
-//Page.CreateFooter();
+Page.CreateFooter();

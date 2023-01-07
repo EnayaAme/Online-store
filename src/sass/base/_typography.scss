@@ -60,6 +60,13 @@ h2 {
 
 #h1_card {
   @include text ('Sora', normal, 400, 2.5rem, $color-primary, 3.5rem);
+  text-align: center;
+}
+.footer__SashaGit,
+.footer__NataGit,
+.footer__year {
+  @include text ('Sora', normal, 700, 1.5rem, $color-light, 2.5rem);
+  text-decoration: none;
 }
 
 .rating-num, 

@@ -10,6 +10,7 @@ import CreateRoute from './route';
 import { CreateSearchBar } from './Components/CreateSearchBar';
 import { filters, product } from './Interfaces';
 import { CreateRadio } from './Elements/CreateRadio';
+import { CreateLink } from './Elements/CreateLink';
 
 class CreateDefaultPage {
   // переменная которая хранит body
@@ -215,7 +216,23 @@ class CreateDefaultPage {
     });
   }
   // метод для footer
-  // CreateFooter() {}
+  CreateFooter() {
+    const footer = new CreateElement({ tag: 'footer', className: 'footer' }).getnode();
+    const wrapper = new CreateElement({ tag: 'div', className: 'wrapper footer__wrapper' }).getnode();
+    footer.append(wrapper);
+    this.body.append(footer);
+    const cartBlock = new CreateElement({ tag: 'div', className: 'footer__cart' }).getnode();
+    const footerCart = new CreateLink({ href: 'https://rs.school/js/', target: '_blank', className: 'footer__cart_light' }).getnode();
+    const footerIcon = new CreateImage({ src: './assets/images/logo_rs_text.svg', alt: 'RS School', className: 'footer__logo'}).getnode();
+    const references = new CreateElement({ tag: 'div', className: 'footer__references' }).getnode();
+    const year = new CreateElement({ tag: 'span', className: 'footer__year', content: '2022' }).getnode();
+    const SashaLink = new CreateLink({ href: 'https://github.com/balaxon', target: '_blank', className: 'footer__SashaGit', content: 'balaxon' }).getnode();
+    const NataLink = new CreateLink({ href: 'https://github.com/EnayaAme', target: '_blank', className: 'footer__NataGit', content: 'EnayaAme' }).getnode();
+    references.append(SashaLink, NataLink, year);
+    footerCart.append(footerIcon);
+    cartBlock.append(footerCart);
+    wrapper.append(cartBlock, references);
+  }
 }
 
 // const Page = new CreateDefaultPage();

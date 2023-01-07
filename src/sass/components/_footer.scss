@@ -1,0 +1,51 @@
+.footer {
+  background: $color-primary;
+  height: 60px;
+}
+
+.footer__wrapper {
+  position: relative;
+  max-width: 1200px;
+  margin: auto;
+  padding-top: 10px;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
+
+.footer__cart {
+  position: absolute;
+  left: 0;
+  top: -50px;
+  width: 105px;
+  height: 105px;
+  display: flex;
+  background-color: $color-primary;
+  border-radius: 50%;
+}
+
+.footer__cart_light {
+  display: flex;
+  margin: auto;
+  width: 90px;
+  height: 90px;
+  background: $color-light;
+  border-radius: 50%;
+  transition: .3s;
+  cursor: pointer;
+  &:active {
+    transform: scale(1.05);
+  }
+}
+
+.footer__logo {
+  //margin: auto;
+  width: 80px;
+  margin-left: 3px;
+}
+
+.footer__references {
+  display: flex;
+  column-gap: 8px;
+  transition: .3s;
+}
