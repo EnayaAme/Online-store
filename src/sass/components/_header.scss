@@ -1,9 +1,10 @@
 header {
   height: 133px;
-  background-color: $color-light;
-  background-image: url('./assets/images/headerbackground.jpg');
-  background-repeat: no-repeat;
-  background-position: 100% 100%;
+  background: linear-gradient(0deg, #69001F 50%, #fff 50%);
+  // background-color: $color-light;
+  // background-image: url('./assets/images/headerbackground1.jpg');
+  // background-repeat: no-repeat;
+  // background-position: 100% 100%;
 }
 
 .header__wrapper {

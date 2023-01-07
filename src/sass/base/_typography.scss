@@ -7,7 +7,8 @@ html {
 }
 
 .header__subtitle {
-  @include text ('Sora', normal, 400, 3rem, $color-primary, 3.8rem);
+  @include text ('Sora', normal, 400, 2rem, $color-light, 3.8rem);
+  letter-spacing: 0.4rem;
 }
 
 .button {
@@ -19,7 +20,9 @@ h2 {
   @include text ('Sora', normal, 700, 2rem, $color-primary, 2.5rem);
 }
 
-.choice-menu__option + label {
+.choice-menu__option + label,
+.search__text,
+.search__text::placeholder {
   @include text ('Sora', normal, 400, 1.5rem, $color-primary, 2.5rem);
 }
 
@@ -37,9 +40,7 @@ h2 {
   text-align: center;
 }
 
-.store__quantity,
-.search__text,
-.search__text::placeholder {
+.store__quantity {
   @include text ('Sora', normal, 700, 1.5rem, $color-primary, 2.5rem);
 }
 
