@@ -26,8 +26,8 @@ export class CardPage{
     DivPath.childNodes[2].textContent = product.brand + ' / ';
     DivPath.childNodes[3].textContent = product.model;
     // ------------------- второй див div.card
-    const h1 = new CreateElement({ tag: 'h1', id: 'h1_card', content: product.model }).getnode();
-    DivCard.append(h1);
+    // const h1 = new CreateElement({ tag: 'h1', id: 'h1_card', content: product.model }).getnode();
+    // DivCard.append(h1);
     const cardcontent = new CreateElement({ tag: 'div', id: 'cardcontent' }).getnode();
     DivCard.append(cardcontent);
     const cardimages =new CreateElement({ tag: 'div', id: 'cardimages' }).getnode();
@@ -58,26 +58,63 @@ export class CardPage{
       // };
       smallimgContainer.append(smallimg)
       imgRow.append(smallimgContainer);
+
+       // переключение основной картинки //
+      smallimg.addEventListener('click', () => {currentimage.src = smallimg.src})
     });
+
     // -----------------data:
-    for (let i = 0; i < 6; i++) {
-      const smalldatacardbox = new CreateElement({ tag: 'div', className: 'smalldatacardbox' }).getnode();
-      smalldatacardbox.append(new CreateElement({ tag: 'h3', className: 'datasmalldescription' }).getnode());
-      smalldatacardbox.append(new CreateElement({ tag: 'p', className: 'datasmalldescription' }).getnode());
-      carddata.append(smalldatacardbox);
-    }
-    carddata.childNodes[0].childNodes[0].textContent = 'Description:';
-    carddata.childNodes[0].childNodes[1].textContent = product.description;
-    carddata.childNodes[1].childNodes[0].textContent = 'Discount Percentage:';
-    carddata.childNodes[1].childNodes[1].textContent = product.discountPercentage.toString();
-    carddata.childNodes[2].childNodes[0].textContent = 'Rating:';
-    carddata.childNodes[2].childNodes[1].textContent = product.rating.toString();
-    carddata.childNodes[3].childNodes[0].textContent = 'Date release:';
-    carddata.childNodes[3].childNodes[1].textContent = product.DateOfIssue.toString();
-    carddata.childNodes[4].childNodes[0].textContent = 'Brand:';
-    carddata.childNodes[4].childNodes[1].textContent = product.brand;
-    carddata.childNodes[5].childNodes[0].textContent = 'Category:';
-    carddata.childNodes[5].childNodes[1].textContent = product.category;
+    const dataTop = new CreateElement({ tag: 'div', className: 'data-top'}).getnode();
+    const h1 = new CreateElement({ tag: 'h1', id: 'h1_card', content: product.model }).getnode();
+    const ratingBlock = new CreateElement({ tag: 'div', className: 'rating-block'}).getnode();
+    const ratingIcon = new CreateImage({ src: './assets/images/star-rating.svg', className: 'rating-icon', alt: 'star'}).getnode();
+    const ratingNum = new CreateElement({ tag: 'span', className: 'rating-num', content: product.rating.toString() }).getnode();
+    ratingBlock.append(ratingIcon, ratingNum);
+    dataTop.append(h1, ratingBlock);
+    const priceBlock = new CreateElement({ tag: 'div', className: 'data__price'}).getnode();
+    const priceNoDiscount = new CreateElement({ tag: 'span', className: 'price-no-discount', content: '$' + (((product.discountPercentage / 100 * product.price)) + product.price).toFixed(2).toString()}).getnode();
+    const priceWithDiscount = new CreateElement({ tag: 'span', className: 'price-with-discount', content: '$' + product.price.toString() }).getnode();
+    priceBlock.append(priceNoDiscount, priceWithDiscount);
+    const description = new CreateElement({ tag: 'span', className: 'data__title', content: 'Description:'}).getnode();
+    const descriptionText = new CreateElement({ tag: 'span', className: 'data__text', content: product.description}).getnode();
+    description.append(descriptionText);
+    const release = new CreateElement({ tag: 'span', className: 'data__title', content: 'Release date:'}).getnode();
+    const releaseText = new CreateElement({ tag: 'span', className: 'data__text', content: product.DateOfIssue.toString()}).getnode();
+    release.append(releaseText);
+    const brand = new CreateElement({ tag: 'span', className: 'data__title', content: 'Brand:'}).getnode();
+    const brandtext = new CreateElement({ tag: 'span', className: 'data__text', content: product.brand}).getnode();
+    brand.append(brandtext);
+    const category = new CreateElement({ tag: 'span', className: 'data__title', content: 'Category:'}).getnode();
+    const categoryText = new CreateElement({ tag: 'span', className: 'data__text', content: product.category}).getnode();
+    category.append(categoryText);
+    const buttons = new CreateElement({ tag: 'div', className: 'data__buttons'}).getnode();
+    const buyNow = new CreateElement({ tag: 'button', className: 'data__button', content: 'Buy it now'}).getnode();
+    const addToCart = new CreateElement({tag: 'div', className: 'card-page__add-to-cart'}).getnode();
+    buttons.append(buyNow, addToCart);
+  
+
+    addToCart.addEventListener('click', () => {
+      addToCart.classList.toggle('_product-added');
+    })
+    // for (let i = 0; i < 6; i++) {
+    //   const smalldatacardbox = new CreateElement({ tag: 'div', className: 'smalldatacardbox' }).getnode();
+    //   smalldatacardbox.append(new CreateElement({ tag: 'h3', className: 'datasmalldescription' }).getnode());
+    //   smalldatacardbox.append(new CreateElement({ tag: 'p', className: 'datasmalldescription' }).getnode());
+    //   carddata.append(smalldatacardbox);
+    // }
+    // carddata.childNodes[0].childNodes[0].textContent = 'Description:';
+    // carddata.childNodes[0].childNodes[1].textContent = product.description;
+    // carddata.childNodes[1].childNodes[0].textContent = 'Discount Percentage:';
+    // carddata.childNodes[1].childNodes[1].textContent = product.discountPercentage.toString();
+    // carddata.childNodes[2].childNodes[0].textContent = 'Rating:';
+    // carddata.childNodes[2].childNodes[1].textContent = product.rating.toString();
+    // carddata.childNodes[3].childNodes[0].textContent = 'Date release:';
+    // carddata.childNodes[3].childNodes[1].textContent = product.DateOfIssue.toString();
+    // carddata.childNodes[4].childNodes[0].textContent = 'Brand:';
+    // carddata.childNodes[4].childNodes[1].textContent = product.brand;
+    // carddata.childNodes[5].childNodes[0].textContent = 'Category:';
+    // carddata.childNodes[5].childNodes[1].textContent = product.category;
+    carddata.append(dataTop, priceBlock, description, release, brand, category, buttons);
   }
 }
 
