@@ -27,28 +27,33 @@ export class ApplyRouting {
     if (hash[1] === '?'){
       this.createFilters(hash);
       if (document.body.childNodes[2]) {
+        console.log(document.body.childNodes);
+        document.body.childNodes[2].remove();
         document.body.childNodes[2].remove();
       }
       const data = new ApplyFilters(this.filters);
       
       this.MainPage.CreateMain(this.filters, data.return());
+      this.MainPage.CreateFooter();
     }
     if (hash.split('-')[0] === '#card') {
-      if (this.body.children[1]){
+      if (this.body.children[1] && this.body.children[2]){
+        this.body.children[2].remove();
         this.body.children[1].remove();
       }
       new CardPage(this.products.GetById(hash.split('-')[1]));
+      this.MainPage.CreateFooter();
     }
     if (hash === '') {
       this.ToDefaultFilters();
       this.MainPage = new CreateDefaultPage();
       if (document.body.childNodes[2]) {
         document.body.childNodes[2].remove();
+        document.body.childNodes[2].remove();
       }
       const data = new ApplyFilters(this.filters);
       this.MainPage.CreateMain(this.filters, data.return());
-      console.log(this.products.Get());
-      console.log(this.filters)
+      this.MainPage.CreateFooter();
       this.checker = true;
     }
     if (hash === '#basket') {

@@ -65,9 +65,6 @@ class CreateDefaultPage {
     const categories = new CreateElement({ tag: 'div', className: 'aside__choice choice-menu' }).getnode();
     const brands = new CreateElement({ tag: 'div', className: 'aside__choice choice-menu' }).getnode();
     const CurrentPrice = product.GetCurrentMinMaxPrice(ProductsCards);
-    // if (filters.MinPrice === '16') {
-    //   filters.MinPrice = CurrentPrice.min;
-    // }
     const MaxMinPrices = product.GetMinMaxPrice();
     const prises = new CreateRangeBlock({
       title: 'Prises',
@@ -85,8 +82,7 @@ class CreateDefaultPage {
       filters: filters,
       current: CurrentPrice,
     }).getnode();
-    const CurrentDate = product.GetCurrentMinMaxDate(new data().Get());
-    console.log(new data().Get())
+    const CurrentDate = product.GetCurrentMinMaxDate(ProductsCards);
     const MaxMinDate = product.GetMinMaxDate();
     const year = new CreateRangeBlock({
       title: 'Release date',
