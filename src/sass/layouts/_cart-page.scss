@@ -1,0 +1,10 @@
+.cart__wrapper {
+  flex-direction: column;
+}
+
+.cart__items {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  row-gap: 10px;
+}
