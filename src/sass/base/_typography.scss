@@ -74,7 +74,8 @@ h2 {
   @include text ('Sora', normal, 400, 1.5rem, $color-primary, 1.5rem);
 }
 
-.price-with-discount {
+.price-with-discount,
+.cart__quantity {
   @include text ('Sora', normal, 700, 1.5rem, $color-primary, 1.5rem);
 }
 
@@ -89,4 +90,8 @@ h2 {
 
 .data__button {
   @include text ('Sora', normal, 400, 1.5rem, $color-light, 1.5rem);
+}
+
+.cart__total {
+  @include text ('Sora', normal, 400, 1.8rem, $color-light, 1.8rem);
 }
