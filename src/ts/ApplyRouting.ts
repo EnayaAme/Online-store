@@ -70,6 +70,14 @@ export class ApplyRouting {
       new BasketPage();
       this.MainPage.CreateFooter();
     }
+    if (hash.split('basket')[1][0] === '!') {
+      if (this.body.children[1] && this.body.children[2]){
+        this.body.children[2].remove();
+        this.body.children[1].remove();
+      }
+      new BasketPage();
+      this.MainPage.CreateFooter();
+    }
     ///filters///
 
     ///Category///
