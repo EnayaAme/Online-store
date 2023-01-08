@@ -12,6 +12,7 @@ export class BasketPage {
     main.append(wrapper);
 
     const ListOfProducts = new CreateElement({ tag: 'div', className: 'cart__items' }).getnode();
+    const summary = new CreateElement({ tag: 'div', className: 'cart__summary' }).getnode();
 
     
     ////// SUMMARY //////
