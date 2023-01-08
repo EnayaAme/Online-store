@@ -11,7 +11,6 @@ import { CreateSearchBar } from './Components/CreateSearchBar';
 import { filters, product } from './Interfaces';
 import { CreateRadio } from './Elements/CreateRadio';
 import { CreateLink } from './Elements/CreateLink';
-import { CreateListOfCards } from './CreateListOfCards';
 
 class CreateDefaultPage {
   // переменная которая хранит body
@@ -45,15 +44,25 @@ class CreateDefaultPage {
       alt: 'cart icon',
       id: 'basket-img',
     }).getnode();
-    const cartTotal = new CreateElement({tag: 'span', className: 'cart__total', id: 'all-price-basket', content: '10000$'}).getnode();
-    const cartQuantity = new CreateElement({tag: 'span', className: 'cart__quantity', id: 'counter-basket', content: '1'}).getnode();
+    const cartTotal = new CreateElement({
+      tag: 'span',
+      className: 'cart__total',
+      id: 'all-price-basket',
+      content: '10000$',
+    }).getnode();
+    const cartQuantity = new CreateElement({
+      tag: 'span',
+      className: 'cart__quantity',
+      id: 'counter-basket',
+      content: '1',
+    }).getnode();
     if (localStorage.getItem('products') !== null) {
-      const DataFromLocal: product[] = JSON.parse(localStorage.getItem('products')!)
+      const DataFromLocal: product[] = JSON.parse(localStorage.getItem('products')!);
       if (DataFromLocal.length !== 0) {
         let cc = 0;
         let totalprice = 0;
         DataFromLocal.forEach((item) => {
-          cc += item.counter
+          cc += item.counter;
           totalprice += item.price * item.counter;
         });
         cartQuantity.textContent = cc.toString();
@@ -173,26 +182,65 @@ class CreateDefaultPage {
     // CreateStore
     const store = new CreateElement({ tag: 'div', className: 'store' }).getnode();
     wrapper.append(store);
-    const menu = new CreateElement({ tag: 'div', className: 'store__menu', }).getnode();
+    const menu = new CreateElement({ tag: 'div', className: 'store__menu' }).getnode();
     /////  menu
-    const viewOptions = new CreateElement({ tag:'div', className:'store__view' }).getnode();
-    const viewBlock1 = new CreateElement({ tag:'div', className:'store__optionBlock1', id: 'store__optionBlock1' }).getnode();
-    const view1 = new CreateRadio({type: 'radio', value: '', id: 'view1', name: 'view', className: 'view-option1', checked: true }).getnode();
+    const viewOptions = new CreateElement({ tag: 'div', className: 'store__view' }).getnode();
+    const viewBlock1 = new CreateElement({
+      tag: 'div',
+      className: 'store__optionBlock1',
+      id: 'store__optionBlock1',
+    }).getnode();
+    const view1 = new CreateRadio({
+      type: 'radio',
+      value: '',
+      id: 'view1',
+      name: 'view',
+      className: 'view-option1',
+      checked: true,
+    }).getnode();
     viewBlock1.append(view1[0], view1[1]);
-    const view2 = new CreateRadio({type: 'radio', value: '', id: 'view2', name: 'view', className: 'view-option2' }).getnode();
-    const viewBlock2 = new CreateElement({ tag:'div', className:'store__optionBlock2', id: 'store__optionBlock2' }).getnode();
+    const view2 = new CreateRadio({
+      type: 'radio',
+      value: '',
+      id: 'view2',
+      name: 'view',
+      className: 'view-option2',
+    }).getnode();
+    const viewBlock2 = new CreateElement({
+      tag: 'div',
+      className: 'store__optionBlock2',
+      id: 'store__optionBlock2',
+    }).getnode();
     viewBlock2.append(view2[0], view2[1]);
     viewOptions.append(viewBlock1, viewBlock2);
     ///////
-    const foundProducts = new CreateElement({ tag: 'div', className: 'store__quantity', content: 'Found : ' }).getnode();
-    const productsAmmount = new CreateElement({ tag: 'span', className: 'store__quantity-found', content: ProductsCards.length.toString() }).getnode();
+    const foundProducts = new CreateElement({
+      tag: 'div',
+      className: 'store__quantity',
+      content: 'Found : ',
+    }).getnode();
+    const productsAmmount = new CreateElement({
+      tag: 'span',
+      className: 'store__quantity-found',
+      content: ProductsCards.length.toString(),
+    }).getnode();
     foundProducts.append(productsAmmount);
-    const sortMenu = new CreateSortMenu({ tag: 'div', className: 'sort-menu', router: this.router, filter: filters.Sort }).getnode();
-    const searchBar = new CreateSearchBar({ tag: 'div', className: 'search', router: this.router, filter: filters.Search }).getnode();
+    const sortMenu = new CreateSortMenu({
+      tag: 'div',
+      className: 'sort-menu',
+      router: this.router,
+      filter: filters.Sort,
+    }).getnode();
+    const searchBar = new CreateSearchBar({
+      tag: 'div',
+      className: 'search',
+      router: this.router,
+      filter: filters.Search,
+    }).getnode();
     menu.append(viewOptions, foundProducts, searchBar, sortMenu);
 
     ///// products
-    
+
     const products = new CreateElement({ tag: 'div', className: 'store__products', id: 'store__products' }).getnode();
     store.append(menu, products);
   }
@@ -203,12 +251,30 @@ class CreateDefaultPage {
     footer.append(wrapper);
     this.body.append(footer);
     const cartBlock = new CreateElement({ tag: 'div', className: 'footer__cart' }).getnode();
-    const footerCart = new CreateLink({ href: 'https://rs.school/js/', target: '_blank', className: 'footer__cart_light' }).getnode();
-    const footerIcon = new CreateImage({ src: './assets/images/logo_rs_text.svg', alt: 'RS School', className: 'footer__logo'}).getnode();
+    const footerCart = new CreateLink({
+      href: 'https://rs.school/js/',
+      target: '_blank',
+      className: 'footer__cart_light',
+    }).getnode();
+    const footerIcon = new CreateImage({
+      src: './assets/images/logo_rs_text.svg',
+      alt: 'RS School',
+      className: 'footer__logo',
+    }).getnode();
     const references = new CreateElement({ tag: 'div', className: 'footer__references' }).getnode();
     const year = new CreateElement({ tag: 'span', className: 'footer__year', content: '2022' }).getnode();
-    const SashaLink = new CreateLink({ href: 'https://github.com/balaxon', target: '_blank', className: 'footer__SashaGit', content: 'balaxon' }).getnode();
-    const NataLink = new CreateLink({ href: 'https://github.com/EnayaAme', target: '_blank', className: 'footer__NataGit', content: 'EnayaAme' }).getnode();
+    const SashaLink = new CreateLink({
+      href: 'https://github.com/balaxon',
+      target: '_blank',
+      className: 'footer__SashaGit',
+      content: 'balaxon',
+    }).getnode();
+    const NataLink = new CreateLink({
+      href: 'https://github.com/EnayaAme',
+      target: '_blank',
+      className: 'footer__NataGit',
+      content: 'EnayaAme',
+    }).getnode();
     references.append(SashaLink, NataLink, year);
     footerCart.append(footerIcon);
     cartBlock.append(footerCart);
@@ -221,6 +287,5 @@ class CreateDefaultPage {
 // Page.CreateHeader();
 // Page.CreateMain();
 // Page.CreateFooter();
-
 
 export default CreateDefaultPage;

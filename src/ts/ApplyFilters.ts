@@ -1,9 +1,9 @@
-import data from "./data";
-import { filters, product } from "./Interfaces";
+import data from './data';
+import { filters, product } from './Interfaces';
 
 export class ApplyFilters {
   private data = new data();
-  private DataAfterFilters:product[] = [];
+  private DataAfterFilters: product[] = [];
   //private
   constructor(filters: filters) {
     this.DataAfterFilters = new data().Get();
@@ -13,12 +13,10 @@ export class ApplyFilters {
     if (filters.Brand.length !== 0) {
       this.brand(filters.Brand);
     }
-    if (filters.MinPrice !== this.data.GetMinMaxPrice().min 
-    || filters.MaxPrice !== this.data.GetMinMaxPrice().max) {
+    if (filters.MinPrice !== this.data.GetMinMaxPrice().min || filters.MaxPrice !== this.data.GetMinMaxPrice().max) {
       this.price(filters.MinPrice, filters.MaxPrice);
     }
-    if (filters.MinYear !== this.data.GetMinMaxDate().min 
-    || filters.MaxYear !== this.data.GetMinMaxDate().max) {
+    if (filters.MinYear !== this.data.GetMinMaxDate().min || filters.MaxYear !== this.data.GetMinMaxDate().max) {
       this.date(filters.MinYear, filters.MaxYear);
     }
     if (filters.Search !== '') {
@@ -52,24 +50,23 @@ export class ApplyFilters {
   }
   price(min: string, max: string) {
     const TempArray: product[] = [];
-      this.DataAfterFilters.forEach((it) => {
-        if (+min <= it.price && it.price <= +max) {
-          TempArray.push(it);
-        }
-      });
+    this.DataAfterFilters.forEach((it) => {
+      if (+min <= it.price && it.price <= +max) {
+        TempArray.push(it);
+      }
+    });
     this.DataAfterFilters = TempArray;
   }
   date(min: string, max: string) {
     const TempArray: product[] = [];
-      this.DataAfterFilters.forEach((it) => {
-        if (+min <= it.DateOfIssue && it.DateOfIssue <= +max) {
-          TempArray.push(it);
-        }
-      });
+    this.DataAfterFilters.forEach((it) => {
+      if (+min <= it.DateOfIssue && it.DateOfIssue <= +max) {
+        TempArray.push(it);
+      }
+    });
     this.DataAfterFilters = TempArray;
   }
   search(search: string) {
-    let newstr = '';
     search = search.toLowerCase();
     const TempArray: product[] = [];
     this.DataAfterFilters.forEach((item) => {
@@ -93,9 +90,8 @@ export class ApplyFilters {
     });
     this.DataAfterFilters = TempArray;
   }
-  swap(first:product, second: product) {
-    let temp: product;
-    temp = first;
+  swap(first: product, second: product) {
+    const temp: product = first;
     first = second;
     second = temp;
   }

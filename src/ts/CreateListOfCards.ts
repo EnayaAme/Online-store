@@ -1,9 +1,9 @@
-import { CreateElement } from "./Elements/CreateElement";
-import { product } from "./Interfaces";
+import { CreateElement } from './Elements/CreateElement';
+import { product } from './Interfaces';
 import CreateRoute from './route';
 
-export class CreateListOfCards{
-  constructor (SortData: product[]) {
+export class CreateListOfCards {
+  constructor(SortData: product[]) {
     const router = new CreateRoute();
     SortData.forEach((item) => {
       const CardBox = new CreateElement({
@@ -19,7 +19,7 @@ export class CreateListOfCards{
         className: 'card__price',
         content: `${item.price.toString()} $`,
       }).getnode();
-      const CardAddtoCart = new CreateElement({tag: 'div', className: 'card__add-to-cart'}).getnode();
+      const CardAddtoCart = new CreateElement({ tag: 'div', className: 'card__add-to-cart' }).getnode();
       CardBox.append(CardModel, CardPrice, CardAddtoCart);
       if (localStorage.getItem('products') !== null) {
         const cards: product[] = JSON.parse(localStorage.getItem('products')!);
@@ -27,10 +27,9 @@ export class CreateListOfCards{
           if (it.id === item.id) {
             CardAddtoCart.classList.toggle('_product-added');
           }
-        })
+        });
       }
       document.getElementById('store__products')!.append(CardBox);
-      let ProductsToLocalStorage: product[] = [];
       CardAddtoCart.addEventListener('click', () => {
         //ProductsToLocalStorage.push(item);
         let totalprice = 0;
@@ -66,7 +65,7 @@ export class CreateListOfCards{
         const basket = document.getElementById('basket-img');
         if (counter !== 0) {
           let cc = 0;
-          ProductsFromLocalStorage.forEach(item => cc += item.counter);
+          ProductsFromLocalStorage.forEach((item) => (cc += item.counter));
           cartQuantity!.textContent = cc.toString();
           cartQuantity!.style.visibility = 'visible';
           cartQuantity!.style.opacity = '1';
@@ -80,8 +79,8 @@ export class CreateListOfCards{
           basket!.style.display = 'block';
         }
         //localStorage.setItem('')
-      })
-      
+      });
+
       document.getElementById('store__optionBlock1')!.addEventListener('click', () => {
         if ((document.getElementById('view1') as HTMLInputElement).checked) {
           if (CardBox.classList.contains('_small-view')) {
@@ -89,7 +88,7 @@ export class CreateListOfCards{
           }
         }
       });
-      
+
       document.getElementById('store__optionBlock2')!.addEventListener('click', () => {
         if ((document.getElementById('view2') as HTMLInputElement).checked) {
           CardBox.classList.add('_small-view');
@@ -97,5 +96,4 @@ export class CreateListOfCards{
       });
     });
   }
-  
 }

@@ -1,24 +1,22 @@
-import data from "./data";
-import { filters } from "./Interfaces";
-import CreateDefaultPage from "./DefaultPage";
-import { CardPage } from "./CardPage";
+import data from './data';
+import { filters } from './Interfaces';
 
 class Router {
   private products = new data();
   private LimitPage = {
-    'limit': 0,
-    'page': 0,
-  }
+    limit: 0,
+    page: 0,
+  };
   private filters: filters = {
-    'Category': [],
-    'Brand': [],
-    'MinPrice': this.products.GetMinMaxPrice().min,
-    'MaxPrice': this.products.GetMinMaxPrice().max,
-    'MinYear': this.products.GetMinMaxDate().min,
-    'MaxYear': this.products.GetMinMaxDate().max,
-    'Search': '',
-    'Sort': 'Sort by',
-  }
+    Category: [],
+    Brand: [],
+    MinPrice: this.products.GetMinMaxPrice().min,
+    MaxPrice: this.products.GetMinMaxPrice().max,
+    MinYear: this.products.GetMinMaxDate().min,
+    MaxYear: this.products.GetMinMaxDate().max,
+    Search: '',
+    Sort: 'Sort by',
+  };
   private body = document.body;
   private checker = false;
   private ToPages = false;
@@ -56,13 +54,17 @@ class Router {
     this.AddFilters();
   }
 
-  AddFilters(){
-    if ((this.filters.Category.length !== 0 || this.filters.Brand.length !== 0) ||
-    (this.filters.MinPrice !== this.products.GetMinMaxPrice().min ||
-    this.filters.MaxPrice !== this.products.GetMinMaxPrice().max) ||
-    (this.filters.MinYear !== this.products.GetMinMaxDate().min ||
-    this.filters.MaxYear !== this.products.GetMinMaxDate().max) ||
-    this.filters.Search !== '' || this.filters.Sort !== 'Sort by') {
+  AddFilters() {
+    if (
+      this.filters.Category.length !== 0 ||
+      this.filters.Brand.length !== 0 ||
+      this.filters.MinPrice !== this.products.GetMinMaxPrice().min ||
+      this.filters.MaxPrice !== this.products.GetMinMaxPrice().max ||
+      this.filters.MinYear !== this.products.GetMinMaxDate().min ||
+      this.filters.MaxYear !== this.products.GetMinMaxDate().max ||
+      this.filters.Search !== '' ||
+      this.filters.Sort !== 'Sort by'
+    ) {
       let newurl = '#?';
       if (this.filters.Category.length !== 0) {
         newurl += 'Category=';
@@ -72,7 +74,7 @@ class Router {
         newurl = newurl.slice(0, -1);
       }
       if (this.filters.Brand.length !== 0) {
-        if(this.filters.Category.length === 0){
+        if (this.filters.Category.length === 0) {
           newurl += 'Brand=';
         } else {
           newurl += '&Brand=';
@@ -82,8 +84,10 @@ class Router {
         });
         newurl = newurl.slice(0, -1);
       }
-      if (this.filters.MinPrice !== this.products.GetMinMaxPrice().min || 
-      this.filters.MaxPrice !== this.products.GetMinMaxPrice().max) {
+      if (
+        this.filters.MinPrice !== this.products.GetMinMaxPrice().min ||
+        this.filters.MaxPrice !== this.products.GetMinMaxPrice().max
+      ) {
         if (newurl === '#?') {
           newurl += `Price=${this.filters.MinPrice}+${this.filters.MaxPrice}`;
         } else {
@@ -91,8 +95,10 @@ class Router {
         }
         this.isChangePrice = true;
       }
-      if (this.filters.MinYear !== this.products.GetMinMaxDate().min || 
-      this.filters.MaxYear !== this.products.GetMinMaxDate().max) {
+      if (
+        this.filters.MinYear !== this.products.GetMinMaxDate().min ||
+        this.filters.MaxYear !== this.products.GetMinMaxDate().max
+      ) {
         if (newurl === '#?') {
           newurl += `Date=${this.filters.MinYear}+${this.filters.MaxYear}`;
         } else {
@@ -122,7 +128,7 @@ class Router {
 
   RemoveCategoryFilters(id: string) {
     const index = this.filters.Category.findIndex((element) => {
-      return element === id
+      return element === id;
     });
     this.filters.Category.splice(index, 1);
     this.AddFilters();
@@ -130,7 +136,7 @@ class Router {
 
   RemoveBrandFilters(id: string) {
     const index = this.filters.Brand.findIndex((element) => {
-      return element === id
+      return element === id;
     });
     this.filters.Brand.splice(index, 1);
     this.AddFilters();
@@ -158,13 +164,16 @@ class Router {
     };
   }
 
-  AddRoutingInBasket() {
+  AddRoutingInBasket(limit: number, page: number) {
+    this.LimitPage.limit = limit;
+    this.LimitPage.page = page;
+    console.log(this.LimitPage);
     let newurl = 'basket';
     if (this.LimitPage.limit > 0) {
       newurl += `!limit=${this.LimitPage.limit}`;
       window.location.hash = newurl;
     }
-    if (this.LimitPage.page > 0) {
+    if (this.LimitPage.page > 0 && this.LimitPage.page !== 1) {
       if (newurl === 'basket') {
         newurl += `!page=${this.LimitPage.page}`;
       } else {
@@ -174,21 +183,23 @@ class Router {
     }
   }
 
-  AddRoutingToLimit(count: string) {
-    this.LimitPage.limit = +count;
-    this.AddRoutingInBasket();
-  }
+  // AddRoutingToLimit(count: string) {
+  //   this.LimitPage.limit = +count;
+  //   console.log(this.LimitPage.limit)
+  //   this.AddRoutingInBasket();
+  // }
 
-  AddRoutingToPage(count: string) {
-    this.LimitPage.page = +count;
-    this.AddRoutingInBasket();
-  }
+  // AddRoutingToPage(count: string) {
+  //   this.LimitPage.page = +count;
+  //   console.log(this.LimitPage.page)
+  //   this.AddRoutingInBasket();
+  // }
 
   AddRoutingToCategory(tag: HTMLInputElement) {
     tag.onclick = (e: Event) => {
       const target = e.target;
       const id = (target as HTMLButtonElement).id;
-      if (tag.checked){
+      if (tag.checked) {
         this.AddCategoryFilters(id);
       } else {
         this.RemoveCategoryFilters(id);
@@ -200,7 +211,7 @@ class Router {
     tag.onclick = (e: Event) => {
       const target = e.target;
       const id = (target as HTMLButtonElement).id;
-      if (tag.checked){
+      if (tag.checked) {
         this.AddBrandFilters(id);
       } else {
         this.RemoveBrandFilters(id);

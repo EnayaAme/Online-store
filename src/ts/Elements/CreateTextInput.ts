@@ -1,4 +1,4 @@
-import { ConstructotTextInput } from "../Interfaces";
+import { ConstructotTextInput } from '../Interfaces';
 
 export class CreateTextInput {
   private input: HTMLInputElement;

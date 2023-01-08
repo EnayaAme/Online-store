@@ -1,4 +1,4 @@
-import { ConstructorLink } from "../Interfaces";
+import { ConstructorLink } from '../Interfaces';
 
 export class CreateLink {
   private link: HTMLAnchorElement;
@@ -19,7 +19,7 @@ export class CreateLink {
       this.link.target = target;
     }
   }
-  
+
   getnode() {
     return this.link;
   }

@@ -1,6 +1,6 @@
-import { CreateElement } from "../Elements/CreateElement";
-import { CreateRadio } from "../Elements/CreateRadio";
-import { ConstructorSortMenu } from "../Interfaces";
+import { CreateElement } from '../Elements/CreateElement';
+import { CreateRadio } from '../Elements/CreateRadio';
+import { ConstructorSortMenu } from '../Interfaces';
 
 export class CreateSortMenu extends CreateElement {
   private container: HTMLElement;
@@ -9,14 +9,14 @@ export class CreateSortMenu extends CreateElement {
   private sortmenu: string[][];
   private option!: HTMLElement;
   private input!: [HTMLInputElement, HTMLLabelElement];
-  constructor ({ tag, className, router, filter }: ConstructorSortMenu) {
+  constructor({ router, filter }: ConstructorSortMenu) {
     super({ tag: 'div', className: 'sort-menu' });
     this.sortmenu = [
       ['Rating', 'Rating'],
       ['PriceTH', 'Price (low to high)'],
       ['PriceTL', 'Price (high to low)'],
-      ['RD', 'Release Date']
-    ]
+      ['RD', 'Release Date'],
+    ];
     this.sortmenu.forEach((it) => {
       if (filter === it[0]) {
         filter = it[1];
@@ -28,7 +28,13 @@ export class CreateSortMenu extends CreateElement {
     this.container.append(this.options, this.selected);
     this.sortmenu.forEach((item) => {
       this.option = new CreateElement({ tag: 'div', className: 'option' }).getnode();
-      this.input =  new CreateRadio({ type: 'radio', className: 'radio', id: item[0], name: 'sort', value: item[1]}).getnode();
+      this.input = new CreateRadio({
+        type: 'radio',
+        className: 'radio',
+        id: item[0],
+        name: 'sort',
+        value: item[1],
+      }).getnode();
       this.option.append(this.input[0], this.input[1]);
       this.options.append(this.option);
       this.input[0].addEventListener('click', () => {
@@ -36,12 +42,12 @@ export class CreateSortMenu extends CreateElement {
           router.AddRoutingToSort(item[0]);
         }
         //this.selected.innerHTML = item[1];
-        this.options.classList.remove("active");
+        this.options.classList.remove('active');
       });
     });
     this.el.append(this.container);
     this.selected.addEventListener('click', () => {
-      this.options!.classList.toggle("active");
-    })
+      this.options!.classList.toggle('active');
+    });
   }
 }

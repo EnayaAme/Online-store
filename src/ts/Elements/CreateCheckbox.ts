@@ -1,4 +1,4 @@
-import { ConstructorCheckbox } from "../Interfaces";
+import { ConstructorCheckbox } from '../Interfaces';
 
 export class CreateCheckbox {
   private input: HTMLInputElement;
@@ -9,7 +9,7 @@ export class CreateCheckbox {
     this.input.name = name;
     this.input.id = id;
     this.input.value = value;
-    
+
     filters?.forEach((item) => {
       if (item === value) {
         this.input.checked = true;

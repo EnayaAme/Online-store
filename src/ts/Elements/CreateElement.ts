@@ -1,4 +1,4 @@
-import { ConstructorElement } from "../Interfaces";
+import { ConstructorElement } from '../Interfaces';
 
 export class CreateElement {
   protected el: HTMLElement;

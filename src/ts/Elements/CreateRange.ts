@@ -1,4 +1,4 @@
-import { ConstructorRange } from "../Interfaces";
+import { ConstructorRange } from '../Interfaces';
 
 export class CreateRange {
   private input: HTMLInputElement;
