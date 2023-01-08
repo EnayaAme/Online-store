@@ -41,7 +41,6 @@ class data {
         this.ListCategories.push(item.category);
       }
     })
-    console.log(categories);
     const ResCategory: GetCategories[] = [];
     this.ListCategories.forEach((item) => {
       let counter = 0;
@@ -63,7 +62,6 @@ class data {
       };
       ResCategory.push(obj);
     });
-    //console.log(ResCategory);
     return ResCategory;
   }
   GetBrands(brands: product[]) {
@@ -121,14 +119,11 @@ class data {
       max: max.toString(),
       min: min.toString(),
     };
-    //console.log(obj);
     return obj;
   }
   GetById(id: string) {
     let ObjById: product;
     products.forEach((item: product) => {
-      //console.log(item.id.toString());
-      //console.log(id);
       if(item.id.toString() === id) {
         ObjById = item;
       }
@@ -159,7 +154,6 @@ class data {
       max: max.toString(),
       min: min.toString(),
     };
-    //console.log(obj)
     return obj;
   }
 }

@@ -21,10 +21,44 @@ export class CreateListOfCards{
       }).getnode();
       const CardAddtoCart = new CreateElement({tag: 'div', className: 'card__add-to-cart'}).getnode();
       CardBox.append(CardModel, CardPrice, CardAddtoCart);
+      if (localStorage.getItem('products') !== null) {
+        const cards: product[] = JSON.parse(localStorage.getItem('products')!);
+        cards.forEach((it) => {
+          if (it.id === item.id) {
+            CardAddtoCart.classList.toggle('_product-added');
+          }
+          console.log(it);
+        })
+      }
       document.getElementById('store__products')!.append(CardBox);
-
+      let ProductsToLocalStorage: product[] = [];
       CardAddtoCart.addEventListener('click', () => {
+        //ProductsToLocalStorage.push(item);
+        let ProductsFromLocalStorage: product[] = [];
+        if (CardAddtoCart.classList.contains('_product-added')) {
+          ProductsFromLocalStorage = JSON.parse(localStorage.getItem('products')!);
+          let index = 0;
+          ProductsFromLocalStorage.forEach((it, ind) => {
+            if (it.id === item.id) {
+              index = ind;
+            }
+          });
+          console.log(index);
+          ProductsFromLocalStorage.splice(index, 1);
+          localStorage.setItem('products', JSON.stringify(ProductsFromLocalStorage));
+        } else {
+          if (localStorage.getItem('products') !== null) {
+            ProductsFromLocalStorage = JSON.parse(localStorage.getItem('products')!);
+            ProductsFromLocalStorage.push(item);
+            localStorage.setItem('products', JSON.stringify(ProductsFromLocalStorage));
+          } else {
+            ProductsFromLocalStorage.push(item);
+            localStorage.setItem('products', JSON.stringify(ProductsFromLocalStorage));
+          }
+        }
         CardAddtoCart.classList.toggle('_product-added');
+        console.log(localStorage.getItem('products'))
+        //localStorage.setItem('')
       })
       
       document.getElementById('store__optionBlock1')!.addEventListener('click', () => {

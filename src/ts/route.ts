@@ -29,17 +29,13 @@ class Router {
       const newurl = `${id}`;
       window.location.hash = newurl;
       this.checker = true;
-      //console.log(window.location.hash);
       this.ToPages = true;
-      //new CardPage(this.products.GetById(id.split('-')[1]));
-      //console.log(this.products.GetById(id.split('-')[1]));
     }
     if (id === '') {
       window.location.hash = '';
       this.checker = true;
     }
-    if (id === '#basket') {
-      //console.log('basket');
+    if (id === 'basket') {
       const newurl = `${id}`;
       window.location.hash = newurl;
       this.checker = true;
@@ -57,7 +53,6 @@ class Router {
   }
 
   AddFilters(){
-    //console.log('asd');
     if ((this.filters.Category.length !== 0 || this.filters.Brand.length !== 0) ||
     (this.filters.MinPrice !== this.products.GetMinMaxPrice().min ||
     this.filters.MaxPrice !== this.products.GetMinMaxPrice().max) ||
@@ -109,7 +104,6 @@ class Router {
         }
       }
       if (this.filters.Sort !== 'Sort by') {
-        //console.log(this.filters.Sort);
         if (newurl === '#?') {
           newurl += `Sort=${this.filters.Sort}`;
         } else {
@@ -147,6 +141,14 @@ class Router {
   }
 
   AddRoutingToHeader(tag: HTMLElement) {
+    tag.onclick = (e: Event) => {
+      const target = e.target;
+      const id = (target as HTMLButtonElement).id;
+      this.AddURL(`${id}`);
+    };
+  }
+
+  AddRoutingToBasket(tag: HTMLElement) {
     tag.onclick = (e: Event) => {
       const target = e.target;
       const id = (target as HTMLButtonElement).id;
@@ -204,7 +206,6 @@ class Router {
   }
   AddRoutingToSort(id: string) {
     this.filters.Sort = id;
-    //console.log(this.filters.Sort);
     this.AddFilters();
   }
 

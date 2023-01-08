@@ -1,5 +1,6 @@
 import { ApplyFilters } from "./ApplyFilters";
 import { ApplySort } from "./ApplySort";
+import { BasketPage } from "./BasketPage";
 import { CardPage } from "./CardPage";
 import { CreateListOfCards } from "./CreateListOfCards";
 import data from "./data";
@@ -25,11 +26,9 @@ export class ApplyRouting {
   }
 
   init(hash: string) {
-    //console.log(this.filters);
     if (hash[1] === '?'){
       this.createFilters(hash);
       if (document.body.childNodes[2]) {
-        console.log(document.body.childNodes);
         document.body.childNodes[2].remove();
         document.body.childNodes[2].remove();
       }
@@ -64,6 +63,12 @@ export class ApplyRouting {
     }
     if (hash === '#basket') {
       this.checker = true;
+      if (this.body.children[1] && this.body.children[2]){
+        this.body.children[2].remove();
+        this.body.children[1].remove();
+      }
+      new BasketPage();
+      this.MainPage.CreateFooter();
     }
     ///filters///
 
@@ -108,7 +113,6 @@ export class ApplyRouting {
           break;
       }
     });
-    //console.log(this.filters);
   }
   ToDefaultFilters() {
     this.filters.Brand = [];

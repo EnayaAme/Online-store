@@ -36,18 +36,19 @@ class CreateDefaultPage {
       content: 'best products, best sales, best service',
     }).getnode();
     textBlock.append(h1, subtitle);
-    const cart = new CreateElement({ tag: 'div', className: 'cart' }).getnode();
+    const cart = new CreateElement({ tag: 'div', className: 'cart', id: 'basket' }).getnode();
+    this.router.AddRoutingToBasket(cart);
     cartBlock.append(cart);
     const cartIcon = new CreateImage({
       src: '../assets/images/cart.svg',
       className: 'cart__icon',
       alt: 'cart icon',
+      id: 'basket',
     }).getnode();
     cart.append(cartIcon);
   }
   // метод для main
   CreateMain(filters: filters, ProductsCards: product[]) {
-    console.log(filters);
     this.router.GetFilters(filters);
     const product = new data();
     const main = new CreateElement({ tag: 'main', className: 'main' }).getnode();
@@ -116,7 +117,6 @@ class CreateDefaultPage {
       content: 'Category',
     }).getnode();
     categories.append(categoriesTitle);
-    //console.log(filters, ProductsCards)
     const ListCategories = product.GetCategories(ProductsCards);
     //const ListOfCurrentCategories = product.GetCurrentCategories(ProductsCards);
     ListCategories.forEach((item) => {
@@ -175,44 +175,6 @@ class CreateDefaultPage {
     
     const products = new CreateElement({ tag: 'div', className: 'store__products', id: 'store__products' }).getnode();
     store.append(menu, products);
-    // console.log(ProductsCards);
-    // console.log(SortData)
-    // SortData.forEach((item) => {
-    //   const CardBox = new CreateElement({
-    //     tag: 'div',
-    //     className: 'card__box',
-    //     id: `card-${item.id.toString()}`,
-    //     BackgroundImg: item.images[0],
-    //   }).getnode();
-    //   this.router.AddRoutingToCard(CardBox);
-    //   const CardModel = new CreateElement({ tag: 'h2', className: 'card__model', content: item.model }).getnode();
-    //   const CardPrice = new CreateElement({
-    //     tag: 'h2',
-    //     className: 'card__price',
-    //     content: `${item.price.toString()} $`,
-    //   }).getnode();
-    //   const CardAddtoCart = new CreateElement({tag: 'div', className: 'card__add-to-cart'}).getnode();
-    //   CardBox.append(CardModel, CardPrice, CardAddtoCart);
-    //   products.append(CardBox);
-
-    //   CardAddtoCart.addEventListener('click', () => {
-    //     CardAddtoCart.classList.toggle('_product-added');
-    //   })
-      
-    //   viewBlock1.addEventListener('click', () => {
-    //     if (view1[0].checked) {
-    //       if (CardBox.classList.contains('_small-view')) {
-    //         CardBox.classList.remove('_small-view');
-    //       }
-    //     }
-    //   });
-      
-    //   viewBlock2.addEventListener('click', () => {
-    //     if (view2[0].checked) {
-    //       CardBox.classList.add('_small-view');
-    //     }
-    //   });
-    // });
   }
   // метод для footer
   CreateFooter() {
