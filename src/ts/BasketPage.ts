@@ -22,7 +22,8 @@ export class BasketPage {
       "DateOfIssue":2021,
       "brand":"Apple",
       "category":"Smartphone",
-      "images":["https://i-product.by/images/o/apple-iphone-13-128gb-krasnyj_1.jpg","https://i-product.by/images/o/apple-iphone-13-128gb-krasnyj_2.jpg","https://i-product.by/images/o/apple-iphone-13-128gb-krasnyj_3.jpg"]
+      "images":["https://i-product.by/images/o/apple-iphone-13-128gb-krasnyj_1.jpg","https://i-product.by/images/o/apple-iphone-13-128gb-krasnyj_2.jpg","https://i-product.by/images/o/apple-iphone-13-128gb-krasnyj_3.jpg"],
+      "counter": 1,
     }).getnode()
     ListOfProducts.append(cartItem)
     wrapper.append(ListOfProducts /*Summary*/);
