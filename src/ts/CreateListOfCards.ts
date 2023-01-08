@@ -27,7 +27,6 @@ export class CreateListOfCards{
           if (it.id === item.id) {
             CardAddtoCart.classList.toggle('_product-added');
           }
-          console.log(it);
         })
       }
       document.getElementById('store__products')!.append(CardBox);
@@ -45,7 +44,6 @@ export class CreateListOfCards{
               index = ind;
             }
           });
-          console.log(index);
           ProductsFromLocalStorage.splice(index, 1);
           localStorage.setItem('products', JSON.stringify(ProductsFromLocalStorage));
         } else {
@@ -81,7 +79,6 @@ export class CreateListOfCards{
           AllPriceBasket!.style.display = 'none';
           basket!.style.display = 'block';
         }
-        console.log(localStorage.getItem('products'));
         //localStorage.setItem('')
       })
       
