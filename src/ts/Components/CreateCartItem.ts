@@ -20,6 +20,13 @@ export class CreateCartItem extends CreateElement {
 
 
   constructor(data: product) {
+    let ProductsFromLocalStorage: product[] = [];
+    if (localStorage.getItem('products') !== null && localStorage.getItem('products')?.length !== 0) {
+      ProductsFromLocalStorage = JSON.parse(localStorage.getItem('products')!);
+      ProductsFromLocalStorage.forEach((item) => {
+        
+      });
+    }
     super({ tag: 'div', className: 'cart__item' });
     this.body = new CreateElement({tag: 'div', className: 'cart__item-body'}).getnode();
     this.photoBlock = new CreateElement({tag: 'div', className: 'item__photo-block'}).getnode();
@@ -41,7 +48,7 @@ export class CreateCartItem extends CreateElement {
     this.icon = new CreateElement({tag: 'span', className: 'cart__cross-icon'}).getnode();
     this.delete.append(this.icon)
     this.el.append(this.body, this.delete);
-    let ProductsFromLocalStorage: product[] = [];
+    //let ProductsFromLocalStorage: product[] = [];
 
     this.quantityButtonMore.addEventListener('click', () => {
       ProductsFromLocalStorage = JSON.parse(localStorage.getItem('products')!);
@@ -78,12 +85,9 @@ export class CreateCartItem extends CreateElement {
             }
           }
         });
-      // if (+this.quantityCounter.textContent! == 1) {
-      //   this.el.remove();
-      // }
       this.currentData(ProductsFromLocalStorage);
     });
-console.log('asd');
+
     this.delete.addEventListener('click', () => {
       ProductsFromLocalStorage = JSON.parse(localStorage.getItem('products')!);
       let index = 0;

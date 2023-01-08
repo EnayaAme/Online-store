@@ -5,6 +5,10 @@ import { CardPage } from "./CardPage";
 
 class Router {
   private products = new data();
+  private LimitPage = {
+    'limit': 0,
+    'page': 0,
+  }
   private filters: filters = {
     'Category': [],
     'Brand': [],
@@ -152,6 +156,32 @@ class Router {
     tag.onclick = () => {
       this.AddURL(`basket`);
     };
+  }
+
+  AddRoutingInBasket() {
+    let newurl = 'basket';
+    if (this.LimitPage.limit > 0) {
+      newurl += `!limit=${this.LimitPage.limit}`;
+      window.location.hash = newurl;
+    }
+    if (this.LimitPage.page > 0) {
+      if (newurl === 'basket') {
+        newurl += `!page=${this.LimitPage.page}`;
+      } else {
+        newurl += `&page=${this.LimitPage.page}`;
+      }
+      window.location.hash = newurl;
+    }
+  }
+
+  AddRoutingToLimit(count: string) {
+    this.LimitPage.limit = +count;
+    this.AddRoutingInBasket();
+  }
+
+  AddRoutingToPage(count: string) {
+    this.LimitPage.page = +count;
+    this.AddRoutingInBasket();
   }
 
   AddRoutingToCategory(tag: HTMLInputElement) {
