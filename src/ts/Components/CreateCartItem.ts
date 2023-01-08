@@ -31,35 +31,83 @@ export class CreateCartItem extends CreateElement {
     this.description.append(this.descriptionTitle, this.descriptionText);
     this.category = new CreateElement({tag: 'div', className: 'item__category', content: `${data.category}` }).getnode();
     this.quantityContainer = new CreateElement({tag: 'div', className: 'item__quantity'}).getnode();
-    this.quantityCounter = new CreateElement({tag: 'span', className: 'item__quantity-counter', content: '1'}).getnode();
+    this.quantityCounter = new CreateElement({tag: 'span', className: 'item__quantity-counter', content: data.counter.toString() }).getnode();
     this.quantityButtonLess = new CreateElement({tag: 'span', className: 'item__quantity-button item__less', content: '-'}).getnode();
     this.quantityButtonMore = new CreateElement({tag: 'span', className: 'item__quantity-button item__more', content: '+'}).getnode();
     this.quantityContainer.append(this.quantityButtonLess, this.quantityCounter, this.quantityButtonMore);
-    this.price = new CreateElement({tag: 'div', className: 'item__price', content: '$ ' + data.price}).getnode();
+    this.price = new CreateElement({tag: 'div', className: 'item__price', content: '$ ' + data.price*data.counter}).getnode();
     this.body.append(this.photoBlock, this.description, this.category, this.quantityContainer, this.price);
     this.delete = new CreateElement({tag: 'div', className: 'cart__item-delete'}).getnode();
     this.icon = new CreateElement({tag: 'span', className: 'cart__cross-icon'}).getnode();
     this.delete.append(this.icon)
     this.el.append(this.body, this.delete);
-
-    console.log(+this.quantityCounter.textContent!)
+    let ProductsFromLocalStorage: product[] = [];
 
     this.quantityButtonMore.addEventListener('click', () => {
-      console.log(+this.quantityCounter.textContent!)
-      this.quantityCounter.textContent = (+this.quantityCounter.textContent! + 1).toString();
-    });
-    this.quantityButtonLess.addEventListener('click', () => {
-      console.log(+this.quantityCounter.textContent!)
-      if (+this.quantityCounter.textContent! > 1) {
-        this.quantityCounter.textContent = (+this.quantityCounter.textContent! - 1).toString();
-      }
-      if (+this.quantityCounter.textContent! <= 1) {
-        this.el.remove();
-      }
+      ProductsFromLocalStorage = JSON.parse(localStorage.getItem('products')!);
+      ProductsFromLocalStorage.forEach((item) => {
+        if (item.id === data.id) {
+          item.counter += 1;
+          localStorage.setItem('products', JSON.stringify(ProductsFromLocalStorage));
+          this.quantityCounter.textContent = item.counter.toString();
+          this.price.textContent = `$ ${item.price * item.counter}`;
+        }
+      });
+      this.currentData(ProductsFromLocalStorage);
     });
 
+    this.quantityButtonLess.addEventListener('click', () => {
+      ProductsFromLocalStorage = JSON.parse(localStorage.getItem('products')!);
+        ProductsFromLocalStorage.forEach((item) => {
+          if (data.id === item.id) {
+            if (item.counter > 1) {
+              item.counter -= 1;
+              localStorage.setItem('products', JSON.stringify(ProductsFromLocalStorage));
+              this.quantityCounter.textContent = item.counter.toString();
+              this.price.textContent = `$ ${item.price * item.counter}`;
+            } else {
+              let index = 0;
+              ProductsFromLocalStorage.forEach((it, ind) => {
+                if (it.id === item.id) {
+                  index = ind;
+                }
+              });
+              ProductsFromLocalStorage.splice(index, 1);
+              localStorage.setItem('products', JSON.stringify(ProductsFromLocalStorage));
+              this.el.remove();
+            }
+          }
+        });
+      // if (+this.quantityCounter.textContent! == 1) {
+      //   this.el.remove();
+      // }
+      this.currentData(ProductsFromLocalStorage);
+    });
+console.log('asd');
     this.delete.addEventListener('click', () => {
+      ProductsFromLocalStorage = JSON.parse(localStorage.getItem('products')!);
+      let index = 0;
+      ProductsFromLocalStorage.forEach((it, ind) => {
+        if (it.id === data.id) {
+          index = ind;
+        }
+      });
+      ProductsFromLocalStorage.splice(index, 1);
+      localStorage.setItem('products', JSON.stringify(ProductsFromLocalStorage));
       this.el.remove();
-    })
+      this.currentData(ProductsFromLocalStorage);
+      })
+  }
+  currentData(data: product[]) {
+    let counter: number = 0;
+    let totalprice: number = 0;
+    const counterBasket = document.getElementById('counter-basket');
+    const allPriceBasket = document.getElementById('all-price-basket');
+    data.forEach((item) => {
+      counter += item.counter;
+      totalprice += item.counter * item.price;
+    });
+    counterBasket!.textContent = counter.toString();
+    allPriceBasket!.textContent = totalprice.toString() + '$';
   }
 }

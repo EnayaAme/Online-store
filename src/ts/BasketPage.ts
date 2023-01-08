@@ -1,6 +1,7 @@
 import { CreateCartItem } from "./Components/CreateCartItem";
 import { CreateElement } from "./Elements/CreateElement";
 import { CreateTextInput } from "./Elements/CreateTextInput";
+import { product } from "./Interfaces";
 
 export class BasketPage {
   constructor () {
@@ -12,20 +13,28 @@ export class BasketPage {
 
     const ListOfProducts = new CreateElement({ tag: 'div', className: 'cart__items' }).getnode();
     //const Summary = new CreateElement({ tag: 'div', className: 'Summary' }).getnode();
-    const cartItem = new CreateCartItem({
-      "id": 1,
-      "model":"iPhone 13",
-      "description":"Смартфон Apple iPhone 13 128GB (красный)",
-      "price":854,
-      "discountPercentage":6,
-      "rating":4.58,
-      "DateOfIssue":2021,
-      "brand":"Apple",
-      "category":"Smartphone",
-      "images":["https://i-product.by/images/o/apple-iphone-13-128gb-krasnyj_1.jpg","https://i-product.by/images/o/apple-iphone-13-128gb-krasnyj_2.jpg","https://i-product.by/images/o/apple-iphone-13-128gb-krasnyj_3.jpg"],
-      "counter": 1,
-    }).getnode()
-    ListOfProducts.append(cartItem)
+    let ProductsFromLocalStorage: product[] = [];
+    if (localStorage.getItem('products') !== null && localStorage.getItem('products')?.length !== 0) {
+      ProductsFromLocalStorage = JSON.parse(localStorage.getItem('products')!);
+      ProductsFromLocalStorage.forEach((item) => {
+        const cartItem = new CreateCartItem({
+          "id": item.id,
+          "model": item.model,
+          "description": item.description,
+          "price": item.price,
+          "discountPercentage": item.discountPercentage,
+          "rating": item.rating,
+          "DateOfIssue": item.DateOfIssue,
+          "brand": item.brand,
+          "category": item.category,
+          "images": item.images,
+          "counter": item.counter,
+        }).getnode();
+        ListOfProducts.append(cartItem)
+      });
+    }
+    //ProductsFromLocalStorage = JSON.parse(localStorage.getItem('products')!);
+    
     wrapper.append(ListOfProducts /*Summary*/);
     //const ListMenu = new CreateElement({ tag: 'div', className: 'SmalMenu' }).getnode();
     //const List = new CreateElement({ tag: 'div', className: 'list' }).getnode();
