@@ -1,4 +1,5 @@
 import products from '../assets/files/data.json';
+import { ApplySort } from './ApplySort';
 import { GetMinMax, product } from './Interfaces';
 
 interface GetCategories {
@@ -33,6 +34,14 @@ class data {
     return products;
   }
   GetCategories(categories: product[]) {
+    const cat = new ApplySort('Sort by', products).return();
+    this.ListCategories = [];
+    cat.forEach((item) => {
+      if (this.ListCategories.includes(item.category) === false) {
+        this.ListCategories.push(item.category);
+      }
+    })
+    console.log(categories);
     const ResCategory: GetCategories[] = [];
     this.ListCategories.forEach((item) => {
       let counter = 0;
@@ -58,6 +67,13 @@ class data {
     return ResCategory;
   }
   GetBrands(brands: product[]) {
+    this.ListBrands = []
+    const brand = new ApplySort('Sort by', products).return();
+    brand.forEach((item) => {
+      if (this.ListBrands.includes(item.brand) === false) {
+        this.ListBrands.push(item.brand);
+      }
+    })
     const ResBrands: GetBrands[] = [];
     this.ListBrands.forEach((item) => {
       let counter = 0;

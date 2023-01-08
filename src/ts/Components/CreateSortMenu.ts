@@ -24,7 +24,7 @@ export class CreateSortMenu extends CreateElement {
     });
     this.container = new CreateElement({ tag: 'div', className: 'select-box' }).getnode();
     this.options = new CreateElement({ tag: 'div', className: 'options-container' }).getnode();
-    this.selected = new CreateElement({ tag: 'div', className: 'selected', content: filter }).getnode();
+    this.selected = new CreateElement({ tag: 'div', className: 'selected', id: 'selected', content: filter }).getnode();
     this.container.append(this.options, this.selected);
     this.sortmenu.forEach((item) => {
       this.option = new CreateElement({ tag: 'div', className: 'option' }).getnode();

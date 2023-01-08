@@ -11,6 +11,7 @@ import { CreateSearchBar } from './Components/CreateSearchBar';
 import { filters, product } from './Interfaces';
 import { CreateRadio } from './Elements/CreateRadio';
 import { CreateLink } from './Elements/CreateLink';
+import { CreateListOfCards } from './CreateListOfCards';
 
 class CreateDefaultPage {
   // переменная которая хранит body
@@ -152,14 +153,14 @@ class CreateDefaultPage {
     // CreateStore
     const store = new CreateElement({ tag: 'div', className: 'store' }).getnode();
     wrapper.append(store);
-    const menu = new CreateElement({ tag: 'div', className: 'store__menu' }).getnode();
+    const menu = new CreateElement({ tag: 'div', className: 'store__menu', }).getnode();
     /////  menu
     const viewOptions = new CreateElement({ tag:'div', className:'store__view' }).getnode();
-    const viewBlock1 = new CreateElement({ tag:'div', className:'store__optionBlock1' }).getnode();
+    const viewBlock1 = new CreateElement({ tag:'div', className:'store__optionBlock1', id: 'store__optionBlock1' }).getnode();
     const view1 = new CreateRadio({type: 'radio', value: '', id: 'view1', name: 'view', className: 'view-option1', checked: true }).getnode();
     viewBlock1.append(view1[0], view1[1]);
     const view2 = new CreateRadio({type: 'radio', value: '', id: 'view2', name: 'view', className: 'view-option2' }).getnode();
-    const viewBlock2 = new CreateElement({ tag:'div', className:'store__optionBlock2' }).getnode();
+    const viewBlock2 = new CreateElement({ tag:'div', className:'store__optionBlock2', id: 'store__optionBlock2' }).getnode();
     viewBlock2.append(view2[0], view2[1]);
     viewOptions.append(viewBlock1, viewBlock2);
     ///////
@@ -171,45 +172,47 @@ class CreateDefaultPage {
     menu.append(viewOptions, foundProducts, searchBar, sortMenu);
 
     ///// products
-    const products = new CreateElement({ tag: 'div', className: 'store__products' }).getnode();
+    
+    const products = new CreateElement({ tag: 'div', className: 'store__products', id: 'store__products' }).getnode();
     store.append(menu, products);
-    const cards = product.Get();
-    ProductsCards.forEach((item) => {
-      const CardBox = new CreateElement({
-        tag: 'div',
-        className: 'card__box',
-        id: `card-${item.id.toString()}`,
-        BackgroundImg: item.images[0],
-      }).getnode();
-      this.router.AddRoutingToCard(CardBox);
-      const CardModel = new CreateElement({ tag: 'h2', className: 'card__model', content: item.model }).getnode();
-      const CardPrice = new CreateElement({
-        tag: 'h2',
-        className: 'card__price',
-        content: `${item.price.toString()} $`,
-      }).getnode();
-      const CardAddtoCart = new CreateElement({tag: 'div', className: 'card__add-to-cart'}).getnode();
-      CardBox.append(CardModel, CardPrice, CardAddtoCart);
-      products.append(CardBox);
+    // console.log(ProductsCards);
+    // console.log(SortData)
+    // SortData.forEach((item) => {
+    //   const CardBox = new CreateElement({
+    //     tag: 'div',
+    //     className: 'card__box',
+    //     id: `card-${item.id.toString()}`,
+    //     BackgroundImg: item.images[0],
+    //   }).getnode();
+    //   this.router.AddRoutingToCard(CardBox);
+    //   const CardModel = new CreateElement({ tag: 'h2', className: 'card__model', content: item.model }).getnode();
+    //   const CardPrice = new CreateElement({
+    //     tag: 'h2',
+    //     className: 'card__price',
+    //     content: `${item.price.toString()} $`,
+    //   }).getnode();
+    //   const CardAddtoCart = new CreateElement({tag: 'div', className: 'card__add-to-cart'}).getnode();
+    //   CardBox.append(CardModel, CardPrice, CardAddtoCart);
+    //   products.append(CardBox);
 
-      CardAddtoCart.addEventListener('click', () => {
-        CardAddtoCart.classList.toggle('_product-added');
-      })
+    //   CardAddtoCart.addEventListener('click', () => {
+    //     CardAddtoCart.classList.toggle('_product-added');
+    //   })
       
-      viewBlock1.addEventListener('click', () => {
-        if (view1[0].checked) {
-          if (CardBox.classList.contains('_small-view')) {
-            CardBox.classList.remove('_small-view');
-          }
-        }
-      });
+    //   viewBlock1.addEventListener('click', () => {
+    //     if (view1[0].checked) {
+    //       if (CardBox.classList.contains('_small-view')) {
+    //         CardBox.classList.remove('_small-view');
+    //       }
+    //     }
+    //   });
       
-      viewBlock2.addEventListener('click', () => {
-        if (view2[0].checked) {
-          CardBox.classList.add('_small-view');
-        }
-      });
-    });
+    //   viewBlock2.addEventListener('click', () => {
+    //     if (view2[0].checked) {
+    //       CardBox.classList.add('_small-view');
+    //     }
+    //   });
+    // });
   }
   // метод для footer
   CreateFooter() {
