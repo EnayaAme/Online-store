@@ -34,6 +34,8 @@ export class CreateListOfCards{
       let ProductsToLocalStorage: product[] = [];
       CardAddtoCart.addEventListener('click', () => {
         //ProductsToLocalStorage.push(item);
+        let totalprice = 0;
+        let counter = 0;
         let ProductsFromLocalStorage: product[] = [];
         if (CardAddtoCart.classList.contains('_product-added')) {
           ProductsFromLocalStorage = JSON.parse(localStorage.getItem('products')!);
@@ -57,7 +59,29 @@ export class CreateListOfCards{
           }
         }
         CardAddtoCart.classList.toggle('_product-added');
-        console.log(localStorage.getItem('products'))
+        ProductsFromLocalStorage.forEach((it) => {
+          counter += it.counter;
+          totalprice += it.counter * it.price;
+        });
+        const cartQuantity = document.getElementById('counter-basket');
+        const AllPriceBasket = document.getElementById('all-price-basket');
+        const basket = document.getElementById('basket-img');
+        if (counter !== 0) {
+          let cc = 0;
+          ProductsFromLocalStorage.forEach(item => cc += item.counter);
+          cartQuantity!.textContent = cc.toString();
+          cartQuantity!.style.visibility = 'visible';
+          cartQuantity!.style.opacity = '1';
+          AllPriceBasket!.style.display = 'block';
+          basket!.style.display = 'none';
+          AllPriceBasket!.textContent = totalprice.toString() + '$';
+        } else {
+          cartQuantity!.style.visibility = 'hidden';
+          cartQuantity!.style.opacity = '0';
+          AllPriceBasket!.style.display = 'none';
+          basket!.style.display = 'block';
+        }
+        console.log(localStorage.getItem('products'));
         //localStorage.setItem('')
       })
       
