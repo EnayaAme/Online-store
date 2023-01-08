@@ -1,11 +1,12 @@
-import { ApplyFilters } from "./ApplyFilters";
-import { ApplySort } from "./ApplySort";
-import { BasketPage } from "./BasketPage";
-import { CardPage } from "./CardPage";
-import { CreateListOfCards } from "./CreateListOfCards";
-import data from "./data";
-import CreateDefaultPage from "./DefaultPage";
-import { filters } from "./Interfaces";
+import { ApplyFilters } from './ApplyFilters';
+import { ApplySort } from './ApplySort';
+import { BasketPage } from './BasketPage';
+import { CardPage } from './CardPage';
+import { CreateCartItem } from './Components/CreateCartItem';
+import { CreateListOfCards } from './CreateListOfCards';
+import data from './data';
+import CreateDefaultPage from './DefaultPage';
+import { filters } from './Interfaces';
 
 export class ApplyRouting {
   private MainPage = new CreateDefaultPage();
@@ -14,19 +15,23 @@ export class ApplyRouting {
   private checker = false;
   private ToPages = false;
   private isChangePrice = false;
+  private LimitPage = {
+    limit: 3,
+    page: 1,
+  };
   private filters: filters = {
-    'Category': [],
-    'Brand': [],
-    'MinPrice': this.products.GetMinMaxPrice().min,
-    'MaxPrice': this.products.GetMinMaxPrice().max,
-    'MinYear': this.products.GetMinMaxDate().min,
-    'MaxYear': this.products.GetMinMaxDate().max,
-    'Search': '',
-    'Sort': 'Sort by',
-  }
+    Category: [],
+    Brand: [],
+    MinPrice: this.products.GetMinMaxPrice().min,
+    MaxPrice: this.products.GetMinMaxPrice().max,
+    MinYear: this.products.GetMinMaxDate().min,
+    MaxYear: this.products.GetMinMaxDate().max,
+    Search: '',
+    Sort: 'Sort by',
+  };
 
   init(hash: string) {
-    if (hash[1] === '?'){
+    if (hash[1] === '?') {
       this.createFilters(hash);
       if (document.body.childNodes[2]) {
         document.body.childNodes[2].remove();
@@ -39,7 +44,7 @@ export class ApplyRouting {
       this.MainPage.CreateFooter();
     }
     if (hash.split('-')[0] === '#card') {
-      if (this.body.children[1] && this.body.children[2]){
+      if (this.body.children[1] && this.body.children[2]) {
         this.body.children[2].remove();
         this.body.children[1].remove();
       }
@@ -54,7 +59,7 @@ export class ApplyRouting {
         document.body.childNodes[2].remove();
       }
       const data = new ApplyFilters(this.filters).return();
-      
+
       const DataSort = new ApplySort(this.filters.Sort, data);
       this.MainPage.CreateMain(this.filters, DataSort.return());
       new CreateListOfCards(DataSort.return());
@@ -63,19 +68,34 @@ export class ApplyRouting {
     }
     if (hash === '#basket') {
       this.checker = true;
-      if (this.body.children[1] && this.body.children[2]){
+      if (this.body.children[1] && this.body.children[2]) {
         this.body.children[2].remove();
         this.body.children[1].remove();
       }
-      new BasketPage();
+      new BasketPage(3, 1);
+      new CreateCartItem(3, 1);
       this.MainPage.CreateFooter();
     }
-    if (hash.split('basket')[1][0] === '!') {
-      if (this.body.children[1] && this.body.children[2]){
+    if (hash[7] === '!') {
+      if (this.body.children[1] && this.body.children[2]) {
         this.body.children[2].remove();
         this.body.children[1].remove();
       }
-      new BasketPage();
+      const filt = hash.split('!')[1];
+      if (filt.includes('&')) {
+        this.LimitPage.limit = +filt.split('&')[0].split('=')[1];
+        this.LimitPage.page = +filt.split('&')[1].split('=')[1];
+      } else {
+        if (filt.includes('limit')) {
+          this.LimitPage.limit = +filt.split('=')[1];
+          this.LimitPage.page = 1;
+        } else {
+          this.LimitPage.page = +filt.split('=')[1];
+        }
+      }
+      //console.log(this.LimitPage);
+      new BasketPage(this.LimitPage.limit, this.LimitPage.page);
+      new CreateCartItem(this.LimitPage.limit, this.LimitPage.page);
       this.MainPage.CreateFooter();
     }
     ///filters///

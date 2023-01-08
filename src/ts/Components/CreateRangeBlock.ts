@@ -1,7 +1,6 @@
-import { CreateElement } from "../Elements/CreateElement";
-import { CreateRange } from "../Elements/CreateRange";
-import { ConstructorRangeBlock } from "../Interfaces";
-
+import { CreateElement } from '../Elements/CreateElement';
+import { CreateRange } from '../Elements/CreateRange';
+import { ConstructorRangeBlock } from '../Interfaces';
 
 export class CreateRangeBlock extends CreateElement {
   private title: HTMLElement;
@@ -26,7 +25,6 @@ export class CreateRangeBlock extends CreateElement {
     isPrice,
     id,
     router,
-    filters,
     current,
   }: ConstructorRangeBlock) {
     super({ tag: 'div', className: 'aside__range range-menu' });
@@ -38,16 +36,16 @@ export class CreateRangeBlock extends CreateElement {
     this.rangeBlock = new CreateElement({ tag: 'div', className: 'range-menu__range' }).getnode();
     this.rangeLine = new CreateElement({ tag: 'div', className: 'range-menu__tracker' }).getnode();
     if (range1Value === '16') {
-      range1Value = current?.min!;
+      range1Value = current!.min!;
     }
     if (range2Value === '1559') {
-      range2Value = current?.max!;
+      range2Value = current!.max!;
     }
     if (range1Value === '2013') {
-      range1Value = current?.min!;
+      range1Value = current!.min!;
     }
     if (range2Value === '2022') {
-      range2Value = current?.max!;
+      range2Value = current!.max!;
     }
     this.range1 = new CreateRange({
       type: 'range',

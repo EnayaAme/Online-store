@@ -18,7 +18,7 @@ class data {
   private ListCategories: string[] = [];
   private arr: product[] = products;
   private ListBrands: string[] = [];
-  constructor () {
+  constructor() {
     this.arr.forEach((item) => {
       if (this.ListCategories.includes(item.category) === false) {
         this.ListCategories.push(item.category);
@@ -40,7 +40,7 @@ class data {
       if (this.ListCategories.includes(item.category) === false) {
         this.ListCategories.push(item.category);
       }
-    })
+    });
     const ResCategory: GetCategories[] = [];
     this.ListCategories.forEach((item) => {
       let counter = 0;
@@ -65,13 +65,13 @@ class data {
     return ResCategory;
   }
   GetBrands(brands: product[]) {
-    this.ListBrands = []
+    this.ListBrands = [];
     const brand = new ApplySort('Sort by', products).return();
     brand.forEach((item) => {
       if (this.ListBrands.includes(item.brand) === false) {
         this.ListBrands.push(item.brand);
       }
-    })
+    });
     const ResBrands: GetBrands[] = [];
     this.ListBrands.forEach((item) => {
       let counter = 0;
@@ -124,7 +124,7 @@ class data {
   GetById(id: string) {
     let ObjById: product;
     products.forEach((item: product) => {
-      if(item.id.toString() === id) {
+      if (item.id.toString() === id) {
         ObjById = item;
       }
     });

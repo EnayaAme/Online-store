@@ -3,7 +3,6 @@ import { ApplyRouting } from './ts/ApplyRouting';
 import data from './ts/data';
 
 import CreateDefaultPage from './ts/DefaultPage';
-import CreateRoute from './ts/route';
 
 const products = new data();
 const AppRouting = new ApplyRouting();
@@ -18,6 +17,10 @@ const hash = location.hash;
 const Page = new CreateDefaultPage();
 Page.CreateHeader();
 AppRouting.init(hash);
-window.addEventListener('hashchange', () => {
-  AppRouting.init(location.hash);
-}, false);
+window.addEventListener(
+  'hashchange',
+  () => {
+    AppRouting.init(location.hash);
+  },
+  false
+);

@@ -1,4 +1,4 @@
-import { ConstructorImage } from "../Interfaces";
+import { ConstructorImage } from '../Interfaces';
 
 export class CreateImage {
   private el: HTMLImageElement;

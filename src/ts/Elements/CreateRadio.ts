@@ -1,4 +1,4 @@
-import { ConstructorRadio } from "../Interfaces";
+import { ConstructorRadio } from '../Interfaces';
 
 export class CreateRadio {
   private input: HTMLInputElement;
