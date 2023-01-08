@@ -91,9 +91,63 @@ export class CardPage{
     const addToCart = new CreateElement({tag: 'div', className: 'card-page__add-to-cart'}).getnode();
     buttons.append(buyNow, addToCart);
   
+    if (localStorage.getItem('products') !== null) {
+      const cards: product[] = JSON.parse(localStorage.getItem('products')!);
+      cards.forEach((it) => {
+        if (it.id === product.id) {
+          addToCart.classList.toggle('_product-added');
+        }
+      });
+    }
 
     addToCart.addEventListener('click', () => {
-      addToCart.classList.toggle('_product-added');
+      //addToCart.classList.toggle('_product-added');
+      let totalprice = 0;
+        let counter = 0;
+        let ProductsFromLocalStorage: product[] = [];
+        if (addToCart.classList.contains('_product-added')) {
+          ProductsFromLocalStorage = JSON.parse(localStorage.getItem('products')!);
+          let index = 0;
+          ProductsFromLocalStorage.forEach((it, ind) => {
+            if (it.id === product.id) {
+              index = ind;
+            }
+          });
+          ProductsFromLocalStorage.splice(index, 1);
+          localStorage.setItem('products', JSON.stringify(ProductsFromLocalStorage));
+        } else {
+          if (localStorage.getItem('products') !== null) {
+            ProductsFromLocalStorage = JSON.parse(localStorage.getItem('products')!);
+            ProductsFromLocalStorage.push(product);
+            localStorage.setItem('products', JSON.stringify(ProductsFromLocalStorage));
+          } else {
+            ProductsFromLocalStorage.push(product);
+            localStorage.setItem('products', JSON.stringify(ProductsFromLocalStorage));
+          }
+        }
+        addToCart.classList.toggle('_product-added');
+        ProductsFromLocalStorage.forEach((it) => {
+          counter += it.counter;
+          totalprice += it.counter * it.price;
+        });
+        const cartQuantity = document.getElementById('counter-basket');
+        const AllPriceBasket = document.getElementById('all-price-basket');
+        const basket = document.getElementById('basket-img');
+        if (counter !== 0) {
+          let cc = 0;
+          ProductsFromLocalStorage.forEach(item => cc += item.counter);
+          cartQuantity!.textContent = cc.toString();
+          cartQuantity!.style.visibility = 'visible';
+          cartQuantity!.style.opacity = '1';
+          AllPriceBasket!.style.display = 'block';
+          basket!.style.display = 'none';
+          AllPriceBasket!.textContent = totalprice.toString() + '$';
+        } else {
+          cartQuantity!.style.visibility = 'hidden';
+          cartQuantity!.style.opacity = '0';
+          AllPriceBasket!.style.display = 'none';
+          basket!.style.display = 'block';
+        }
     })
     // for (let i = 0; i < 6; i++) {
     //   const smalldatacardbox = new CreateElement({ tag: 'div', className: 'smalldatacardbox' }).getnode();
