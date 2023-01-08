@@ -1,5 +1,7 @@
 import { ApplyFilters } from "./ApplyFilters";
+import { ApplySort } from "./ApplySort";
 import { CardPage } from "./CardPage";
+import { CreateListOfCards } from "./CreateListOfCards";
 import data from "./data";
 import CreateDefaultPage from "./DefaultPage";
 import { filters } from "./Interfaces";
@@ -31,9 +33,10 @@ export class ApplyRouting {
         document.body.childNodes[2].remove();
         document.body.childNodes[2].remove();
       }
-      const data = new ApplyFilters(this.filters);
-      
-      this.MainPage.CreateMain(this.filters, data.return());
+      const data = new ApplyFilters(this.filters).return();
+      this.MainPage.CreateMain(this.filters, data);
+      const DataSort = new ApplySort(this.filters.Sort, data);
+      new CreateListOfCards(DataSort.return());
       this.MainPage.CreateFooter();
     }
     if (hash.split('-')[0] === '#card') {
@@ -51,8 +54,11 @@ export class ApplyRouting {
         document.body.childNodes[2].remove();
         document.body.childNodes[2].remove();
       }
-      const data = new ApplyFilters(this.filters);
-      this.MainPage.CreateMain(this.filters, data.return());
+      const data = new ApplyFilters(this.filters).return();
+      
+      const DataSort = new ApplySort(this.filters.Sort, data);
+      this.MainPage.CreateMain(this.filters, DataSort.return());
+      new CreateListOfCards(DataSort.return());
       this.MainPage.CreateFooter();
       this.checker = true;
     }

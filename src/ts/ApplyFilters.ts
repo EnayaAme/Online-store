@@ -1,5 +1,4 @@
 import data from "./data";
-import { GetData } from "./GetDefaultData";
 import { filters, product } from "./Interfaces";
 
 export class ApplyFilters {
@@ -7,7 +6,7 @@ export class ApplyFilters {
   private DataAfterFilters:product[] = [];
   //private
   constructor(filters: filters) {
-    this.DataAfterFilters = new GetData().Get();
+    this.DataAfterFilters = new data().Get();
     if (filters.Category.length !== 0) {
       this.category(filters.Category);
     }
@@ -24,30 +23,6 @@ export class ApplyFilters {
     }
     if (filters.Search !== '') {
       this.search(filters.Search);
-    }
-    if (filters.Sort !== 'Sort by') {
-      switch (filters.Sort) {
-        case 'Rating':
-          this.SortByRating(this.DataAfterFilters);
-          console.log('Rating');
-          break;
-        case 'PriceTH':
-          console.log('Price (low to high)');
-          break;
-        case 'PriceTL':
-          console.log('Price (high to low)');
-          break;
-        case 'RD':
-          console.log('Release Date');
-          break;
-        default:
-          //this.SortByID(this.DataAfterFilters);
-          break;
-      }
-    }
-    if(filters.Sort === 'Sort by') {
-      console.log('sort by id')
-      this.SortByID(this.DataAfterFilters);
     }
   }
   return() {
@@ -118,38 +93,6 @@ export class ApplyFilters {
       }
     });
     this.DataAfterFilters = TempArray;
-  }
-  SortByRating(products: product[]) {
-    let counter = 1;
-    let temp: product;
-    for (let k = 0; k < products.length; k++){
-      let index = 0;
-      for (let i = counter; i < products.length; i++) {
-        if(products[k].rating > products[i].rating) {
-          temp = products[k];
-          products[k] = products[i];
-          products[i] = temp;
-        }
-      };
-      counter += 1;
-    };
-    console.log(products);
-  }
-  SortByID(products: product[]) {
-    let counter = 1;
-    let temp: product;
-    for (let k = 0; k < products.length; k++){
-      let index = 0;
-      for (let i = counter; i < products.length; i++) {
-        if(products[k].id > products[i].id) {
-          temp = products[k];
-          products[k] = products[i];
-          products[i] = temp;
-        }
-      };
-      counter += 1;
-    };
-    console.log(products);
   }
   swap(first:product, second: product) {
     let temp: product;
