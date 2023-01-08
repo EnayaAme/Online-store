@@ -1,10 +1,21 @@
-.cart__wrapper {
-  flex-direction: column;
-}
+// .cart__wrapper {
+//   flex-direction: column;
+// }
 
 .cart__items {
   display: flex;
   flex-direction: column;
   width: 70%;
   row-gap: 10px;
+}
+
+.cart__summary {
+  padding: 30px 30px 22px 35px;
+  width: 30%;
+  background: $color-primary;
+  border-radius: 40px 0 0 40px;
+  -webkit-animation-name: fadeInRight;
+  animation-name: fadeInRight;
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
 }

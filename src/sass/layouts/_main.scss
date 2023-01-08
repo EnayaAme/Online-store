@@ -1,4 +1,5 @@
 .main {
+  min-height: calc(100vh - 133px - 60px);
   background-color: $color-base;
   background-image: url('./assets/images/pattern.png');
   background-repeat: repeat;

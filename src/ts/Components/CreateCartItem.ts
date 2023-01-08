@@ -61,5 +61,7 @@ export class CreateCartItem extends CreateElement {
     this.delete.addEventListener('click', () => {
       this.el.remove();
     })
+
+    
   }
 }
