@@ -12,6 +12,62 @@ export class BasketPage {
     main.append(wrapper);
 
     const ListOfProducts = new CreateElement({ tag: 'div', className: 'cart__items' }).getnode();
+
+    
+    ////// SUMMARY //////
+    const summaryWrapper = new CreateElement({tag: 'div', className: 'summary__wrapper'}).getnode();
+    summary.append(summaryWrapper);
+    const promocode = new CreateElement({tag: 'div', className: 'summary__promocode'}).getnode();
+    const promocodeTitle = new CreateElement({tag: 'span', className: 'summary__title', content: 'Promo Code'}).getnode();
+    const promocodeArea = new CreateElement({tag: 'div', className: 'summary__promocode-area'}).getnode();
+    const promocodeInput = new CreateTextInput ({type: 'text', placeholder: 'balaxon | enayaame', name: 'promocode', className: 'summary__promocode-input'}).getnode();
+    const promocodeButton = new CreateElement({tag: 'button', className: 'summary__promocode-button', content: 'add'}).getnode();
+    const promocodeTextArea = new CreateElement({tag: 'div', className: 'summary__text-area'}).getnode();
+    promocodeArea.append(promocodeInput, promocodeButton)
+    promocode.append(promocodeTitle, promocodeArea, promocodeTextArea);
+
+    const promocode1 = new CreateElement({tag: 'div', className: 'summary__li'}).getnode();
+    const summaryPromocode1Left = new CreateElement({tag: 'span', content: 'Promo code 1'}).getnode();
+    const summaryPromocode1Right = new CreateElement({tag: 'span', content: '-10%'}).getnode();
+    promocode1.append(summaryPromocode1Left, summaryPromocode1Right);
+    const promocode2 = new CreateElement({tag: 'div', className: 'summary__li'}).getnode();
+    const summaryPromocode2Left = new CreateElement({tag: 'span', content: 'Promo code 2'}).getnode();
+    const summaryPromocode2Right = new CreateElement({tag: 'span', content: '-10%'}).getnode();
+    promocode2.append(summaryPromocode2Left, summaryPromocode2Right);
+    promocodeTextArea.append(promocode1, promocode2);
+
+    const orderSummary = new CreateElement({tag: 'div', className: 'summary__order-summary'}).getnode();
+    const orderTitle = new CreateElement({tag: 'span', className: 'summary__title', content: 'Order summary'}).getnode();
+    const orderTextArea = new CreateElement({tag: 'div', className: 'summary__text-area'}).getnode();
+    const orderSubtotal = new CreateElement({tag: 'div', className: 'summary__li'}).getnode();
+    const summaryOrder1Left = new CreateElement({tag: 'span', content: 'Subtotal'}).getnode();
+    const summaryOrder1Right = new CreateElement({tag: 'div', className: 'summary__price-change'}).getnode();
+
+    const summaryPrice1 = new CreateElement({tag: 'span', content: '$ 678'}).getnode();
+    const summaryPrice2 = new CreateElement({tag: 'span', content: '$ 658'}).getnode();
+
+    summaryOrder1Right.append(summaryPrice1, summaryPrice2)
+    orderSubtotal.append(summaryOrder1Left, summaryOrder1Right);
+    const orderShipping = new CreateElement({tag: 'div', className: 'summary__li'}).getnode();
+    const summaryOrder2Left = new CreateElement({tag: 'span', content: 'Shipping'}).getnode();
+    const summaryOrder2Right = new CreateElement({tag: 'span', content: '$ 20'}).getnode();
+
+    orderShipping.append(summaryOrder2Left, summaryOrder2Right);
+    orderTextArea.append(orderSubtotal, orderShipping);
+    orderSummary.append(orderTitle, orderTextArea);
+
+    const total = new CreateElement({tag: 'div', className: 'summary__total'}).getnode();
+    const totalTitle = new CreateElement({tag: 'span', className: 'summary__title', content: 'Total'}).getnode();
+    const totalPrice = new CreateElement({tag: 'span', className: 'summary__title', content: '$ 587'}).getnode();
+
+    total.append(totalTitle, totalPrice);
+
+    const checkoutButton = new CreateElement({tag: 'button', className: 'summary__checkout-button', content: 'Go to checkout'}).getnode();
+
+
+    summaryWrapper.append(promocode, orderSummary, total, checkoutButton)
+    wrapper.append(ListOfProducts, summary);
+
     //const Summary = new CreateElement({ tag: 'div', className: 'Summary' }).getnode();
     let ProductsFromLocalStorage: product[] = [];
     if (localStorage.getItem('products') !== null && localStorage.getItem('products')?.length !== 0) {
@@ -35,7 +91,7 @@ export class BasketPage {
     }
     //ProductsFromLocalStorage = JSON.parse(localStorage.getItem('products')!);
     
-    wrapper.append(ListOfProducts /*Summary*/);
+
     //const ListMenu = new CreateElement({ tag: 'div', className: 'SmalMenu' }).getnode();
     //const List = new CreateElement({ tag: 'div', className: 'list' }).getnode();
     //ListOfProducts.append(ListMenu, List);

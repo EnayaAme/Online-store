@@ -111,3 +111,22 @@ h2 {
 .item__description-text {
   @include text ('Sora', normal, 400, 1rem, rgba(105, 0, 31, 0.65), 2rem);
 }
+
+.summary__title {
+  @include text ('Sora', normal, 400, 2rem, $color-light, 2.5rem);
+}
+
+.summary__checkout-button,
+.summary__promocode-button,
+.summary__li {
+  @include text ('Sora', normal, 400, 1.3rem, $color-light, 1.6rem);
+}
+
+.summary__promocode-input,
+.summary__promocode-input::placeholder {
+  @include text ('Sora', normal, 400, 1.3rem, $color-primary, 1.6rem);
+}
+
+.summary__promocode-input::placeholder {
+  opacity: 0.5;
+}
