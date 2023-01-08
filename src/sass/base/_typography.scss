@@ -95,3 +95,19 @@ h2 {
 .cart__total {
   @include text ('Sora', normal, 400, 1.8rem, $color-light, 1.8rem);
 }
+
+.item__description-title,
+.item__category,
+.item__price,
+.item__quantity-counter,
+.item__quantity-button {
+  @include text ('Sora', normal, 400, 1.5rem, $color-primary, 2rem);
+}
+
+.item__quantity-counter {
+  text-align: center
+}
+
+.item__description-text {
+  @include text ('Sora', normal, 400, 1rem, rgba(105, 0, 31, 0.65), 2rem);
+}
