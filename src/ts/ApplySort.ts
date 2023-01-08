@@ -9,19 +9,15 @@ export class ApplySort {
       switch (sort) {
         case 'Rating':
           this.SortByRating(this.DataAfterFilters);
-          console.log('Rating');
           break;
         case 'PriceTH':
           this.SortByPriceLtoH(this.DataAfterFilters);
-          console.log('Price (low to high)');
           break;
         case 'PriceTL':
           this.SortByPriceHtoL(this.DataAfterFilters);
-          console.log('Price (high to low)');
           break;
         case 'RD':
           this.SortByReleaseDate(this.DataAfterFilters);
-          console.log('Release Date');
           break;
         default:
           //this.SortByID(this.DataAfterFilters);
@@ -29,7 +25,6 @@ export class ApplySort {
       }
     }
     if(sort === 'Sort by') {
-      console.log('sort by id')
       this.SortByID(this.DataAfterFilters);
     }
   }

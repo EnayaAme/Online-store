@@ -73,7 +73,6 @@ export class ApplyFilters {
     search = search.toLowerCase();
     const TempArray: product[] = [];
     this.DataAfterFilters.forEach((item) => {
-      //console.log(item.category.toLowerCase().includes(search))
       if (item.category.toLowerCase().includes(search)) {
         TempArray.push(item);
       } else if (item.brand.toLowerCase().includes(search)) {
