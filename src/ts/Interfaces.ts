@@ -11,6 +11,7 @@ export interface product {
   brand: string;
   category: string;
   images: string[];
+  counter: number;
 }
 
 export interface ConstructorElement {

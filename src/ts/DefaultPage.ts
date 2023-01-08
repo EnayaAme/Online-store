@@ -43,10 +43,28 @@ class CreateDefaultPage {
       src: '../assets/images/cart.svg',
       className: 'cart__icon',
       alt: 'cart icon',
-      id: 'basket',
+      id: 'basket-img',
     }).getnode();
-    const cartTotal = new CreateElement({tag: 'span', className: 'cart__total', content: '10000$'}).getnode();
-    const cartQuantity = new CreateElement({tag: 'span', className: 'cart__quantity', content: '1'}).getnode();
+    const cartTotal = new CreateElement({tag: 'span', className: 'cart__total', id: 'all-price-basket', content: '10000$'}).getnode();
+    const cartQuantity = new CreateElement({tag: 'span', className: 'cart__quantity', id: 'counter-basket', content: '1'}).getnode();
+    if (localStorage.getItem('products') !== null) {
+      const DataFromLocal: product[] = JSON.parse(localStorage.getItem('products')!)
+      if (DataFromLocal.length !== 0) {
+        let cc = 0;
+        let totalprice = 0;
+        DataFromLocal.forEach((item) => {
+          cc += item.counter
+          totalprice += item.price * item.counter;
+        });
+        cartQuantity.textContent = cc.toString();
+        cartQuantity.style.visibility = 'visible';
+        cartQuantity.style.opacity = '1';
+        cartTotal.textContent = totalprice.toString() + '$';
+        cartTotal.style.display = 'block';
+        cartIcon.style.display = 'none';
+        //cartQuantity.classList.add('cart__quantity_visible');
+      }
+    }
     cart.append(cartIcon, cartTotal, cartQuantity);
   }
   // метод для main
