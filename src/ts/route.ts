@@ -149,10 +149,8 @@ class Router {
   }
 
   AddRoutingToBasket(tag: HTMLElement) {
-    tag.onclick = (e: Event) => {
-      const target = e.target;
-      const id = (target as HTMLButtonElement).id;
-      this.AddURL(`${id}`);
+    tag.onclick = () => {
+      this.AddURL(`basket`);
     };
   }
 
