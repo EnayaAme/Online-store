@@ -45,7 +45,9 @@ class CreateDefaultPage {
       alt: 'cart icon',
       id: 'basket',
     }).getnode();
-    cart.append(cartIcon);
+    const cartTotal = new CreateElement({tag: 'span', className: 'cart__total', content: '10000$'}).getnode();
+    const cartQuantity = new CreateElement({tag: 'span', className: 'cart__quantity', content: '1'}).getnode();
+    cart.append(cartIcon, cartTotal, cartQuantity);
   }
   // метод для main
   CreateMain(filters: filters, ProductsCards: product[]) {

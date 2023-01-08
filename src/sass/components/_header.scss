@@ -27,6 +27,7 @@ header {
 
 //////////////////////
 .cart {
+  position: relative;
   display: flex;
   margin: auto;
   width: 90px;
@@ -48,7 +49,34 @@ header {
   height: 40px;
 }
 
+.cart__total {
+  margin: auto;
+  display: none;
+}
+
 .h1 {
   cursor: pointer;
   width: fit-content;
+}
+
+.cart__quantity {
+  position: absolute;
+  right: -12px;
+  top: -7px;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $color-light;
+  border: solid 1px $color-primary;
+  border-radius: 50%;
+  opacity: 0;
+  visibility: hidden;
+  transition: .3s;
+}
+
+.cart__quantity_visible {
+  opacity: 1;
+  visibility: visible;
 }
