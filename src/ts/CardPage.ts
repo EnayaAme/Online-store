@@ -131,13 +131,12 @@ export class CardPage {
         }
       });
     }
-    
+
     buyNow.addEventListener('click', () => {
       let ProductsFromLocalStorage: product[] = [];
       let totalprice = 0;
       let counter = 0;
       if (!addToCart.classList.contains('_product-added')) {
-        
         if (localStorage.getItem('products') !== null) {
           ProductsFromLocalStorage = JSON.parse(localStorage.getItem('products')!);
           ProductsFromLocalStorage.push(product);
@@ -168,7 +167,7 @@ export class CardPage {
 
     const fromcard = true;
     router.AddRoutingToBasket(buyNow, fromcard);
-    
+
     addToCart.addEventListener('click', () => {
       //addToCart.classList.toggle('_product-added');
       let totalprice = 0;
