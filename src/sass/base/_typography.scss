@@ -169,10 +169,28 @@ h2 {
 }
 
 .form__input,
-.form__input_long {
+.form__input_long,
+.form__select {
   @include text ('Inconsolata', normal, normal, 1.5rem, $color-primary, 1.5rem);
   text-align: center;
   letter-spacing: 1px;
   text-transform: uppercase;
 }
 
+.popup__button {
+  @include text ('Inconsolata', normal, normal, 1.5rem, $color-light, 1.5rem);
+  text-align: center;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.form__input_half {
+  @include text ('Inconsolata', normal, normal, 1.5rem, $color-primary, 1.5rem);
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+#ccv-placeholder,
+#email-placeholder {
+  text-align: right;
+}

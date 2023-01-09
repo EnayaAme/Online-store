@@ -41,6 +41,13 @@ export class CreateCheckoutPopup extends CreateElement {
     for (let i = 1; i < 5; i++) {
       const input = new CreateNumberInput({ type: 'number', className: 'form__input', required: true }).getnode();
       formCardNumberInputs.append(input);
+      input.addEventListener( 'keypress', (evt) => {
+        if (input.value.length > 3) {
+          evt.preventDefault();
+          //input.!nextElementSibling.focus();
+        }
+        //frontNumber.textContent = input.value;
+      }, false )
     }
     formCardNumberBlock.append(formCardNumberPlaceholder, formCardNumberInputs);
     const formCardNameBlock = new CreateElement({ tag: 'div', className: 'form__block_name'}).getnode();
@@ -51,8 +58,27 @@ export class CreateCheckoutPopup extends CreateElement {
     const formCardExpirationBlock = new CreateElement({ tag: 'div', className: 'form__block-half'}).getnode();
     const formCardExpirationPlaceholder = new CreateElement({ tag: 'span', className: 'form__placeholder', content: 'Expiration date'}).getnode();
     const formCardMonth = new CreateElement({ tag: 'div', className: 'form__input', id: 'month-input'}).getnode();
-    const formCardYear = new CreateElement({ tag: 'div', className: 'form__input'}).getnode();
+    const MonthSelect = new CreateElement({ tag: 'select', className: 'form__select'}).getnode();
+    const monthOption = new CreateElement({ tag: 'option'}).getnode();
+    MonthSelect.append(monthOption);
+    for (let i = 1; i < 13; i++) {
+      const value = i.toString().padStart(2, '0');
+      const option = new CreateElement({ tag: 'option', content: value}).getnode();
+      MonthSelect.append(option);
+    }
+    formCardMonth.append(MonthSelect);
 
+
+    const formCardYear = new CreateElement({ tag: 'div', className: 'form__input'}).getnode();
+    const YearSelect = new CreateElement({ tag: 'select', className: 'form__select'}).getnode();
+    const yearOption = new CreateElement({ tag: 'option'}).getnode();
+    YearSelect.append(yearOption);
+    for (let i = 2022; i < 2031; i++) {
+      const value = i.toString();
+      const option = new CreateElement({ tag: 'option', content: value}).getnode();
+      YearSelect.append(option);
+    }
+    formCardYear.append(YearSelect);
     formCardExpirationBlock.append(formCardExpirationPlaceholder, formCardMonth, formCardYear);
 
 
@@ -63,7 +89,26 @@ export class CreateCheckoutPopup extends CreateElement {
 
     formCardOtherBlock.append(formCardExpirationBlock, formCardCcvBlock);
 
-    form.append(formCardNumberBlock, formCardNameBlock, formCardOtherBlock);
+    const formCardAddressBlock = new CreateElement({ tag: 'div', className: 'form__block_address'}).getnode();
+    const formAddressPlaceholder = new CreateElement({ tag: 'span', className: 'form__placeholder', content: 'Shipping address'}).getnode();
+    const formCardAddressInput = new CreateTextInput({ type: 'text', name: 'address', className: 'form__input_long', required: true}).getnode();
+
+    formCardAddressBlock.append(formAddressPlaceholder, formCardAddressInput)
+    const formCardContactsBlock = new CreateElement({ tag: 'div', className: 'form__block_other'}).getnode();
+    const formPhoneBlock = new CreateElement({ tag: 'div', className: 'form__block-half'}).getnode();
+    const formPhonePlaceholder = new CreateElement({ tag: 'span', className: 'form__placeholder', id: 'phone-placeholder', content: 'Phone number'}).getnode();
+    const formPhoneInput = new CreateTextInput({ type: 'tel', name: 'phone', className: 'form__input_half', id: 'phone-input', required: true}).getnode();
+
+    formPhoneBlock.append(formPhonePlaceholder, formPhoneInput);
+    const formEmailBlock = new CreateElement({ tag: 'div', className: 'form__block-half'}).getnode();
+    const formEmailPlaceholder = new CreateElement({ tag: 'span', className: 'form__placeholder', id: 'email-placeholder', content: 'E-mail'}).getnode();
+    const formEmailInput = new CreateTextInput({ type: 'email', name: 'email', className: 'form__input_half', id: 'email-input', required: true}).getnode();
+    formEmailBlock.append(formEmailPlaceholder, formEmailInput);
+    formCardContactsBlock.append(formPhoneBlock, formEmailBlock);
+
+    const confirmButton = new CreateElement({ tag: 'button', className: 'popup__button', content: 'confirm'}).getnode();
+
+    form.append(formCardNumberBlock, formCardNameBlock, formCardOtherBlock, formCardAddressBlock, formCardContactsBlock, confirmButton);
 
     this.el.append(creditCard, form);
   }
