@@ -118,8 +118,14 @@ h2 {
 
 .summary__checkout-button,
 .summary__promocode-button,
-.summary__li {
+.summary__li,
+.price-changed {
   @include text ('Sora', normal, 400, 1.3rem, $color-light, 1.6rem);
+}
+
+.price-changed {
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: line-through;
 }
 
 .summary__promocode-input,
@@ -129,4 +135,21 @@ h2 {
 
 .summary__promocode-input::placeholder {
   opacity: 0.5;
+}
+
+.menu span {
+  @include text ('Sora', normal, 400, 1.3rem, $color-primary, 1.6rem);
+}
+
+.menu input,
+.menu input::placeholder {
+  @include text ('Sora', normal, 400, 1.3rem, $color-primary, 1.6rem);
+}
+
+.menu input::placeholder {
+  opacity: 0.5;
+}
+
+.cart-empty {
+  @include text ('Sora', normal, 400, 4.9rem, $color-primary, 6.2rem);
 }
