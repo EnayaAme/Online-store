@@ -75,6 +75,10 @@ export class ApplyRouting {
       new BasketPage(3, 1);
       new CreateCartItem(3, 1);
       this.MainPage.CreateFooter();
+      if (localStorage.getItem('fromcard') === 'true') {
+        document.getElementById('buyitnowBtn')?.click();
+        localStorage.removeItem('fromcard');
+      }
     }
     if (hash[7] === '!') {
       if (this.body.children[1] && this.body.children[2]) {
