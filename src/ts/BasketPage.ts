@@ -1,3 +1,4 @@
+import { CreateCheckoutPopup } from './CheckoutPopup';
 import { CreateElement } from './Elements/CreateElement';
 import { CreateTextInput } from './Elements/CreateTextInput';
 import { product } from './Interfaces';
@@ -30,8 +31,8 @@ export class BasketPage {
         name: 'limit',
       }).getnode();
       const page = new CreateTextInput({ type: 'number', placeholder: '1', className: 'page', name: 'page' }).getnode();
-      const LimitSpan = new CreateElement({ tag: 'span', content: 'LIMIT:' }).getnode();
-      const PageSpan = new CreateElement({ tag: 'span', content: 'PAGE:' }).getnode();
+      const LimitSpan = new CreateElement({ tag: 'span', content: 'Limit:' }).getnode();
+      const PageSpan = new CreateElement({ tag: 'span', content: 'Page:' }).getnode();
       limit.value = DefaultLimit.toString();
       limit.min = '1';
       limit.max = ProductsFromLocalStorage.length.toString();
@@ -109,12 +110,27 @@ export class BasketPage {
       const checkoutButton = new CreateElement({
         tag: 'button',
         className: 'summary__checkout-button',
+        id: 'buyitnowBtn',
         content: 'Go to checkout',
       }).getnode();
 
       summaryWrapper.append(promocode, orderSummary, total, checkoutButton);
       wrapper.append(ListOfProducts, summary);
 
+      ///////////////////
+      checkoutButton.addEventListener('click', () => {
+        const body = document.body;
+        const overlay = new CreateElement({ tag: 'div', className: 'popup__overlay'}).getnode();
+        const popup = new CreateCheckoutPopup().getnode();
+        overlay.append(popup);
+        body.append(overlay);
+        body.style.overflowY = 'hidden';
+        // overlay.addEventListener('click', () => {
+        //   popup.remove();
+        //   overlay.remove();
+        //   body.style.overflowY = 'auto';
+        // })
+      })
 
       ///////////////////
       let balaxonCounter = 0;
@@ -129,7 +145,6 @@ export class BasketPage {
           if (promocodeInput.value === 'balaxon') balaxonCounter+=1;
           if (promocodeInput.value === 'enayaame') enayaameCounter+=1;
 
-          
           const summaryPrice = new CreateElement({ tag: 'span'}).getnode();
           summaryOrder1Right.append(summaryPrice);
           const newPrice =  (Number(summaryPrice.previousElementSibling!.textContent?.slice(2)) - (Number(summaryPrice.previousElementSibling!.textContent?.slice(2)) / 100 * 10)).toFixed(2);
@@ -138,34 +153,6 @@ export class BasketPage {
           summaryPrice.previousElementSibling!.classList.add('price-changed');
         }
       })
-
-      //const Summary = new CreateElement({ tag: 'div', className: 'Summary' }).getnode();
-      // let ProductsFromLocalStorage: product[] = [];
-      //   ProductsFromLocalStorage = JSON.parse(localStorage.getItem('products')!);
-      //   ProductsFromLocalStorage.forEach((item) => {
-      //     const cartItem = new CreateCartItem({
-      //       "id": item.id,
-      //       "model": item.model,
-      //       "description": item.description,
-      //       "price": item.price,
-      //       "discountPercentage": item.discountPercentage,
-      //       "rating": item.rating,
-      //       "DateOfIssue": item.DateOfIssue,
-      //       "brand": item.brand,
-      //       "category": item.category,
-      //       "images": item.images,
-      //       "counter": item.counter,
-      //     }).getnode();
-      //     ListOfProducts.append(cartItem)
-      //   });
-
-      //const ListMenu = new CreateElement({ tag: 'div', className: 'SmalMenu' }).getnode();
-      //const List = new CreateElement({ tag: 'div', className: 'list' }).getnode();
-      //ListOfProducts.append(ListMenu, List);
-      //const TextMenu = new CreateElement({ tag: 'h2', className: 'textmenu', content: 'Products In Cart' }).getnode();
-      //const limit = new CreateTextInput({ type: 'number', placeholder: '1', className: 'limit', name: 'limit' }).getnode();
-      //const page = new CreateTextInput({ type: 'number', placeholder: '1', className: 'page', name: 'page' }).getnode();
-      //ListMenu.append(TextMenu, limit, page);
     } else {
       const body = document.body;
       const main = new CreateElement({ tag: 'main', className: 'main main_empty'}).getnode();
