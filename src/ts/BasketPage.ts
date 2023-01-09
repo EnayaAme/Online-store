@@ -21,8 +21,8 @@ export class BasketPage {
       main.append(wrapper);
 
       const menu = new CreateElement({ tag: 'div', className: 'menu' }).getnode();
-      wrapper.append(menu);
-      const TextMenu = new CreateElement({ tag: 'h2', className: 'textmenu', content: 'Products In Cart' }).getnode();
+      // wrapper.append(menu);
+      //const TextMenu = new CreateElement({ tag: 'h2', className: 'textmenu', content: 'Products In Cart' }).getnode();
       const limit = new CreateTextInput({
         type: 'number',
         placeholder: '3',
@@ -45,11 +45,11 @@ export class BasketPage {
       page.addEventListener('input', () => {
         this.route.AddRoutingInBasket(+limit.value, +page.value);
       });
-      menu.append(TextMenu, LimitSpan, limit, PageSpan, page);
+      menu.append(/*TextMenu*/ LimitSpan, limit, PageSpan, page);
 
       const ListOfProducts = new CreateElement({ tag: 'div', className: 'cart__items', id: 'cart-items' }).getnode();
       const summary = new CreateElement({ tag: 'div', className: 'cart__summary' }).getnode();
-
+      ListOfProducts.append(menu);
       ////// SUMMARY //////
       const summaryWrapper = new CreateElement({ tag: 'div', className: 'summary__wrapper' }).getnode();
       summary.append(summaryWrapper);
@@ -74,17 +74,6 @@ export class BasketPage {
       const promocodeTextArea = new CreateElement({ tag: 'div', className: 'summary__text-area' }).getnode();
       promocodeArea.append(promocodeInput, promocodeButton);
       promocode.append(promocodeTitle, promocodeArea, promocodeTextArea);
-
-      const promocode1 = new CreateElement({ tag: 'div', className: 'summary__li' }).getnode();
-      const summaryPromocode1Left = new CreateElement({ tag: 'span', content: 'Promo code 1' }).getnode();
-      const summaryPromocode1Right = new CreateElement({ tag: 'span', content: '-10%' }).getnode();
-      promocode1.append(summaryPromocode1Left, summaryPromocode1Right);
-      const promocode2 = new CreateElement({ tag: 'div', className: 'summary__li' }).getnode();
-      const summaryPromocode2Left = new CreateElement({ tag: 'span', content: 'Promo code 2' }).getnode();
-      const summaryPromocode2Right = new CreateElement({ tag: 'span', content: '-10%' }).getnode();
-      promocode2.append(summaryPromocode2Left, summaryPromocode2Right);
-      promocodeTextArea.append(promocode1, promocode2);
-
       const orderSummary = new CreateElement({ tag: 'div', className: 'summary__order-summary' }).getnode();
       const orderTitle = new CreateElement({
         tag: 'span',
@@ -95,11 +84,8 @@ export class BasketPage {
       const orderSubtotal = new CreateElement({ tag: 'div', className: 'summary__li' }).getnode();
       const summaryOrder1Left = new CreateElement({ tag: 'span', content: 'Subtotal' }).getnode();
       const summaryOrder1Right = new CreateElement({ tag: 'div', className: 'summary__price-change' }).getnode();
-
-      const summaryPrice1 = new CreateElement({ tag: 'span', content: '$ 678' }).getnode();
-      const summaryPrice2 = new CreateElement({ tag: 'span', content: '$ 658' }).getnode();
-
-      summaryOrder1Right.append(summaryPrice1, summaryPrice2);
+      const summaryPrice = new CreateElement({ tag: 'span', content: '$ ' + totalprice.toString() }).getnode();
+      summaryOrder1Right.append(summaryPrice);
       orderSubtotal.append(summaryOrder1Left, summaryOrder1Right);
       const orderShipping = new CreateElement({ tag: 'div', className: 'summary__li' }).getnode();
       const summaryOrder2Left = new CreateElement({ tag: 'span', content: 'Shipping' }).getnode();
@@ -114,7 +100,7 @@ export class BasketPage {
       const totalPrice = new CreateElement({
         tag: 'span',
         className: 'summary__title',
-        content: totalprice.toString() + '$',
+        content: '$ ' + (totalprice + 20).toString(),
         id: 'summary-total',
       }).getnode();
 
@@ -128,6 +114,30 @@ export class BasketPage {
 
       summaryWrapper.append(promocode, orderSummary, total, checkoutButton);
       wrapper.append(ListOfProducts, summary);
+
+
+      ///////////////////
+      let balaxonCounter = 0;
+      let enayaameCounter = 0;
+      promocodeButton.addEventListener('click', () => {
+        if ((promocodeInput.value === 'balaxon' && balaxonCounter === 0) || (promocodeInput.value === 'enayaame' && enayaameCounter == 0)) {
+          const promocode = new CreateElement({ tag: 'div', className: 'summary__li' }).getnode();
+          const summaryPromocode1Left = new CreateElement({ tag: 'span', content: promocodeInput.value }).getnode();
+          const summaryPromocode1Right = new CreateElement({ tag: 'span', content: '-10%' }).getnode();
+          promocode.append(summaryPromocode1Left, summaryPromocode1Right);
+          promocodeTextArea.append(promocode);
+          if (promocodeInput.value === 'balaxon') balaxonCounter+=1;
+          if (promocodeInput.value === 'enayaame') enayaameCounter+=1;
+
+          
+          const summaryPrice = new CreateElement({ tag: 'span'}).getnode();
+          summaryOrder1Right.append(summaryPrice);
+          const newPrice =  (Number(summaryPrice.previousElementSibling!.textContent?.slice(2)) - (Number(summaryPrice.previousElementSibling!.textContent?.slice(2)) / 100 * 10)).toFixed(2);
+          summaryPrice.textContent = '$ ' + newPrice;
+          totalPrice.textContent = '$ ' + ((20 + +newPrice)).toFixed(2);
+          summaryPrice.previousElementSibling!.classList.add('price-changed');
+        }
+      })
 
       //const Summary = new CreateElement({ tag: 'div', className: 'Summary' }).getnode();
       // let ProductsFromLocalStorage: product[] = [];
@@ -158,7 +168,9 @@ export class BasketPage {
       //ListMenu.append(TextMenu, limit, page);
     } else {
       const body = document.body;
-      const main = new CreateElement({ tag: 'main', className: 'main', content: 'Вы ничего не выбрали' }).getnode();
+      const main = new CreateElement({ tag: 'main', className: 'main main_empty'}).getnode();
+      const empty = new CreateElement({ tag: 'span', className: 'cart-empty', content: 'Cart is empty' }).getnode();
+      main.append(empty);
       body.append(main);
     }
   }

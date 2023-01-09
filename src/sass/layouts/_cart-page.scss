@@ -19,3 +19,38 @@
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
 }
+
+.menu {
+  order: 1;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.menu span {
+  margin-right: 5px;
+}
+
+.menu input {
+  padding: 0 10px;
+  width: 60px;
+  height: 25px;
+  border: none;
+  outline: none;
+  background: rgba(105, 0, 31, 0.2);
+  border-radius: 40px;
+  transition: .3s;
+  &::-webkit-inner-spin-button {
+    cursor: pointer;
+    transition: .3s;
+  }
+}
+
+.limit {
+  margin-right: 10px;
+}
+
+.cart-empty {
+  margin: auto;
+}
