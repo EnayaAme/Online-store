@@ -100,6 +100,15 @@
 }
 
 .popup__front-number {
+  display: flex;
+  position: absolute;
+  margin: 0 auto;
+  top: 103px;
+  left: 19px;
+  font-size: 38px;
+}
+
+.popup__number {
   position: absolute;
   margin: 0 auto;
   top: 103px;
