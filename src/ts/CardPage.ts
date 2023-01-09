@@ -57,12 +57,6 @@ export class CardPage {
         className: 'smallImgContainer',
       }).getnode();
       const smallimg = new CreateImage({ src: `${it}`, id: 'smallImg', className: 'smallImg' }).getnode();
-      //const smallimg = new Image(150, 100);
-      // smallimg.src = `${it}`;
-      // smallimg.style.margin = '20px';
-      // smallimg.onclick = () => {
-      //   currentimage.style.background = `url('${smallimg.src}') no-repeat center / contain`;
-      // };
       smallimgContainer.append(smallimg);
       imgRow.append(smallimgContainer);
 
@@ -92,12 +86,12 @@ export class CardPage {
     const priceNoDiscount = new CreateElement({
       tag: 'span',
       className: 'price-no-discount',
-      content: '$' + ((product.discountPercentage / 100) * product.price + product.price).toFixed(2).toString(),
+      content: '$ ' + ((product.discountPercentage / 100) * product.price + product.price).toFixed(2).toString(),
     }).getnode();
     const priceWithDiscount = new CreateElement({
       tag: 'span',
       className: 'price-with-discount',
-      content: '$' + product.price.toString(),
+      content: '$ ' + product.price.toString(),
     }).getnode();
     priceBlock.append(priceNoDiscount, priceWithDiscount);
     const description = new CreateElement({ tag: 'span', className: 'data__title', content: 'Description:' }).getnode();
@@ -137,7 +131,44 @@ export class CardPage {
         }
       });
     }
+    
+    buyNow.addEventListener('click', () => {
+      let ProductsFromLocalStorage: product[] = [];
+      let totalprice = 0;
+      let counter = 0;
+      if (!addToCart.classList.contains('_product-added')) {
+        
+        if (localStorage.getItem('products') !== null) {
+          ProductsFromLocalStorage = JSON.parse(localStorage.getItem('products')!);
+          ProductsFromLocalStorage.push(product);
+          localStorage.setItem('products', JSON.stringify(ProductsFromLocalStorage));
+        } else {
+          ProductsFromLocalStorage.push(product);
+          localStorage.setItem('products', JSON.stringify(ProductsFromLocalStorage));
+        }
+      }
+      ProductsFromLocalStorage.forEach((it) => {
+        counter += it.counter;
+        totalprice += it.counter * it.price;
+      });
+      const cartQuantity = document.getElementById('counter-basket');
+      const AllPriceBasket = document.getElementById('all-price-basket');
+      const basket = document.getElementById('basket-img');
+      if (counter !== 0) {
+        let cc = 0;
+        ProductsFromLocalStorage.forEach((item) => (cc += item.counter));
+        cartQuantity!.textContent = cc.toString();
+        cartQuantity!.style.visibility = 'visible';
+        cartQuantity!.style.opacity = '1';
+        AllPriceBasket!.style.display = 'block';
+        basket!.style.display = 'none';
+        AllPriceBasket!.textContent = '$ ' + totalprice.toString();
+      }
+    });
 
+    const fromcard = true;
+    router.AddRoutingToBasket(buyNow, fromcard);
+    
     addToCart.addEventListener('click', () => {
       //addToCart.classList.toggle('_product-added');
       let totalprice = 0;
@@ -179,7 +210,7 @@ export class CardPage {
         cartQuantity!.style.opacity = '1';
         AllPriceBasket!.style.display = 'block';
         basket!.style.display = 'none';
-        AllPriceBasket!.textContent = totalprice.toString() + '$';
+        AllPriceBasket!.textContent = '$ ' + totalprice.toString();
       } else {
         cartQuantity!.style.visibility = 'hidden';
         cartQuantity!.style.opacity = '0';

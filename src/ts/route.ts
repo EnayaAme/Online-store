@@ -146,6 +146,7 @@ class Router {
     tag.onclick = (e: Event) => {
       const target = e.target;
       const id = (target as HTMLButtonElement).id;
+      console.log(id);
       this.AddURL(`#${id}`);
     };
   }
@@ -158,7 +159,7 @@ class Router {
     };
   }
 
-  AddRoutingToBasket(tag: HTMLElement) {
+  AddRoutingToBasket(tag: HTMLElement, fromcard?: boolean) {
     tag.onclick = () => {
       this.AddURL(`basket`);
     };

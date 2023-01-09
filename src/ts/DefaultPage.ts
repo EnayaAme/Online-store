@@ -68,7 +68,7 @@ class CreateDefaultPage {
         cartQuantity.textContent = cc.toString();
         cartQuantity.style.visibility = 'visible';
         cartQuantity.style.opacity = '1';
-        cartTotal.textContent = totalprice.toString() + '$';
+        cartTotal.textContent = '$ ' + totalprice.toString();
         cartTotal.style.display = 'block';
         cartIcon.style.display = 'none';
         //cartQuantity.classList.add('cart__quantity_visible');

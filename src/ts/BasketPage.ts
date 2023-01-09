@@ -85,7 +85,7 @@ export class BasketPage {
       const orderSubtotal = new CreateElement({ tag: 'div', className: 'summary__li' }).getnode();
       const summaryOrder1Left = new CreateElement({ tag: 'span', content: 'Subtotal' }).getnode();
       const summaryOrder1Right = new CreateElement({ tag: 'div', className: 'summary__price-change' }).getnode();
-      const summaryPrice = new CreateElement({ tag: 'span', content: '$ ' + totalprice.toString() }).getnode();
+      const summaryPrice = new CreateElement({ tag: 'span', content: '$ ' + totalprice.toString(), id: 'subtotal-price' }).getnode();
       summaryOrder1Right.append(summaryPrice);
       orderSubtotal.append(summaryOrder1Left, summaryOrder1Right);
       const orderShipping = new CreateElement({ tag: 'div', className: 'summary__li' }).getnode();
@@ -133,24 +133,98 @@ export class BasketPage {
       })
 
       ///////////////////
+      let balaxon = '';
+      let enayaame = '';
       let balaxonCounter = 0;
       let enayaameCounter = 0;
+      let sale = 0;
+      if(window.localStorage.getItem('balaxon') !== null) {
+        balaxon = 'balaxon';
+        balaxonCounter = +window.localStorage.getItem('balaxon')!;
+      }
+      if(window.localStorage.getItem('enayaame') !== null) {
+        enayaame = 'enayaame';
+        enayaameCounter = +window.localStorage.getItem('enayaame')!;
+      }
+
+      if (balaxon === 'balaxon' && balaxonCounter === 1) {
+        const promocode = new CreateElement({ tag: 'div', className: 'summary__li' }).getnode();
+        const summaryPromocode1Left = new CreateElement({ tag: 'span', content: balaxon }).getnode();
+        const summaryPromocode1Right = new CreateElement({ tag: 'span', content: '-10%' }).getnode();
+        const balaxonDel = new CreateElement({
+          tag: 'button',
+          className: 'summary__promocode-button',
+          content: 'del',
+        }).getnode();
+        balaxonDel.addEventListener('click', () => {
+          window.localStorage.removeItem('balaxon');
+          location.reload();
+        });
+        promocode.append(summaryPromocode1Left, summaryPromocode1Right, balaxonDel);
+        promocodeTextArea.append(promocode);
+        sale += 0.1;
+      }
+
+      
+      if (enayaame === 'enayaame' && enayaameCounter === 1) {
+        const promocode = new CreateElement({ tag: 'div', className: 'summary__li' }).getnode();
+        const summaryPromocode1Left = new CreateElement({ tag: 'span', content: enayaame }).getnode();
+        const summaryPromocode1Right = new CreateElement({ tag: 'span', content: '-10%' }).getnode();
+        const enayaameDel = new CreateElement({
+          tag: 'button',
+          className: 'summary__promocode-button',
+          content: 'del',
+        }).getnode();
+        enayaameDel.addEventListener('click', () => {
+          window.localStorage.removeItem('enayaame');
+          location.reload();
+        });
+        promocode.append(summaryPromocode1Left, summaryPromocode1Right, enayaameDel);
+        promocodeTextArea.append(promocode);
+        sale += 0.1;
+      }
+
+      if (enayaame === 'enayaame' || balaxon === 'balaxon') {
+        const summaryPrice = new CreateElement({ tag: 'span', id: 'summary-price' }).getnode();
+        summaryOrder1Right.append(summaryPrice);
+        //const newPrice =  (Number(summaryPrice.previousElementSibling!.textContent?.slice(2)) - (Number(summaryPrice.previousElementSibling!.textContent?.slice(2)) / 100 * 10)).toFixed(2);
+        summaryPrice.textContent = '$ ' + (totalprice - (totalprice * sale));
+        totalPrice.textContent = '$ ' + (20 + (totalprice - (totalprice * sale))).toFixed(2);
+        summaryPrice.previousElementSibling!.classList.add('price-changed');
+      }
+
       promocodeButton.addEventListener('click', () => {
         if ((promocodeInput.value === 'balaxon' && balaxonCounter === 0) || (promocodeInput.value === 'enayaame' && enayaameCounter == 0)) {
-          const promocode = new CreateElement({ tag: 'div', className: 'summary__li' }).getnode();
-          const summaryPromocode1Left = new CreateElement({ tag: 'span', content: promocodeInput.value }).getnode();
-          const summaryPromocode1Right = new CreateElement({ tag: 'span', content: '-10%' }).getnode();
-          promocode.append(summaryPromocode1Left, summaryPromocode1Right);
-          promocodeTextArea.append(promocode);
+          // const promocode = new CreateElement({ tag: 'div', className: 'summary__li' }).getnode();
+          // const summaryPromocode1Left = new CreateElement({ tag: 'span', content: promocodeInput.value }).getnode();
+          // const summaryPromocode1Right = new CreateElement({ tag: 'span', content: '-10%' }).getnode();
+          // promocode.append(summaryPromocode1Left, summaryPromocode1Right);
+          // promocodeTextArea.append(promocode);
           if (promocodeInput.value === 'balaxon') balaxonCounter+=1;
           if (promocodeInput.value === 'enayaame') enayaameCounter+=1;
+          
+          // if(window.localStorage.getItem('balaxon') === null && window.localStorage.getItem('enayaame') === null) {
+          //   const summaryPrice = new CreateElement({ tag: 'span', id: 'summary-price' }).getnode();
+          //   summaryOrder1Right.append(summaryPrice);
 
-          const summaryPrice = new CreateElement({ tag: 'span'}).getnode();
-          summaryOrder1Right.append(summaryPrice);
-          const newPrice =  (Number(summaryPrice.previousElementSibling!.textContent?.slice(2)) - (Number(summaryPrice.previousElementSibling!.textContent?.slice(2)) / 100 * 10)).toFixed(2);
-          summaryPrice.textContent = '$ ' + newPrice;
-          totalPrice.textContent = '$ ' + ((20 + +newPrice)).toFixed(2);
-          summaryPrice.previousElementSibling!.classList.add('price-changed');
+          
+          // const newPrice =  (Number(summaryPrice.previousElementSibling!.textContent?.slice(2)) - (Number(summaryPrice.previousElementSibling!.textContent?.slice(2)) / 100 * 10)).toFixed(2);
+          // summaryPrice.textContent = '$ ' + newPrice;
+          // totalPrice.textContent = '$ ' + ((20 + +newPrice)).toFixed(2);
+          // summaryPrice.previousElementSibling!.classList.add('price-changed');
+          // }
+          if (balaxonCounter === 1 && enayaameCounter === 1){
+            window.localStorage.setItem('balaxon', '1');
+            window.localStorage.setItem('enayaame', '1');
+          } else {
+            if(balaxonCounter === 1){
+              window.localStorage.setItem('balaxon', '1');
+            } else {
+              window.localStorage.setItem('enayaame', '1');
+            }
+          }
+          location.reload();
+
         }
       })
     } else {
