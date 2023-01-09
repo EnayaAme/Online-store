@@ -153,3 +153,26 @@ h2 {
 .cart-empty {
   @include text ('Sora', normal, 400, 4.9rem, $color-primary, 6.2rem);
 }
+
+.popup__front-name-placeholder,
+.popup__front-expiration-placeholder {
+  @include text ('Inconsolata', normal, normal, 1rem, $color-light, 1.15rem);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.5;
+}
+
+.form__placeholder {
+  @include text ('Inconsolata', normal, bold, 1.1rem, rgba(105, 0, 31, 0.6), 1.15rem);
+  text-transform: uppercase;
+  //text-shadow: 0 1px 1px rgb(0 0 0 / 30%);
+}
+
+.form__input,
+.form__input_long {
+  @include text ('Inconsolata', normal, normal, 1.5rem, $color-primary, 1.5rem);
+  text-align: center;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+

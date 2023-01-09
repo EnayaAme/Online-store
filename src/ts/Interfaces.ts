@@ -44,9 +44,11 @@ export interface ConstructorCheckbox {
 
 export interface ConstructotTextInput {
   type: string;
-  placeholder: string;
   name: string;
+  id?: string;
+  placeholder?: string;
   className?: string;
+  required?: boolean;
 }
 
 export interface ConstructorRange {
@@ -56,6 +58,15 @@ export interface ConstructorRange {
   value: string;
   id: string;
   className?: string;
+}
+
+export interface ConstructorNumberInput {
+  type: string;
+  value?: string;
+  id?: string;
+  className?: string;
+  placeholder?: string;
+  required?: boolean;
 }
 
 export interface ConstructorRangeBlock {

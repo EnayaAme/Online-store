@@ -3,6 +3,7 @@ import { ApplyRouting } from './ts/ApplyRouting';
 import data from './ts/data';
 
 import CreateDefaultPage from './ts/DefaultPage';
+import { CreateElement } from './ts/Elements/CreateElement';
 
 const products = new data();
 const AppRouting = new ApplyRouting();

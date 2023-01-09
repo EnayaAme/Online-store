@@ -187,24 +187,6 @@ export class CardPage {
         basket!.style.display = 'block';
       }
     });
-    // for (let i = 0; i < 6; i++) {
-    //   const smalldatacardbox = new CreateElement({ tag: 'div', className: 'smalldatacardbox' }).getnode();
-    //   smalldatacardbox.append(new CreateElement({ tag: 'h3', className: 'datasmalldescription' }).getnode());
-    //   smalldatacardbox.append(new CreateElement({ tag: 'p', className: 'datasmalldescription' }).getnode());
-    //   carddata.append(smalldatacardbox);
-    // }
-    // carddata.childNodes[0].childNodes[0].textContent = 'Description:';
-    // carddata.childNodes[0].childNodes[1].textContent = product.description;
-    // carddata.childNodes[1].childNodes[0].textContent = 'Discount Percentage:';
-    // carddata.childNodes[1].childNodes[1].textContent = product.discountPercentage.toString();
-    // carddata.childNodes[2].childNodes[0].textContent = 'Rating:';
-    // carddata.childNodes[2].childNodes[1].textContent = product.rating.toString();
-    // carddata.childNodes[3].childNodes[0].textContent = 'Date release:';
-    // carddata.childNodes[3].childNodes[1].textContent = product.DateOfIssue.toString();
-    // carddata.childNodes[4].childNodes[0].textContent = 'Brand:';
-    // carddata.childNodes[4].childNodes[1].textContent = product.brand;
-    // carddata.childNodes[5].childNodes[0].textContent = 'Category:';
-    // carddata.childNodes[5].childNodes[1].textContent = product.category;
     carddata.append(dataTop, priceBlock, description, release, brand, category, buttons);
   }
 }
