@@ -15,7 +15,9 @@ export class CreateCheckoutPopup extends CreateElement {
     const frontChip = new CreateElement({ tag: 'div', className: 'popup__front-chip'}).getnode();
     const frontLogo = new CreateElement({ tag: 'div', className: 'popup__front-logo card-logo'}).getnode();
     const frontNumber = new CreateElement({ tag: 'div', className: 'popup__front-number'}).getnode();
+    
     const frontName = new CreateElement({ tag: 'div', className: 'popup__front-name'}).getnode();
+    
     const namePlaceholder = new CreateElement({ tag: 'span', className: 'popup__front-name-placeholder', content: 'Card holder'}).getnode();
     const nameText = new CreateElement({ tag: 'div', className: 'popup__front-name-text'}).getnode();
     frontName.append(namePlaceholder, nameText);
@@ -38,8 +40,41 @@ export class CreateCheckoutPopup extends CreateElement {
     const formCardNumberBlock = new CreateElement({ tag: 'div', className: 'form__block'}).getnode();
     const formCardNumberPlaceholder = new CreateElement({ tag: 'span', className: 'form__placeholder', content: 'Card number'}).getnode();
     const formCardNumberInputs = new CreateElement({ tag: 'div', className: 'form__inputs'}).getnode();
+    const reg = new RegExp('[0-9]');
+    const char = new RegExp('[^\d]');
     for (let i = 1; i < 5; i++) {
-      const input = new CreateNumberInput({ type: 'number', className: 'form__input', id: i.toString(), required: true }).getnode();
+      const input = new CreateNumberInput({ type: 'text', className: 'form__input', id: i.toString(), required: true }).getnode();
+      
+      const number = new CreateElement({ tag: 'div', className: '.popup__number'}).getnode();
+      frontNumber.append(number);
+      input.maxLength = 4;
+      input.onpaste = () => {return false}
+      input.addEventListener('input', () => {
+        let lastchar = input.value[input.value.length - 1];
+        console.log(lastchar);
+        input.value = input.value.slice(0, -1);
+        number.textContent = input.value;
+        if(reg.test(lastchar)) {
+          input.value += lastchar;
+          number.textContent += lastchar;
+          if (i === 1) {
+            switch (input.value[0]) {
+              case '4':
+                frontLogo.textContent = 'VISA';
+              break;
+              case '5':
+                frontLogo.textContent = 'MasterCard';
+              break;
+              case '6':
+                frontLogo.textContent = 'Discover';
+              break;
+              default:
+                frontLogo.textContent = '';
+              break;
+            }
+          }
+        }
+      });
       formCardNumberInputs.append(input);
       console.log(document.getElementById('1'))
       input.addEventListener( 'keypress', (evt) => {
@@ -86,6 +121,16 @@ export class CreateCheckoutPopup extends CreateElement {
     const formCardCcvBlock = new CreateElement({ tag: 'div', className: 'form__block-half'}).getnode();
     const formCardCcvPlaceholder = new CreateElement({ tag: 'span', className: 'form__placeholder', id: 'ccv-placeholder', content: 'Ccv'}).getnode();
     const formCardCcvInput = new CreateTextInput({ type: 'text', name: 'card-ccv', className: 'form__input', id: 'card-ccv', required: true}).getnode();
+    formCardCcvInput.maxLength = 3;
+    formCardCcvInput.addEventListener('input', () => {
+      let lastchar = formCardCcvInput.value[formCardCcvInput.value.length - 1];
+      //console.log(lastchar);
+      formCardCcvInput.value = formCardCcvInput.value.slice(0, -1);
+      if(reg.test(lastchar)) {
+        formCardCcvInput.value += lastchar;
+      }
+    });
+    formCardCcvInput.onpaste = () => {return false}
     formCardCcvBlock.append(formCardCcvPlaceholder, formCardCcvInput);
 
     formCardOtherBlock.append(formCardExpirationBlock, formCardCcvBlock);
