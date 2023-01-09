@@ -25,7 +25,12 @@
   top: -112px;
   left: 50%;
   transform: translateX(-50%);
+  &:hover .popup__flip,
+  &.hover .popup__flip {
+    transform: rotateY(180deg);
+  }
 }
+
 .popup__flip {
   transition: 0.6s;
   transform-style: preserve-3d;
@@ -151,8 +156,10 @@
     left: 0;
 }
 
-.popuo__back-logo {
+.popup__back-logo {
+  position: absolute;
   top: 185px;
+  right: 20px;
 }
 
 .popup__back-ccv {
@@ -300,4 +307,18 @@
   &:active {
     transform: scale(1.03);
   }
+}
+
+.card-logo {
+  width: 60px;
+  height: 60px;
+}
+
+.popup__back-logo {
+  top: 185px;
+}
+
+.popup__back-ccv-placeholder {
+  margin: -25px 0 14px;
+  display: block;
 }

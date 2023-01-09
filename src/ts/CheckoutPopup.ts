@@ -1,4 +1,5 @@
 import { CreateElement } from "./Elements/CreateElement";
+import { CreateImage } from "./Elements/CreateImage";
 import { CreateNumberInput } from "./Elements/CreateNumberInput";
 import { CreateTextInput } from "./Elements/CreateTextInput";
 
@@ -61,13 +62,19 @@ export class CreateCheckoutPopup extends CreateElement {
           if (i === 1) {
             switch (input.value[0]) {
               case '4':
-                frontLogo.textContent = 'VISA';
+                frontLogo.style.background = `url('./assets/images/visa.svg') no-repeat center / contain`;
+                backLogo.style.background = `url('./assets/images/visa.svg') no-repeat center / contain`;
+                //frontLogo.textContent = 'VISA';
               break;
               case '5':
-                frontLogo.textContent = 'MasterCard';
+                frontLogo.style.background = `url('./assets/images/mastercard.svg') no-repeat center / contain`;
+                backLogo.style.background = `url('./assets/images/mastercard.svg') no-repeat center / contain`;
+                //frontLogo.textContent = 'MasterCard';
               break;
               case '6':
-                frontLogo.textContent = 'Discover';
+                frontLogo.style.background = `url('./assets/images/discover.svg') no-repeat center / contain`;
+                backLogo.style.background = `url('./assets/images/discover.svg') no-repeat center / contain`;
+                //frontLogo.textContent = 'Discover';
               break;
               default:
                 frontLogo.textContent = '';
@@ -77,14 +84,6 @@ export class CreateCheckoutPopup extends CreateElement {
         }
       });
       formCardNumberInputs.append(input);
-      // console.log(document.getElementById('1'))
-      // input.addEventListener( 'keypress', (evt) => {
-      //   if (input.value.length > 3) {
-      //     evt.preventDefault();
-      //     //input.!nextElementSibling.focus();
-      //   }
-      //   frontNumber.textContent = input.value;
-      // }, false )
     }
     formCardNumberBlock.append(formCardNumberPlaceholder, formCardNumberInputs);
     const formCardNameBlock = new CreateElement({ tag: 'div', className: 'form__block_name'}).getnode();
@@ -125,6 +124,18 @@ export class CreateCheckoutPopup extends CreateElement {
     const formCardCcvBlock = new CreateElement({ tag: 'div', className: 'form__block-half'}).getnode();
     const formCardCcvPlaceholder = new CreateElement({ tag: 'span', className: 'form__placeholder', id: 'ccv-placeholder', content: 'Ccv'}).getnode();
     const formCardCcvInput = new CreateTextInput({ type: 'text', name: 'card-ccv', className: 'form__input', id: 'card-ccv', required: true}).getnode();
+    formCardCcvInput.addEventListener('click', () => {
+      formCardCcvInput.focus()
+      if (!creditCard.classList.contains('hover')) creditCard.classList.add('hover');
+    })
+
+    // form.addEventListener('click', (e) => {
+    //   if ((e.target as HTMLElement).id === 'card-ccv') {
+    //     if (creditCard.classList.contains('hover')) creditCard.classList.remove('hover');
+    //   }
+    // })
+
+    
     formCardCcvInput.maxLength = 3;
     formCardCcvInput.addEventListener('input', () => {
       let lastchar = formCardCcvInput.value[formCardCcvInput.value.length - 1];
