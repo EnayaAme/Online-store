@@ -39,14 +39,15 @@ export class CreateCheckoutPopup extends CreateElement {
     const formCardNumberPlaceholder = new CreateElement({ tag: 'span', className: 'form__placeholder', content: 'Card number'}).getnode();
     const formCardNumberInputs = new CreateElement({ tag: 'div', className: 'form__inputs'}).getnode();
     for (let i = 1; i < 5; i++) {
-      const input = new CreateNumberInput({ type: 'number', className: 'form__input', required: true }).getnode();
+      const input = new CreateNumberInput({ type: 'number', className: 'form__input', id: i.toString(), required: true }).getnode();
       formCardNumberInputs.append(input);
+      console.log(document.getElementById('1'))
       input.addEventListener( 'keypress', (evt) => {
         if (input.value.length > 3) {
           evt.preventDefault();
           //input.!nextElementSibling.focus();
         }
-        //frontNumber.textContent = input.value;
+        frontNumber.textContent = input.value;
       }, false )
     }
     formCardNumberBlock.append(formCardNumberPlaceholder, formCardNumberInputs);
@@ -105,8 +106,44 @@ export class CreateCheckoutPopup extends CreateElement {
     const formEmailInput = new CreateTextInput({ type: 'email', name: 'email', className: 'form__input_half', id: 'email-input', required: true}).getnode();
     formEmailBlock.append(formEmailPlaceholder, formEmailInput);
     formCardContactsBlock.append(formPhoneBlock, formEmailBlock);
-
+    //////////////
     const confirmButton = new CreateElement({ tag: 'button', className: 'popup__button', content: 'confirm'}).getnode();
+
+    confirmButton.addEventListener('click', () => {
+      let message = '';
+
+      let month = Array.from(MonthSelect.getElementsByTagName('option')).filter((option) => {
+        return option.selected;
+      })
+      let year = Array.from(MonthSelect.getElementsByTagName('option')).filter((option) => {
+        return option.selected;
+      })
+
+      if (!(/^([.a-zA-Z]{3,}[\s]){2,}$/).test(formCardNameInput.value += ' ')) {
+        message +="\nCard holder name should contain at least 2 words each one not less than 3 letters!";
+      }
+
+      if (!month[0].textContent) {
+        message +="\nChose expiration month!";
+      }
+      if (!year[0].textContent) {
+        message +="\nChose expiration year!";
+      }
+      if (!(/^([.0-9a-zA-Z\-\,]{5,}[\s]){3,}$/).test(formCardAddressInput.value += ' ')) {
+        message +="\nShipping address should contain at least 3 words each one not less than 5 symbols!";
+      }
+      if (!(/^[\+][0-9]{9,15}$/).test(formPhoneInput.value)) {
+        message +="\nPhone number should start with '+' and contain 9 or more digits!";
+      }
+      if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(formEmailInput.value))) {
+        message +="\nInvalid email address!";
+      }
+
+
+      if (message) {
+        alert(message)
+      }
+    })
 
     form.append(formCardNumberBlock, formCardNameBlock, formCardOtherBlock, formCardAddressBlock, formCardContactsBlock, confirmButton);
 
