@@ -12,7 +12,7 @@ import { filters, product } from './Interfaces';
 import { CreateRadio } from './Elements/CreateRadio';
 import { CreateLink } from './Elements/CreateLink';
 
-class CreateDefaultPage {
+export class CreateDefaultPage {
   // переменная которая хранит body
   private body = document.body;
   // Роутер
