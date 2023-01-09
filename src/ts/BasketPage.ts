@@ -125,11 +125,13 @@ export class BasketPage {
         overlay.append(popup);
         body.append(overlay);
         body.style.overflowY = 'hidden';
-        // overlay.addEventListener('click', () => {
-        //   popup.remove();
-        //   overlay.remove();
-        //   body.style.overflowY = 'auto';
-        // })
+        overlay.addEventListener('click', (e) => {
+          if ((e.target as HTMLElement).classList.contains('popup__overlay')) {
+            popup.remove();
+            overlay.remove();
+            body.style.overflowY = 'auto';
+          }
+        })
       })
 
       ///////////////////
