@@ -1,3 +1,4 @@
+import { errorpage } from './404';
 import { ApplyFilters } from './ApplyFilters';
 import { ApplySort } from './ApplySort';
 import { BasketPage } from './BasketPage';
@@ -42,15 +43,15 @@ export class ApplyRouting {
       const DataSort = new ApplySort(this.filters.Sort, data);
       new CreateListOfCards(DataSort.return());
       this.MainPage.CreateFooter();
-    }
-    if (hash.split('-')[0] === '#card') {
+    } else 
+    if (hash.split('-')[0] === '#card' && +hash.split('-')[1] < 64) {
       if (this.body.children[1] && this.body.children[2]) {
         this.body.children[2].remove();
         this.body.children[1].remove();
       }
       new CardPage(this.products.GetById(hash.split('-')[1]));
       this.MainPage.CreateFooter();
-    }
+    } else
     if (hash === '') {
       this.ToDefaultFilters();
       this.MainPage = new CreateDefaultPage();
@@ -65,7 +66,7 @@ export class ApplyRouting {
       new CreateListOfCards(DataSort.return());
       this.MainPage.CreateFooter();
       this.checker = true;
-    }
+    } else 
     if (hash === '#basket') {
       this.checker = true;
       if (this.body.children[1] && this.body.children[2]) {
@@ -79,7 +80,7 @@ export class ApplyRouting {
         document.getElementById('buyitnowBtn')?.click();
         localStorage.removeItem('fromcard');
       }
-    }
+    } else 
     if (hash[7] === '!') {
       if (this.body.children[1] && this.body.children[2]) {
         this.body.children[2].remove();
@@ -101,6 +102,9 @@ export class ApplyRouting {
       new BasketPage(this.LimitPage.limit, this.LimitPage.page);
       new CreateCartItem(this.LimitPage.limit, this.LimitPage.page);
       this.MainPage.CreateFooter();
+    } else {
+      this.body.innerHTML = ' ';
+      new errorpage();
     }
     ///filters///
 
