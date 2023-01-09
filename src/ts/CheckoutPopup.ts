@@ -129,11 +129,11 @@ export class CreateCheckoutPopup extends CreateElement {
       if (!creditCard.classList.contains('hover')) creditCard.classList.add('hover');
     })
 
-    // form.addEventListener('click', (e) => {
-    //   if ((e.target as HTMLElement).id === 'card-ccv') {
-    //     if (creditCard.classList.contains('hover')) creditCard.classList.remove('hover');
-    //   }
-    // })
+    form.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).id !== 'card-ccv') {
+        if (creditCard.classList.contains('hover')) creditCard.classList.remove('hover');
+      }
+    })
 
     
     formCardCcvInput.maxLength = 3;
@@ -141,6 +141,7 @@ export class CreateCheckoutPopup extends CreateElement {
       let lastchar = formCardCcvInput.value[formCardCcvInput.value.length - 1];
       //console.log(lastchar);
       formCardCcvInput.value = formCardCcvInput.value.slice(0, -1);
+      ccvText.textContent = formCardCcvInput.value;
       if(reg.test(lastchar)) {
         formCardCcvInput.value += lastchar;
       }

@@ -201,7 +201,14 @@ h2 {
   opacity: 0.5;
 }
 
+.popup__front-expiration-text,
+.popup__front-name {
+  @include text ('Inconsolata', normal, normal, 2rem, $color-light, 2rem);
+  opacity: 0.5;
+}
+
 .popup__back-ccv-text {
   @include text ('Inconsolata', normal, normal, 1.5rem, $color-primary, 1.5rem);
   text-align: right;
 }
+
