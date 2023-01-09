@@ -4,6 +4,10 @@
   align-items: center;
 }
 
+.item__description-title {
+  cursor: pointer;
+}
+
 .cart__item-body {
   padding: 10px;
   flex-basis: 95%;
@@ -40,6 +44,7 @@
 .item__photo-block {
   flex-basis: 15%;
   display: flex;
+  cursor: pointer;
 }
 
 .item__photo {
