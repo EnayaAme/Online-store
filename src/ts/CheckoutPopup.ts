@@ -43,11 +43,12 @@ export class CreateCheckoutPopup extends CreateElement {
     const formCardNumberInputs = new CreateElement({ tag: 'div', className: 'form__inputs'}).getnode();
     const reg = new RegExp('[0-9]');
     const char = new RegExp('[^\d]');
+    let CardNumber = '';
     for (let i = 1; i < 5; i++) {
       const input = new CreateNumberInput({ type: 'text', className: 'form__input', id: i.toString(), required: true }).getnode();
-      
       const number = new CreateElement({ tag: 'div', className: '.popup__number'}).getnode();
       frontNumber.append(number);
+      input.minLength = 4;
       input.maxLength = 4;
       input.onpaste = () => {return false}
       input.addEventListener('input', () => {
@@ -83,18 +84,14 @@ export class CreateCheckoutPopup extends CreateElement {
         }
       });
       formCardNumberInputs.append(input);
-      input.addEventListener( 'keypress', (evt) => {
-        if (input.value.length > 3) {
-          evt.preventDefault();
-          //input.!nextElementSibling.focus();
-        }
-        frontNumber.textContent = input.value;
-      }, false )
     }
     formCardNumberBlock.append(formCardNumberPlaceholder, formCardNumberInputs);
     const formCardNameBlock = new CreateElement({ tag: 'div', className: 'form__block_name'}).getnode();
     const formCardNamePlaceholder = new CreateElement({ tag: 'span', className: 'form__placeholder', content: 'Card holder'}).getnode();
     const formCardNameInput = new CreateTextInput({ type: 'text', name: 'card-holder', className: 'form__input_long', required: true}).getnode();
+    formCardNameInput.addEventListener('input', () => {
+      nameText.textContent = formCardNameInput.value.toUpperCase();
+    });
     formCardNameBlock.append(formCardNamePlaceholder, formCardNameInput);
     const formCardOtherBlock = new CreateElement({ tag: 'div', className: 'form__block_other'}).getnode();
     const formCardExpirationBlock = new CreateElement({ tag: 'div', className: 'form__block-half'}).getnode();
@@ -171,6 +168,27 @@ export class CreateCheckoutPopup extends CreateElement {
     formCardContactsBlock.append(formPhoneBlock, formEmailBlock);
     //////////////
     const confirmButton = new CreateElement({ tag: 'button', className: 'popup__button', content: 'confirm'}).getnode();
+    
+    
+    let MY = {
+      'month': '',
+      'year': ''
+    };
+    MonthSelect.addEventListener('change', () => {
+      let month = Array.from(MonthSelect.getElementsByTagName('option')).filter((option) => {
+        return option.selected;
+      });
+      MY.month = month[0].textContent!;
+      expirationText.textContent = MY.month + '/' + MY.year;
+    });
+
+    YearSelect.addEventListener('change', () => {
+      let Year = Array.from(YearSelect.getElementsByTagName('option')).filter((option) => {
+        return option.selected;
+      });
+      MY.year = Year[0].textContent!;
+      expirationText.textContent = MY.month + '/' + MY.year;
+    });
 
     confirmButton.addEventListener('click', () => {
       let message = '';
@@ -201,7 +219,16 @@ export class CreateCheckoutPopup extends CreateElement {
       if (!(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(formEmailInput.value))) {
         message +="\nInvalid email address!";
       }
-
+      let CardLength = 0;
+      frontNumber.childNodes.forEach((it) => {
+        CardLength += it.textContent?.split('').length!;
+      })
+      if (CardLength !== 16) {
+        message +="\nInvalid Card!";
+      }
+      if (formCardCcvInput.value.split('').length !== 3) {
+        message +="\nInvalid CCV!";
+      }
 
       if (message) {
         alert(message)
