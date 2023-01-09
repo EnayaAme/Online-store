@@ -141,10 +141,10 @@ export class CreateCheckoutPopup extends CreateElement {
       let lastchar = formCardCcvInput.value[formCardCcvInput.value.length - 1];
       //console.log(lastchar);
       formCardCcvInput.value = formCardCcvInput.value.slice(0, -1);
-      ccvText.textContent = formCardCcvInput.value;
       if(reg.test(lastchar)) {
         formCardCcvInput.value += lastchar;
       }
+      ccvText.textContent = formCardCcvInput.value;
     });
     formCardCcvInput.onpaste = () => {return false}
     formCardCcvBlock.append(formCardCcvPlaceholder, formCardCcvInput);
