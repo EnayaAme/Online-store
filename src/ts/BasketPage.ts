@@ -85,7 +85,11 @@ export class BasketPage {
       const orderSubtotal = new CreateElement({ tag: 'div', className: 'summary__li' }).getnode();
       const summaryOrder1Left = new CreateElement({ tag: 'span', content: 'Subtotal' }).getnode();
       const summaryOrder1Right = new CreateElement({ tag: 'div', className: 'summary__price-change' }).getnode();
-      const summaryPrice = new CreateElement({ tag: 'span', content: '$ ' + totalprice.toString(), id: 'subtotal-price' }).getnode();
+      const summaryPrice = new CreateElement({
+        tag: 'span',
+        content: '$ ' + totalprice.toString(),
+        id: 'subtotal-price',
+      }).getnode();
       summaryOrder1Right.append(summaryPrice);
       orderSubtotal.append(summaryOrder1Left, summaryOrder1Right);
       const orderShipping = new CreateElement({ tag: 'div', className: 'summary__li' }).getnode();
@@ -120,7 +124,7 @@ export class BasketPage {
       ///////////////////
       checkoutButton.addEventListener('click', () => {
         const body = document.body;
-        const overlay = new CreateElement({ tag: 'div', className: 'popup__overlay'}).getnode();
+        const overlay = new CreateElement({ tag: 'div', className: 'popup__overlay' }).getnode();
         const popup = new CreateCheckoutPopup().getnode();
         overlay.append(popup);
         body.append(overlay);
@@ -131,8 +135,8 @@ export class BasketPage {
             overlay.remove();
             body.style.overflowY = 'auto';
           }
-        })
-      })
+        });
+      });
 
       ///////////////////
       let balaxon = '';
@@ -140,11 +144,11 @@ export class BasketPage {
       let balaxonCounter = 0;
       let enayaameCounter = 0;
       let sale = 0;
-      if(window.localStorage.getItem('balaxon') !== null) {
+      if (window.localStorage.getItem('balaxon') !== null) {
         balaxon = 'balaxon';
         balaxonCounter = +window.localStorage.getItem('balaxon')!;
       }
-      if(window.localStorage.getItem('enayaame') !== null) {
+      if (window.localStorage.getItem('enayaame') !== null) {
         enayaame = 'enayaame';
         enayaameCounter = +window.localStorage.getItem('enayaame')!;
       }
@@ -167,7 +171,6 @@ export class BasketPage {
         sale += 0.1;
       }
 
-      
       if (enayaame === 'enayaame' && enayaameCounter === 1) {
         const promocode = new CreateElement({ tag: 'div', className: 'summary__li' }).getnode();
         const summaryPromocode1Left = new CreateElement({ tag: 'span', content: enayaame }).getnode();
@@ -190,48 +193,49 @@ export class BasketPage {
         const summaryPrice = new CreateElement({ tag: 'span', id: 'summary-price' }).getnode();
         summaryOrder1Right.append(summaryPrice);
         //const newPrice =  (Number(summaryPrice.previousElementSibling!.textContent?.slice(2)) - (Number(summaryPrice.previousElementSibling!.textContent?.slice(2)) / 100 * 10)).toFixed(2);
-        summaryPrice.textContent = '$ ' + (totalprice - (totalprice * sale));
-        totalPrice.textContent = '$ ' + (20 + (totalprice - (totalprice * sale))).toFixed(2);
+        summaryPrice.textContent = '$ ' + (totalprice - totalprice * sale);
+        totalPrice.textContent = '$ ' + (20 + (totalprice - totalprice * sale)).toFixed(2);
         summaryPrice.previousElementSibling!.classList.add('price-changed');
       }
 
       promocodeButton.addEventListener('click', () => {
-        if ((promocodeInput.value === 'balaxon' && balaxonCounter === 0) || (promocodeInput.value === 'enayaame' && enayaameCounter == 0)) {
+        if (
+          (promocodeInput.value === 'balaxon' && balaxonCounter === 0) ||
+          (promocodeInput.value === 'enayaame' && enayaameCounter == 0)
+        ) {
           // const promocode = new CreateElement({ tag: 'div', className: 'summary__li' }).getnode();
           // const summaryPromocode1Left = new CreateElement({ tag: 'span', content: promocodeInput.value }).getnode();
           // const summaryPromocode1Right = new CreateElement({ tag: 'span', content: '-10%' }).getnode();
           // promocode.append(summaryPromocode1Left, summaryPromocode1Right);
           // promocodeTextArea.append(promocode);
-          if (promocodeInput.value === 'balaxon') balaxonCounter+=1;
-          if (promocodeInput.value === 'enayaame') enayaameCounter+=1;
-          
+          if (promocodeInput.value === 'balaxon') balaxonCounter += 1;
+          if (promocodeInput.value === 'enayaame') enayaameCounter += 1;
+
           // if(window.localStorage.getItem('balaxon') === null && window.localStorage.getItem('enayaame') === null) {
           //   const summaryPrice = new CreateElement({ tag: 'span', id: 'summary-price' }).getnode();
           //   summaryOrder1Right.append(summaryPrice);
 
-          
           // const newPrice =  (Number(summaryPrice.previousElementSibling!.textContent?.slice(2)) - (Number(summaryPrice.previousElementSibling!.textContent?.slice(2)) / 100 * 10)).toFixed(2);
           // summaryPrice.textContent = '$ ' + newPrice;
           // totalPrice.textContent = '$ ' + ((20 + +newPrice)).toFixed(2);
           // summaryPrice.previousElementSibling!.classList.add('price-changed');
           // }
-          if (balaxonCounter === 1 && enayaameCounter === 1){
+          if (balaxonCounter === 1 && enayaameCounter === 1) {
             window.localStorage.setItem('balaxon', '1');
             window.localStorage.setItem('enayaame', '1');
           } else {
-            if(balaxonCounter === 1){
+            if (balaxonCounter === 1) {
               window.localStorage.setItem('balaxon', '1');
             } else {
               window.localStorage.setItem('enayaame', '1');
             }
           }
           location.reload();
-
         }
-      })
+      });
     } else {
       const body = document.body;
-      const main = new CreateElement({ tag: 'main', className: 'main main_empty'}).getnode();
+      const main = new CreateElement({ tag: 'main', className: 'main main_empty' }).getnode();
       const empty = new CreateElement({ tag: 'span', className: 'cart-empty', content: 'Cart is empty' }).getnode();
       main.append(empty);
       body.append(main);

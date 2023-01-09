@@ -39,7 +39,7 @@ class CreateDefaultPage {
     this.router.AddRoutingToBasket(cart);
     cartBlock.append(cart);
     const cartIcon = new CreateImage({
-      src: '../assets/images/cart.svg',
+      src: './assets/images/cart.svg',
       className: 'cart__icon',
       alt: 'cart icon',
       id: 'basket-img',
