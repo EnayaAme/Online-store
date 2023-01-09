@@ -33,7 +33,7 @@ class data {
   Get() {
     return products;
   }
-  GetCategories(categories: product[]) {
+  GetCategories(categories: product[]): GetCategories[] {
     const cat = new ApplySort('Sort by', products).return();
     this.ListCategories = [];
     cat.forEach((item) => {
@@ -64,7 +64,7 @@ class data {
     });
     return ResCategory;
   }
-  GetBrands(brands: product[]) {
+  GetBrands(brands: product[]): GetBrands[] {
     this.ListBrands = [];
     const brand = new ApplySort('Sort by', products).return();
     brand.forEach((item) => {
