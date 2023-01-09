@@ -155,7 +155,8 @@ h2 {
 }
 
 .popup__front-name-placeholder,
-.popup__front-expiration-placeholder {
+.popup__front-expiration-placeholder,
+.popup__back-ccv-placeholder {
   @include text ('Inconsolata', normal, normal, 1rem, $color-light, 1.15rem);
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -192,5 +193,15 @@ h2 {
 
 #ccv-placeholder,
 #email-placeholder {
+  text-align: right;
+}
+
+.popup__front-number {
+  @include text ('Inconsolata', normal, normal, 2.5rem, $color-light, 2.5rem);
+  opacity: 0.5;
+}
+
+.popup__back-ccv-text {
+  @include text ('Inconsolata', normal, normal, 1.5rem, $color-primary, 1.5rem);
   text-align: right;
 }
