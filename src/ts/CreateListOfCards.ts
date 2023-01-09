@@ -71,7 +71,7 @@ export class CreateListOfCards {
           cartQuantity!.style.opacity = '1';
           AllPriceBasket!.style.display = 'block';
           basket!.style.display = 'none';
-          AllPriceBasket!.textContent = totalprice.toString() + '$';
+          AllPriceBasket!.textContent = '$ ' + totalprice.toString();
         } else {
           cartQuantity!.style.visibility = 'hidden';
           cartQuantity!.style.opacity = '0';
