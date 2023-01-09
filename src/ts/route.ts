@@ -161,6 +161,9 @@ class Router {
 
   AddRoutingToBasket(tag: HTMLElement, fromcard?: boolean) {
     tag.onclick = () => {
+      if (fromcard) {
+        localStorage.setItem('fromcard', 'true');
+      }
       this.AddURL(`basket`);
     };
   }
