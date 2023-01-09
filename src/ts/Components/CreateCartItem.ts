@@ -16,7 +16,11 @@ export class CreateCartItem {
         const cartItem = new CreateElement({ tag: 'div', className: 'cart__item' }).getnode();
         const cartItemBody = new CreateElement({ tag: 'div', className: 'cart__item-body' }).getnode();
         const photoBlock = new CreateElement({ tag: 'div', className: 'item__photo-block' }).getnode();
-        const photo = new CreateImage({ src: data.images[0], className: 'item__photo', id: `card-${data.id.toString()}` }).getnode();
+        const photo = new CreateImage({
+          src: data.images[0],
+          className: 'item__photo',
+          id: `card-${data.id.toString()}`,
+        }).getnode();
         photoBlock.append(photo);
         const description = new CreateElement({ tag: 'div', className: 'item__description' }).getnode();
         const descriptionTitle = new CreateElement({
@@ -74,10 +78,6 @@ export class CreateCartItem {
         router.AddRoutingToCard(photo);
         router.AddRoutingToCard(descriptionTitle);
 
-        
-
-
-
         quantityButtonMore.addEventListener('click', () => {
           ProductsFromLocalStorage = JSON.parse(localStorage.getItem('products')!);
           ProductsFromLocalStorage.forEach((item) => {
@@ -85,8 +85,8 @@ export class CreateCartItem {
               item.counter += 1;
               localStorage.setItem('products', JSON.stringify(ProductsFromLocalStorage));
               quantityCounter.textContent = item.counter.toString();
-              
-              price.textContent = `$ ${(item.price * item.counter)}`;
+
+              price.textContent = `$ ${item.price * item.counter}`;
             }
           });
           this.currentData(ProductsFromLocalStorage);
@@ -146,7 +146,7 @@ export class CreateCartItem {
   }
   currentData(data: product[]) {
     let sale = 0;
-    if(window.localStorage.getItem('balaxon') !== null) {
+    if (window.localStorage.getItem('balaxon') !== null) {
       sale += 0.1;
     }
     if (window.localStorage.getItem('enayaame') !== null) {
@@ -170,10 +170,9 @@ export class CreateCartItem {
       summaryTotal!.textContent = '$ ' + (totalprice + 20).toString();
     } else {
       subTotal!.textContent = '$ ' + totalprice;
-      summaryprice!.textContent = '$ ' + (totalprice - (totalprice * sale));
-      summaryTotal!.textContent = '$ ' + ((totalprice - (totalprice * sale)) + 20);
+      summaryprice!.textContent = '$ ' + (totalprice - totalprice * sale);
+      summaryTotal!.textContent = '$ ' + (totalprice - totalprice * sale + 20);
     }
-    
   }
 
   // ListOfDisplay(limit: number) {

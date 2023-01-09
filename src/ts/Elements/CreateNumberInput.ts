@@ -1,4 +1,4 @@
-import { ConstructorNumberInput } from "../Interfaces";
+import { ConstructorNumberInput } from '../Interfaces';
 
 export class CreateNumberInput {
   private input: HTMLInputElement;
