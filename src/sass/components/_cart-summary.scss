@@ -1,0 +1,89 @@
+.cart__summary {
+  width: 100%;
+}
+
+.summary__wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.summary__promocode-area {
+  display: flex;
+  margin-bottom: 25px;
+  justify-content: space-between;
+}
+
+.summary__title {
+  display: block;
+  margin-bottom: 15px;
+}
+
+.summary__text-area {
+  padding-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+}
+
+.summary__li {
+  display: flex;
+  //align-items: center;
+  justify-content: space-between;
+}
+
+.summary__promocode-input {
+  padding: 0 25px;
+  width: 85%;
+  height: 35px;
+  border: 0;
+  outline: none;
+  background: rgba(255, 255, 255, 0.73);
+  border-radius: 40px;
+}
+
+.summary__promocode-button {
+  width: 35px;
+  height: 35px;
+  outline: 0;
+  border: 1px solid $color-light;
+  background: $color-primary;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: .3s;
+  &:hover {
+    background: $color-primary-hover;
+    transform: scale(1.03);
+  }
+}
+
+.summary__text-block {
+  display: flex;
+}
+
+.summary__total {
+  display: flex;
+  justify-content: space-between;
+}
+
+.summary__checkout-button {
+  align-self: center;
+  width: 120px;
+  height: 35px;
+  background: $color-primary;
+  border-radius: 40px;
+  outline: 0;
+  border: 1px solid $color-light;
+  cursor: pointer;
+  transition: .3s;
+  &:hover {
+    background: $color-primary-hover;
+    transform: scale(1.03);
+  }
+}
+
+.summary__price-change {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  row-gap: 10px;
+}

@@ -1,0 +1,41 @@
+.search {
+  width: 350px;
+  height: 25px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: $color-menu-checked;
+  border: 1px solid $color-primary;
+  border-radius: 40px;
+}
+
+.search__text {
+  padding: 0 25px;
+  background: transparent;
+  flex: 1;
+  border: 0;
+  outline: none;
+  text-transform: lowercase;
+}
+
+.search__button {
+  position: absolute;
+  right: -1px;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: $color-primary;
+  cursor: pointer;
+  transition: .3s;
+  &:hover {
+    background: $color-primary-hover;
+  }
+  &:active {
+    transform: scale(1.05);
+  }
+}
+
+.search__icon {
+  width: 25px;
+}
