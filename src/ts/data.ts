@@ -1,18 +1,6 @@
 import products from '../assets/files/data.json';
 import { ApplySort } from './ApplySort';
-import { GetMinMax, product } from './Interfaces';
-
-interface GetCategories {
-  category: string;
-  count: number;
-  CurrentCategory: number;
-}
-
-interface GetBrands {
-  brand: string;
-  count: number;
-  CurrentBrand: number;
-}
+import { GetBrands, GetCategories, GetMinMax, product } from './Interfaces';
 
 class data {
   private ListCategories: string[] = [];

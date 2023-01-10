@@ -24,7 +24,6 @@ export class CreateSearchBar extends CreateElement {
     }).getnode();
     this.input.value = filter!;
     this.button.addEventListener('click', () => {
-      //console.log(router);
       if (router) {
         router.AddRoutingToSearch(this.input.value);
       }

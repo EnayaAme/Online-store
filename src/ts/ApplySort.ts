@@ -2,7 +2,6 @@ import { product } from './Interfaces';
 
 export class ApplySort {
   private DataAfterFilters: product[] = [];
-  //private
   constructor(sort: string, products: product[]) {
     this.DataAfterFilters = products;
     if (sort !== 'Sort by') {
@@ -20,7 +19,6 @@ export class ApplySort {
           this.SortByReleaseDate(this.DataAfterFilters);
           break;
         default:
-          //this.SortByID(this.DataAfterFilters);
           break;
       }
     }

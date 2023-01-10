@@ -41,7 +41,6 @@ export class CreateSortMenu extends CreateElement {
         if (router) {
           router.AddRoutingToSort(item[0]);
         }
-        //this.selected.innerHTML = item[1];
         this.options.classList.remove('active');
       });
     });

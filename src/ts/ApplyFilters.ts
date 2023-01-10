@@ -4,7 +4,6 @@ import { filters, product } from './Interfaces';
 export class ApplyFilters {
   private data = new data();
   private DataAfterFilters: product[] = [];
-  //private
   constructor(filters: filters) {
     this.DataAfterFilters = new data().Get();
     if (filters.Category.length !== 0) {
@@ -23,9 +22,11 @@ export class ApplyFilters {
       this.search(filters.Search);
     }
   }
+
   return() {
     return this.DataAfterFilters;
   }
+
   category(categories: string[]) {
     const TempArray: product[] = [];
     categories.forEach((item) => {
@@ -37,6 +38,7 @@ export class ApplyFilters {
     });
     this.DataAfterFilters = TempArray;
   }
+
   brand(brands: string[]) {
     const TempArray: product[] = [];
     brands.forEach((item) => {
@@ -48,6 +50,7 @@ export class ApplyFilters {
     });
     this.DataAfterFilters = TempArray;
   }
+
   price(min: string, max: string) {
     const TempArray: product[] = [];
     this.DataAfterFilters.forEach((it) => {
@@ -57,6 +60,7 @@ export class ApplyFilters {
     });
     this.DataAfterFilters = TempArray;
   }
+
   date(min: string, max: string) {
     const TempArray: product[] = [];
     this.DataAfterFilters.forEach((it) => {
@@ -66,6 +70,7 @@ export class ApplyFilters {
     });
     this.DataAfterFilters = TempArray;
   }
+
   search(search: string) {
     search = search.toLowerCase();
     const TempArray: product[] = [];

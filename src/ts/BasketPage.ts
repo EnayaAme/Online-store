@@ -22,8 +22,6 @@ export class BasketPage {
       main.append(wrapper);
 
       const menu = new CreateElement({ tag: 'div', className: 'menu' }).getnode();
-      // wrapper.append(menu);
-      //const TextMenu = new CreateElement({ tag: 'h2', className: 'textmenu', content: 'Products In Cart' }).getnode();
       const limit = new CreateTextInput({
         type: 'number',
         placeholder: '3',
@@ -41,17 +39,15 @@ export class BasketPage {
       page.max = pages.toString();
       limit.addEventListener('input', () => {
         this.route.AddRoutingInBasket(+limit.value, +page.value);
-        //console.log(document.getElementsByTagName('input')[1].value)
       });
       page.addEventListener('input', () => {
         this.route.AddRoutingInBasket(+limit.value, +page.value);
       });
-      menu.append(/*TextMenu*/ LimitSpan, limit, PageSpan, page);
+      menu.append(LimitSpan, limit, PageSpan, page);
 
       const ListOfProducts = new CreateElement({ tag: 'div', className: 'cart__items', id: 'cart-items' }).getnode();
       const summary = new CreateElement({ tag: 'div', className: 'cart__summary' }).getnode();
       ListOfProducts.append(menu);
-      ////// SUMMARY //////
       const summaryWrapper = new CreateElement({ tag: 'div', className: 'summary__wrapper' }).getnode();
       summary.append(summaryWrapper);
       const promocode = new CreateElement({ tag: 'div', className: 'summary__promocode' }).getnode();
@@ -121,7 +117,6 @@ export class BasketPage {
       summaryWrapper.append(promocode, orderSummary, total, checkoutButton);
       wrapper.append(ListOfProducts, summary);
 
-      ///////////////////
       checkoutButton.addEventListener('click', () => {
         const body = document.body;
         const overlay = new CreateElement({ tag: 'div', className: 'popup__overlay' }).getnode();
@@ -138,7 +133,6 @@ export class BasketPage {
         });
       });
 
-      ///////////////////
       let balaxon = '';
       let enayaame = '';
       let balaxonCounter = 0;
@@ -192,7 +186,6 @@ export class BasketPage {
       if (enayaame === 'enayaame' || balaxon === 'balaxon') {
         const summaryPrice = new CreateElement({ tag: 'span', id: 'summary-price' }).getnode();
         summaryOrder1Right.append(summaryPrice);
-        //const newPrice =  (Number(summaryPrice.previousElementSibling!.textContent?.slice(2)) - (Number(summaryPrice.previousElementSibling!.textContent?.slice(2)) / 100 * 10)).toFixed(2);
         summaryPrice.textContent = '$ ' + (totalprice - totalprice * sale);
         totalPrice.textContent = '$ ' + (20 + (totalprice - totalprice * sale)).toFixed(2);
         summaryPrice.previousElementSibling!.classList.add('price-changed');
@@ -203,23 +196,8 @@ export class BasketPage {
           (promocodeInput.value === 'balaxon' && balaxonCounter === 0) ||
           (promocodeInput.value === 'enayaame' && enayaameCounter == 0)
         ) {
-          // const promocode = new CreateElement({ tag: 'div', className: 'summary__li' }).getnode();
-          // const summaryPromocode1Left = new CreateElement({ tag: 'span', content: promocodeInput.value }).getnode();
-          // const summaryPromocode1Right = new CreateElement({ tag: 'span', content: '-10%' }).getnode();
-          // promocode.append(summaryPromocode1Left, summaryPromocode1Right);
-          // promocodeTextArea.append(promocode);
           if (promocodeInput.value === 'balaxon') balaxonCounter += 1;
           if (promocodeInput.value === 'enayaame') enayaameCounter += 1;
-
-          // if(window.localStorage.getItem('balaxon') === null && window.localStorage.getItem('enayaame') === null) {
-          //   const summaryPrice = new CreateElement({ tag: 'span', id: 'summary-price' }).getnode();
-          //   summaryOrder1Right.append(summaryPrice);
-
-          // const newPrice =  (Number(summaryPrice.previousElementSibling!.textContent?.slice(2)) - (Number(summaryPrice.previousElementSibling!.textContent?.slice(2)) / 100 * 10)).toFixed(2);
-          // summaryPrice.textContent = '$ ' + newPrice;
-          // totalPrice.textContent = '$ ' + ((20 + +newPrice)).toFixed(2);
-          // summaryPrice.previousElementSibling!.classList.add('price-changed');
-          // }
           if (balaxonCounter === 1 && enayaameCounter === 1) {
             window.localStorage.setItem('balaxon', '1');
             window.localStorage.setItem('enayaame', '1');

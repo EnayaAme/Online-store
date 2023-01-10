@@ -13,13 +13,9 @@ import { CreateRadio } from './Elements/CreateRadio';
 import { CreateLink } from './Elements/CreateLink';
 
 export class CreateDefaultPage {
-  // переменная которая хранит body
   private body = document.body;
-  // Роутер
   private router = new CreateRoute();
-  // метод создает header
   CreateHeader() {
-    // создаем header, передаем в конструктор не все возможные аргументы, но он не ругается
     const header = new CreateElement({ tag: 'header', className: 'header' }).getnode();
     const wrapper = new CreateElement({ tag: 'div', className: 'wrapper header__wrapper' }).getnode();
     const textBlock = new CreateElement({ tag: 'div', className: 'header__text' }).getnode();
@@ -71,12 +67,10 @@ export class CreateDefaultPage {
         cartTotal.textContent = '$ ' + totalprice.toString();
         cartTotal.style.display = 'block';
         cartIcon.style.display = 'none';
-        //cartQuantity.classList.add('cart__quantity_visible');
       }
     }
     cart.append(cartIcon, cartTotal, cartQuantity);
   }
-  // метод для main
   CreateMain(filters: filters, ProductsCards: product[]) {
     this.router.GetFilters(filters);
     const product = new data();
@@ -84,7 +78,6 @@ export class CreateDefaultPage {
     this.body.append(main);
     const wrapper = new CreateElement({ tag: 'div', className: 'wrapper main__wrapper' }).getnode();
     main.append(wrapper);
-    // CreateAside
     const aside = new CreateElement({ tag: 'aside', className: 'aside' }).getnode();
     wrapper.append(aside);
     const buttonTop = new CreateElement({
@@ -147,7 +140,6 @@ export class CreateDefaultPage {
     }).getnode();
     categories.append(categoriesTitle);
     const ListCategories = product.GetCategories(ProductsCards);
-    //const ListOfCurrentCategories = product.GetCurrentCategories(ProductsCards);
     ListCategories.forEach((item) => {
       const current: [HTMLInputElement, HTMLLabelElement] = new CreateCheckbox({
         type: 'checkbox',
@@ -179,11 +171,9 @@ export class CreateDefaultPage {
       this.router.AddRoutingToBrand(current[0]);
       brands.append(current[0], current[1]);
     });
-    // CreateStore
     const store = new CreateElement({ tag: 'div', className: 'store' }).getnode();
     wrapper.append(store);
     const menu = new CreateElement({ tag: 'div', className: 'store__menu' }).getnode();
-    /////  menu
     const viewOptions = new CreateElement({ tag: 'div', className: 'store__view' }).getnode();
     const viewBlock1 = new CreateElement({
       tag: 'div',
@@ -213,7 +203,6 @@ export class CreateDefaultPage {
     }).getnode();
     viewBlock2.append(view2[0], view2[1]);
     viewOptions.append(viewBlock1, viewBlock2);
-    ///////
     const foundProducts = new CreateElement({
       tag: 'div',
       className: 'store__quantity',
@@ -238,13 +227,9 @@ export class CreateDefaultPage {
       filter: filters.Search,
     }).getnode();
     menu.append(viewOptions, foundProducts, searchBar, sortMenu);
-
-    ///// products
-
     const products = new CreateElement({ tag: 'div', className: 'store__products', id: 'store__products' }).getnode();
     store.append(menu, products);
   }
-  // метод для footer
   CreateFooter() {
     const footer = new CreateElement({ tag: 'footer', className: 'footer' }).getnode();
     const wrapper = new CreateElement({ tag: 'div', className: 'wrapper footer__wrapper' }).getnode();
@@ -281,11 +266,5 @@ export class CreateDefaultPage {
     wrapper.append(cartBlock, references);
   }
 }
-
-// const Page = new CreateDefaultPage();
-
-// Page.CreateHeader();
-// Page.CreateMain();
-// Page.CreateFooter();
 
 export default CreateDefaultPage;

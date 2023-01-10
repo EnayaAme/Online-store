@@ -125,3 +125,15 @@ export interface GetMinMax {
   max: string;
   min: string;
 }
+
+export interface GetCategories {
+  category: string;
+  count: number;
+  CurrentCategory: number;
+}
+
+export interface GetBrands {
+  brand: string;
+  count: number;
+  CurrentBrand: number;
+}
