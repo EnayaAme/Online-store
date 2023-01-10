@@ -7,7 +7,7 @@ class Router {
     limit: 0,
     page: 0,
   };
-  private filters: filters = {
+  public filters: filters = {
     Category: [],
     Brand: [],
     MinPrice: this.products.GetMinMaxPrice().min,

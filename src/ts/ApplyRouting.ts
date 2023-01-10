@@ -17,7 +17,7 @@ export class ApplyRouting {
     limit: 3,
     page: 1,
   };
-  private filters: filters = {
+  public filters: filters = {
     Category: [],
     Brand: [],
     MinPrice: this.products.GetMinMaxPrice().min,
