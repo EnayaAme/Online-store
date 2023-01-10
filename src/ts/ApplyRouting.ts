@@ -13,9 +13,6 @@ export class ApplyRouting {
   private MainPage = new CreateDefaultPage();
   private products = new data();
   private body = document.body;
-  private checker = false;
-  private ToPages = false;
-  private isChangePrice = false;
   private LimitPage = {
     limit: 3,
     page: 1,
@@ -43,16 +40,14 @@ export class ApplyRouting {
       const DataSort = new ApplySort(this.filters.Sort, data);
       new CreateListOfCards(DataSort.return());
       this.MainPage.CreateFooter();
-    } else 
-    if (hash.split('-')[0] === '#card' && +hash.split('-')[1] < 64) {
+    } else if (hash.split('-')[0] === '#card' && +hash.split('-')[1] < 64) {
       if (this.body.children[1] && this.body.children[2]) {
         this.body.children[2].remove();
         this.body.children[1].remove();
       }
       new CardPage(this.products.GetById(hash.split('-')[1]));
       this.MainPage.CreateFooter();
-    } else
-    if (hash === '') {
+    } else if (hash === '') {
       this.ToDefaultFilters();
       this.MainPage = new CreateDefaultPage();
       if (document.body.childNodes[2]) {
@@ -65,10 +60,7 @@ export class ApplyRouting {
       this.MainPage.CreateMain(this.filters, DataSort.return());
       new CreateListOfCards(DataSort.return());
       this.MainPage.CreateFooter();
-      this.checker = true;
-    } else 
-    if (hash === '#basket') {
-      this.checker = true;
+    } else if (hash === '#basket') {
       if (this.body.children[1] && this.body.children[2]) {
         this.body.children[2].remove();
         this.body.children[1].remove();
@@ -80,8 +72,7 @@ export class ApplyRouting {
         document.getElementById('buyitnowBtn')?.click();
         localStorage.removeItem('fromcard');
       }
-    } else 
-    if (hash[7] === '!') {
+    } else if (hash[7] === '!') {
       if (this.body.children[1] && this.body.children[2]) {
         this.body.children[2].remove();
         this.body.children[1].remove();
@@ -98,7 +89,6 @@ export class ApplyRouting {
           this.LimitPage.page = +filt.split('=')[1];
         }
       }
-      //console.log(this.LimitPage);
       new BasketPage(this.LimitPage.limit, this.LimitPage.page);
       new CreateCartItem(this.LimitPage.limit, this.LimitPage.page);
       this.MainPage.CreateFooter();
@@ -106,16 +96,6 @@ export class ApplyRouting {
       this.body.innerHTML = ' ';
       new errorpage();
     }
-    ///filters///
-
-    ///Category///
-    // if (id.split('=')[0] === 'Category') {
-    //   if(!this.filters.Category.includes(id.split('=')[1])){
-    //     this.filters.Category.push(id.split('=')[1]);
-    //   }
-    // }
-    // if (this.checker === false) {
-    // }
   }
 
   createFilters(hash: string) {

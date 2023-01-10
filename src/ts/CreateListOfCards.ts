@@ -31,7 +31,6 @@ export class CreateListOfCards {
       }
       document.getElementById('store__products')!.append(CardBox);
       CardAddtoCart.addEventListener('click', () => {
-        //ProductsToLocalStorage.push(item);
         let totalprice = 0;
         let counter = 0;
         let ProductsFromLocalStorage: product[] = [];
@@ -78,7 +77,6 @@ export class CreateListOfCards {
           AllPriceBasket!.style.display = 'none';
           basket!.style.display = 'block';
         }
-        //localStorage.setItem('')
       });
 
       document.getElementById('store__optionBlock1')!.addEventListener('click', () => {

@@ -10,13 +10,10 @@ export class CreateCheckoutPopup extends CreateElement {
     const flipFront = new CreateElement({ tag: 'div', className: 'popup__flip-front' }).getnode();
     const flipBack = new CreateElement({ tag: 'div', className: 'popup__flip-back' }).getnode();
     flip.append(flipFront, flipBack);
-    ///// front /////
     const frontChip = new CreateElement({ tag: 'div', className: 'popup__front-chip' }).getnode();
     const frontLogo = new CreateElement({ tag: 'div', className: 'popup__front-logo card-logo' }).getnode();
     const frontNumber = new CreateElement({ tag: 'div', className: 'popup__front-number' }).getnode();
-
     const frontName = new CreateElement({ tag: 'div', className: 'popup__front-name' }).getnode();
-
     const namePlaceholder = new CreateElement({
       tag: 'span',
       className: 'popup__front-name-placeholder',
@@ -33,7 +30,6 @@ export class CreateCheckoutPopup extends CreateElement {
     const expirationText = new CreateElement({ tag: 'div', className: 'popup__front-expiration-text' }).getnode();
     frontExpiration.append(expirationPlaceholder, expirationText);
     flipFront.append(frontChip, frontLogo, frontNumber, frontName, frontExpiration);
-    ///// back /////
     const backStrip = new CreateElement({ tag: 'div', className: 'popup__back-strip' }).getnode();
     const backLogo = new CreateElement({ tag: 'div', className: 'popup__back-logo card-logo' }).getnode();
     const backCcv = new CreateElement({ tag: 'div', className: 'popup__back-ccv' }).getnode();
@@ -46,7 +42,6 @@ export class CreateCheckoutPopup extends CreateElement {
     backCcv.append(ccvPlaceholder, ccvText);
     flipBack.append(backStrip, backLogo, backCcv);
     creditCard.append(flip);
-    ///////////////////////////////////////////////
     const form = new CreateElement({ tag: 'div', className: 'popup__form' }).getnode();
     const formCardNumberBlock = new CreateElement({ tag: 'div', className: 'form__block' }).getnode();
     const formCardNumberPlaceholder = new CreateElement({
@@ -72,7 +67,6 @@ export class CreateCheckoutPopup extends CreateElement {
       };
       input.addEventListener('input', () => {
         const lastchar = input.value[input.value.length - 1];
-        console.log(lastchar);
         input.value = input.value.slice(0, -1);
         number.textContent = input.value;
         if (reg.test(lastchar)) {
@@ -83,17 +77,14 @@ export class CreateCheckoutPopup extends CreateElement {
               case '4':
                 frontLogo.style.background = `url('./assets/images/visa.svg') no-repeat center / contain`;
                 backLogo.style.background = `url('./assets/images/visa.svg') no-repeat center / contain`;
-                //frontLogo.textContent = 'VISA';
                 break;
               case '5':
                 frontLogo.style.background = `url('./assets/images/mastercard.svg') no-repeat center / contain`;
                 backLogo.style.background = `url('./assets/images/mastercard.svg') no-repeat center / contain`;
-                //frontLogo.textContent = 'MasterCard';
                 break;
               case '6':
                 frontLogo.style.background = `url('./assets/images/discover.svg') no-repeat center / contain`;
                 backLogo.style.background = `url('./assets/images/discover.svg') no-repeat center / contain`;
-                //frontLogo.textContent = 'Discover';
                 break;
               default:
                 frontLogo.textContent = '';
@@ -138,7 +129,6 @@ export class CreateCheckoutPopup extends CreateElement {
       MonthSelect.append(option);
     }
     formCardMonth.append(MonthSelect);
-
     const formCardYear = new CreateElement({ tag: 'div', className: 'form__input' }).getnode();
     const YearSelect = new CreateElement({ tag: 'select', className: 'form__select' }).getnode();
     const yearOption = new CreateElement({ tag: 'option' }).getnode();
@@ -150,7 +140,6 @@ export class CreateCheckoutPopup extends CreateElement {
     }
     formCardYear.append(YearSelect);
     formCardExpirationBlock.append(formCardExpirationPlaceholder, formCardMonth, formCardYear);
-
     const formCardCcvBlock = new CreateElement({ tag: 'div', className: 'form__block-half' }).getnode();
     const formCardCcvPlaceholder = new CreateElement({
       tag: 'span',
@@ -165,6 +154,7 @@ export class CreateCheckoutPopup extends CreateElement {
       id: 'card-ccv',
       required: true,
     }).getnode();
+
     formCardCcvInput.addEventListener('click', () => {
       formCardCcvInput.focus();
       if (!creditCard.classList.contains('hover')) creditCard.classList.add('hover');
@@ -179,7 +169,6 @@ export class CreateCheckoutPopup extends CreateElement {
     formCardCcvInput.maxLength = 3;
     formCardCcvInput.addEventListener('input', () => {
       const lastchar = formCardCcvInput.value[formCardCcvInput.value.length - 1];
-      //console.log(lastchar);
       formCardCcvInput.value = formCardCcvInput.value.slice(0, -1);
       if (reg.test(lastchar)) {
         formCardCcvInput.value += lastchar;
@@ -190,9 +179,7 @@ export class CreateCheckoutPopup extends CreateElement {
       return false;
     };
     formCardCcvBlock.append(formCardCcvPlaceholder, formCardCcvInput);
-
     formCardOtherBlock.append(formCardExpirationBlock, formCardCcvBlock);
-
     const formCardAddressBlock = new CreateElement({ tag: 'div', className: 'form__block_address' }).getnode();
     const formAddressPlaceholder = new CreateElement({
       tag: 'span',
@@ -240,7 +227,6 @@ export class CreateCheckoutPopup extends CreateElement {
     }).getnode();
     formEmailBlock.append(formEmailPlaceholder, formEmailInput);
     formCardContactsBlock.append(formPhoneBlock, formEmailBlock);
-    //////////////
     const confirmButton = new CreateElement({
       tag: 'button',
       className: 'popup__button',
@@ -251,6 +237,7 @@ export class CreateCheckoutPopup extends CreateElement {
       month: '',
       year: '',
     };
+
     MonthSelect.addEventListener('change', () => {
       const month = Array.from(MonthSelect.getElementsByTagName('option')).filter((option) => {
         return option.selected;
@@ -269,7 +256,6 @@ export class CreateCheckoutPopup extends CreateElement {
 
     confirmButton.addEventListener('click', () => {
       let message = '';
-
       const month = Array.from(MonthSelect.getElementsByTagName('option')).filter((option) => {
         return option.selected;
       });
@@ -280,14 +266,16 @@ export class CreateCheckoutPopup extends CreateElement {
       if (!/^([.a-zA-Z]{3,}[\s]){2,}$/.test((formCardNameInput.value += ' '))) {
         message += '\nCard holder name should contain at least 2 words each one not less than 3 letters!';
       }
-
       if (!month[0].textContent) {
         message += '\nChose expiration month!';
       }
       if (!year[0].textContent) {
         message += '\nChose expiration year!';
       }
-      if (!/^([.0-9a-zA-Z\-\,]{5,}[\s]){3,}$/.test((formCardAddressInput.value += ' '))) {
+      if (formCardAddressInput.value.toString().split('').reverse()[0] !== ' ') {
+        formCardAddressInput.value += ' ';
+      }
+      if (!/^([.0-9a-zA-Z\-\,]{5,}[\s]){3,}$/.test(formCardAddressInput.value)) {
         message += '\nShipping address should contain at least 3 words each one not less than 5 symbols!';
       }
       if (!/^[\+][0-9]{9,15}$/.test(formPhoneInput.value)) {
@@ -306,7 +294,6 @@ export class CreateCheckoutPopup extends CreateElement {
       if (formCardCcvInput.value.split('').length !== 3) {
         message += '\nInvalid CCV!';
       }
-
       if (message) {
         alert(message);
       }

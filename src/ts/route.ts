@@ -17,30 +17,18 @@ class Router {
     Search: '',
     Sort: 'Sort by',
   };
-  private body = document.body;
-  private checker = false;
-  private ToPages = false;
-  private isChangePrice = false;
-
-  // constructor(filters: filters) {
-  //   this.filters = filters;
-  // }
 
   AddURL(id: string) {
     if (id.split('-')[0] === '#card') {
       const newurl = `${id}`;
       window.location.hash = newurl;
-      this.checker = true;
-      this.ToPages = true;
     }
     if (id === '') {
       window.location.hash = '';
-      this.checker = true;
     }
     if (id === 'basket') {
       const newurl = `${id}`;
       window.location.hash = newurl;
-      this.checker = true;
     }
   }
 
@@ -93,7 +81,6 @@ class Router {
         } else {
           newurl += `&Price=${this.filters.MinPrice}+${this.filters.MaxPrice}`;
         }
-        this.isChangePrice = true;
       }
       if (
         this.filters.MinYear !== this.products.GetMinMaxDate().min ||
@@ -104,7 +91,6 @@ class Router {
         } else {
           newurl += `&Date=${this.filters.MinYear}+${this.filters.MaxYear}`;
         }
-        this.isChangePrice = true;
       }
       if (this.filters.Search !== '') {
         if (newurl === '#?') {
@@ -146,7 +132,6 @@ class Router {
     tag.onclick = (e: Event) => {
       const target = e.target;
       const id = (target as HTMLButtonElement).id;
-      console.log(id);
       this.AddURL(`#${id}`);
     };
   }
@@ -171,7 +156,6 @@ class Router {
   AddRoutingInBasket(limit: number, page: number) {
     this.LimitPage.limit = limit;
     this.LimitPage.page = page;
-    console.log(this.LimitPage);
     let newurl = 'basket';
     if (this.LimitPage.limit > 0) {
       newurl += `!limit=${this.LimitPage.limit}`;
@@ -186,18 +170,6 @@ class Router {
       window.location.hash = newurl;
     }
   }
-
-  // AddRoutingToLimit(count: string) {
-  //   this.LimitPage.limit = +count;
-  //   console.log(this.LimitPage.limit)
-  //   this.AddRoutingInBasket();
-  // }
-
-  // AddRoutingToPage(count: string) {
-  //   this.LimitPage.page = +count;
-  //   console.log(this.LimitPage.page)
-  //   this.AddRoutingInBasket();
-  // }
 
   AddRoutingToCategory(tag: HTMLInputElement) {
     tag.onclick = (e: Event) => {

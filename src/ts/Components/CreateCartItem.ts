@@ -68,13 +68,11 @@ export class CreateCartItem {
         cartItemdelete.append(icon);
         cartItem.append(cartItemBody, cartItemdelete);
         cartItem.style.display = 'none';
-        //console.log(counter)
         if (counter < limit * page && counter > limit * page - limit - 1) {
           cartItem.style.display = 'flex';
         }
         counter += 1;
         tag!.append(cartItem);
-
         router.AddRoutingToCard(photo);
         router.AddRoutingToCard(descriptionTitle);
 
@@ -141,8 +139,6 @@ export class CreateCartItem {
         });
       });
     }
-    //ProductsFromLocalStorage.forEach();
-    //this.ListOfDisplay(limit);
   }
   currentData(data: product[]) {
     let sale = 0;
@@ -174,20 +170,4 @@ export class CreateCartItem {
       summaryTotal!.textContent = '$ ' + (totalprice - totalprice * sale + 20);
     }
   }
-
-  // ListOfDisplay(limit: number) {
-  //   let ProductsFromLocalStorage: product[] = [];
-  //   ProductsFromLocalStorage = JSON.parse(localStorage.getItem('products')!);
-  //   const pages = Math.ceil(ProductsFromLocalStorage.length / limit);
-  //   let arr = new Array();
-  //   for (let i = 0; i < pages; i++) {
-  //     arr.push(new Array());
-  //     ProductsFromLocalStorage.forEach((item, ind) => {
-  //       arr[i].push(item);
-  //       if (ind = pages) {
-  //       }
-  //     });
-  //   }
-  //   console.log(arr!)
-  // }
 }

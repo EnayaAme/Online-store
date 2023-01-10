@@ -19,7 +19,6 @@ export class CreateLink {
       this.link.target = target;
     }
   }
-
   getnode() {
     return this.link;
   }

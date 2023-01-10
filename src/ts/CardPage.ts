@@ -14,7 +14,6 @@ export class CardPage {
     main.append(wrapper);
     wrapper.append(DivPath);
     wrapper.append(DivCard);
-    // ---------------------- первый див div.path
     for (let i = 0; i < 4; i++) {
       const span = new CreateElement({ tag: 'a', className: 'card_path' }).getnode();
       DivPath.append(span);
@@ -24,9 +23,6 @@ export class CardPage {
     DivPath.childNodes[1].textContent = product.category + ' / ';
     DivPath.childNodes[2].textContent = product.brand + ' / ';
     DivPath.childNodes[3].textContent = product.model;
-    // ------------------- второй див div.card
-    // const h1 = new CreateElement({ tag: 'h1', id: 'h1_card', content: product.model }).getnode();
-    // DivCard.append(h1);
     const cardcontent = new CreateElement({ tag: 'div', id: 'cardcontent' }).getnode();
     DivCard.append(cardcontent);
     const cardimages = new CreateElement({ tag: 'div', id: 'cardimages' }).getnode();
@@ -35,7 +31,6 @@ export class CardPage {
     cardcontent.append(cardimages);
     cardcontent.append(carddata);
     cardcontent.append(cardprice);
-    // ---------------------- images:
     const row = new CreateElement({ tag: 'div', id: 'row', className: 'row' }).getnode();
     cardimages.append(row);
     const col2 = new CreateElement({ tag: 'div', id: 'col-2', className: 'col-2' }).getnode();
@@ -47,8 +42,6 @@ export class CardPage {
     }).getnode();
     const imgRow = new CreateElement({ tag: 'div', id: 'small-img-row', className: 'small-img-row' }).getnode();
     col2.append(currentimage, imgRow);
-    // const listimages = new CreateElement({ tag: 'div', id: 'listimages' }).getnode();
-    // cardimages.append(listimages);
 
     product.images.forEach((it) => {
       const smallimgContainer = new CreateElement({
@@ -60,13 +53,11 @@ export class CardPage {
       smallimgContainer.append(smallimg);
       imgRow.append(smallimgContainer);
 
-      // переключение основной картинки //
       smallimg.addEventListener('click', () => {
         currentimage.src = smallimg.src;
       });
     });
 
-    // -----------------data:
     const dataTop = new CreateElement({ tag: 'div', className: 'data-top' }).getnode();
     const h1 = new CreateElement({ tag: 'h1', id: 'h1_card', content: product.model }).getnode();
     const ratingBlock = new CreateElement({ tag: 'div', className: 'rating-block' }).getnode();
@@ -169,7 +160,6 @@ export class CardPage {
     router.AddRoutingToBasket(buyNow, fromcard);
 
     addToCart.addEventListener('click', () => {
-      //addToCart.classList.toggle('_product-added');
       let totalprice = 0;
       let counter = 0;
       let ProductsFromLocalStorage: product[] = [];
@@ -220,6 +210,3 @@ export class CardPage {
     carddata.append(dataTop, priceBlock, description, release, brand, category, buttons);
   }
 }
-
-//http://localhost:8080/url(https://i-product.by/images/o/apple-iphone-14-pro-128gb-kosmicheskij-chernyj_1.jpg
-//https://i-product.by/images/o/apple-iphone-14-pro-128gb-kosmicheskij-chernyj_1.jpg
